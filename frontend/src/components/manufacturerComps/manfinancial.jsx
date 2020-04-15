@@ -1,8 +1,11 @@
 import React from "react";
 import Logo from "./erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
+import { ManufacturerRepository } from "../../API";
 
 export class Manfinancial extends React.Component {
+
+    manufacturerRepository = new ManufacturerRepository();
 
     username;
     
