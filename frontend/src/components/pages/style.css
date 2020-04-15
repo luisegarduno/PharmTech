@@ -1,0 +1,271 @@
+nav {
+    background-color: #4a64a8;
+}
+
+.welcome {
+    color: white;
+    float: right;
+    margin-top: -4em;
+    margin-right: 1em;
+}
+
+/*Welcome for manufacturer dashboard*/
+.welcomeMan {
+    color: white;
+    float: right;
+    margin-top: -2.5em;
+    margin-right: 1em;
+    font-size: xx-large;
+}
+
+/*image for viewcart button on pharm manager*/
+#cart {
+    float: right;
+    margin-top: -2em;
+    margin-right: 1em;
+    font-size: x-large;
+    font-weight: bold;
+    color: white;
+    background: none;
+    border-style: solid;
+    cursor: pointer;
+}
+
+#cartImg {
+    margin-top: .2em;
+    margin-left: .1em;
+    margin-right: .2em;
+    width: .8em;
+}
+
+
+#cart:hover {
+    transition: all 250ms ease-in-out;
+    background-color: #364875;
+}
+
+/*buttons formatting*/
+.menu {
+    text-align: center;
+    display: flexbox;
+    position: relative;
+}
+
+#menuButton {
+    display: flexbox;
+    color: white;
+    background-color: #4a65a888;
+    border-style: solid;
+    border-color: #4a64a8;
+    border-width: .05em;
+    border-radius: .1em;
+    transition: all 250ms ease-in-out;
+    text-align: center;
+    font-size: xxx-large;
+    height: 14em;
+    width: 6em;
+    margin: .5em;
+    cursor: pointer;
+}
+
+
+#menuButton:hover {
+    background-color: #4a64a8;
+}
+
+/*specfic buttons for manufacturer dashboard*/
+
+#manMenuButton {
+    display: flexbox;
+    color: white;
+    background-color: #4a65a888;
+    border-style: solid;
+    border-color: #4a64a8;
+    border-width: .05em;
+    border-radius: .1em;
+    transition: all 250ms ease-in-out;
+    text-align: center;
+    font-size: x-large;
+    height: 22em;
+    width: 8em;
+    margin: .5em;
+    cursor: pointer;
+}
+
+#manMenuButton:hover {
+    background-color: #4a64a8;
+}
+
+/*formatting for the view cart page of pharmacy manager*/
+
+.yourCart {
+    color: white;
+    float: right;
+    margin-top: -1.5em;
+    margin-right: 1em;
+    font-size: xxx-large;
+}
+
+
+.itemsTable {
+    margin: 1em;
+    text-align: center;
+}
+
+.itemsTable table, th, #item{
+    border-style: solid;
+    border-color: #4a64a8;
+}
+
+tr {
+    border-style: solid;
+    border-color: #4a64a8;   
+}
+
+table {
+    padding: 1em;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: x-large;
+}
+
+.itemsTable th, #item {
+    text-align: left;
+}
+
+
+#quantity {
+    font-size: x-large;
+}
+
+#delete {
+    float: right;
+    font-size: x-large;
+    background: none;
+    cursor: pointer;
+}
+
+#delete:hover {
+    text-decoration: underline;
+}
+
+#swap {
+    background-color: #4a64a8;
+    color:white;
+    font-size: x-large;
+    margin-left: 1em;
+    border-radius: .5em;
+    cursor: pointer;
+    transition: all 250ms ease-in-out;
+}
+
+#swap:hover {
+    background-color: #4a65a888;
+}
+
+#total {
+    text-align: center;
+    height: 0em;
+    font-size: x-large;
+}
+
+#addItems {
+    margin-left: 1em;
+    float: left;
+}
+
+.extraButtons button {
+    position: relative;
+    color: white;
+    background-color: #4a64a8;
+    border-style: solid;
+    border-color: #233050;
+    border-width: .05em;
+    border-radius: .1em;
+    transition: all 250ms ease-in-out;
+    text-align: center;
+    font-size: x-large;
+    cursor: pointer;
+}
+
+.placeOrder:hover {
+    background-color: #2d8f56;
+}
+
+#addItems:hover {
+    background-color: #233050;
+}
+
+.placeOrder {
+    height: 3em;
+    float: right;
+}
+
+.notification li {                     /* Notification for new info in pharmacist */        
+    max-width: 6cm;
+    word-wrap:break-word;
+    font-size: large;
+    font-weight: 400;
+    margin-right: 1cm;
+}
+
+.notification p {
+    font-size: x-large;
+    font-weight: bold;
+    color: black;
+    margin-right: 0.5em;
+}
+
+.notification {
+    float: right;
+    margin-top: -1em;
+    margin-right: 0.5em;
+}
+
+.return {
+    margin: 1em;
+    float: left;
+    position: relative;
+    color: white;
+    background-color: #4a64a8;
+    border-style: solid;
+    border-color: #233050;
+    border-width: .05em;
+    border-radius: .1em;
+    transition: all 250ms ease-in-out;
+    text-align: center;
+    font-size: x-large;
+    cursor: pointer;
+}
+
+.return:hover {
+    background-color: #233050;
+}
+
+/*Styles for your pharmacy page*/
+
+#range {
+    font-size: large;
+    margin: 1em;
+}
+
+#viewInventory {
+    float: right;
+}
+
+.tableHeader {
+    margin: .3em;
+}
+
+#expDate {
+    background: none;
+    font-size: x-large;
+    border: none;
+    font-weight: bold;
+    padding: 0;
+    cursor: pointer;
+}
+
+#expDate:hover {
+    text-decoration: underline;
+}
