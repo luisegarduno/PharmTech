@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "./erpharmtechgrayer.png";
+import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 
 
@@ -34,8 +34,8 @@ export class Pharmacist extends React.Component {
 
         var show = LimitList(this.state.notificationlist);
 
-        const listItems = show.map((item) =>
-            <li>{item}</li>
+        const listItems = show.map((item, i) =>
+            <li key = {i}>{item}</li>
         );
 
         return(
@@ -49,7 +49,7 @@ export class Pharmacist extends React.Component {
                             Welcome back {this.username}!
                         </h1>
                     </nav>
-                    <div class = "notification">
+                    <div className = "notification">
                         <p>Your notification</p>
                         <ul>{listItems}</ul>
                     </div>

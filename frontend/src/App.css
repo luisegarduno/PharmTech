@@ -27,6 +27,16 @@
 .App-link {
   color: #61dafb;
 }
+/*./components/pages/141990.jpg */
+.background {
+  background-image: url(./images/background.jpg);
+  height: 100%; 
+  background-position: center;
+  background-size: cover;
+  width: 100vw;
+  min-height: 100vh;
+}
+
 
 @keyframes App-logo-spin {
   from {

@@ -1,6 +1,6 @@
 import React from "react";
-import Logo from "./erpharmtechgrayer.png";
-import Cart from "./cart.png";
+import Logo from "../../images/erpharmtechgrayer.png";
+import Cart from "../../images/cart.png";
 import {Link} from "react-router-dom";
 
 export class PharmManager extends React.Component {

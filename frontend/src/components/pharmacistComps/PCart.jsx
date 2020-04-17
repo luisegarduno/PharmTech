@@ -1,11 +1,12 @@
 import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
+import { PharmacistRepository } from '../../API/pharmacistRepository'
 import {Link} from "react-router-dom";
 
-export class Request extends React.Component {
 
+
+export class PCart extends React.Component{
     username;
-    
     constructor(props) {
         super(props);
         this.username = localStorage['username']
@@ -13,19 +14,23 @@ export class Request extends React.Component {
 
     render() {
         return (
+        <div>
            <div className = "body">
-                <nav>
+            <nav>
                 <div className = "img" id = "logo">
-                        <img src={Logo} alt="Logo"/>
+                        <img src={Logo} />
                 </div>
-                <h1 className = "yourCart">
-                        Request Form
-                </h1>
-                </nav>
-                <Link to="/pharmManager">
+            </nav>
+            <div>
+                <h2>Request Drug List</h2>
+            </div>
+            </div>
+                <div>
+                <Link to="/Pharmacist">
                     <button className = "return">Return to Homepage</button>
-                    </Link> 
-           </div>
+                </Link> 
+            </div> 
+        </div>        
         );
     }
 }

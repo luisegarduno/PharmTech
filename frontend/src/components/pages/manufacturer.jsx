@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "./erpharmtechgrayer.png";
+import Logo from "../../images/erpharmtechgrayer.png";
 //import Cart from "./cart.png";
 import {Link} from "react-router-dom";
 
