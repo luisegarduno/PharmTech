@@ -1,6 +1,8 @@
 import React from "react";
-import Logo from "./erpharmtechgrayer.png";
+import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
+import { PharmacistRepository } from '../../API/pharmacistRepository'
+
 
 export class ReceivedOrder extends React.Component {
 

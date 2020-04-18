@@ -52,6 +52,7 @@ CREATE TABLE drugs(
     description VARCHAR(1000),
     sell_price FLOAT NOT NULL,
     purchase_price FLOAT NOT NULL,
+    manu_price FLOAT NOT NULL,
     rec_stock_amount INT NOT NULL,
     unit_measure VARCHAR(50) NOT NULL,
     drug_type INT NOT NULL,
