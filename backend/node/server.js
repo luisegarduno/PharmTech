@@ -45,7 +45,7 @@ app.get('/', (req, res) => {
 });
 
 //inventory for pharmacist, manager, and doctor
-app.get('/getInventory', (req, res) => {
+app.get('/pharmManager/inventory', (req, res) => {
   connection.query('SELECT * FROM `pharmtech`.`inventory`', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
