@@ -8,22 +8,26 @@ export class Maninventory extends React.Component {
     manufacturerRepository = new ManufacturerRepository();
 
     username;
-    
+
     constructor(props) {
         super(props);
         this.username = localStorage['username']
+        this.state = {
+            drugs:[],
+        }
     }
 
-    currInventory = [
-        {"name": "first", "madeOn": "date", "expires": "never", "acqFrom": "SMU", "expired": true, "okToBuy": true}
-    ]
+    componentDidMount(){
+        this.manufacturerRepository.getInventory()
+            .then(Drug => this.setState({drugs : Drug.data}))
+    }
 
     toggleExpired(item) {
-        this.manufacturerRepository.markExpired(item)
+        // this.manufacturerRepository.markExpired(item)
     }
 
     toggleBuy(item) {
-        this.manufacturerRepository.markBuy(item)
+        // this.manufacturerRepository.markBuy(item)
     }
 
     render() {
@@ -48,14 +52,14 @@ export class Maninventory extends React.Component {
                             <th>Expired?</th>
                             <th>OK to Buy?</th>
                         </tr>
-                        {this.currInventory.map(item => (
+                        {this.state.drugs.map(item => (
                             <tr>
                                 <td id="item">{item.name}</td>
                                 <td id="item">{item.madeOn}</td>
-                                <td id="item">{item.expires}</td>
+                                <td id="item">{item.exp_date}</td>
                                 <td id="item">{item.acqFrom}</td>
-                                <td id="item"><input type="checkbox" id="item" value={item.expired}></input></td>
-                                <td id="item"><input type="checkbox" id="item" value={item.okToBuy}></input></td>
+                                <td id="item">{item.expired}<form><button onClick = {this.toggleExpired(item)}>Flip Expired</button></form></td>
+                                <td id="item">{item.okToBuy}<form><button onClick = {this.toggleBuy(item)}>Flip Ok to Buy</button></form></td>
                             </tr>
                         ))}
                     </table>
