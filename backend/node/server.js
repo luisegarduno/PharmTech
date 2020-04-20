@@ -207,6 +207,24 @@ app.get('/manufacturerinventory', (req, res) => {
   });
 });
 
+//sales for manufacturer
+app.get('/manufacturersales', (req, res) => { 
+  connection.query('SELECT d.name, d.purchase_price, io.quantity FROM `pharmtech`.`inventory_orders` io join `pharmtech`.`drugs` d on d.id = io.drug_id WHERE fulfill_date IS NOT NULL', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
 //connecting the express object to listen on a particular port as defined in the config object.
 app.listen(config.port, config.host, (e) => {
   if (e) {
