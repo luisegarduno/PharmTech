@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export class PharmManagerRepository {
     
-    url = ''
+    url = 'http://localhost:3000'
 
     config = {
         headers: {

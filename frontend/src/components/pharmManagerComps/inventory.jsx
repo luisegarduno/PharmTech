@@ -74,7 +74,7 @@ export class Inventory extends React.Component {
     }
 
     componentDidMount() {
-        this.pharmManagerRepository.getCart()
+        this.pharmManagerRepository.getInventory()
             .then(drugs => this.setState({ drugs }));
     }
 }
