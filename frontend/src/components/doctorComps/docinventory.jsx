@@ -14,9 +14,14 @@ export class Docinventory extends React.Component {
         this.username = localStorage['username']
     }
 
+    componentDidMount(){
+        this.DoctorRepository.getInventory()
+            .then(Drug => this.currInventory({currInventory : Drug.data}))
+    }
+
     currInventory = [
-        {"name": "drug", "instock": 7, "tags": "medicine", "related": "otherdrug"},
-        {"name": "otherdrug", "instock": 0, "tags": "not medicine", "related": "drug"}
+        // {"name": "drug", "instock": 7, "tags": "medicine", "related": "otherdrug"},
+        // {"name": "otherdrug", "instock": 0, "tags": "not medicine", "related": "drug"}
     ]
 
     pickFilter(filterBy) {

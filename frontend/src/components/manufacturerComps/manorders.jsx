@@ -12,15 +12,23 @@ export class Manorders extends React.Component {
     constructor(props) {
         super(props);
         this.username = localStorage['username']
+        this.state = {
+            orders:[],
+        }
     }
 
-    orders = [
-        {"num": 2, "date": "today", "status": "shipped", "item": "drugs", "units": 7, "priceUnit": 5, "price": 35},
-        {"num": 1, "date": "yesterday", "status": "packing", "item": "other drugs", "units": 3, "priceUnit": 2, "price": 6}
-    ]
+    componentDidMount(){
+        this.manufacturerRepository.getOrders()
+            .then(Drug => this.setState({orders : Drug.data}))
+    }
+
+    // orders = [
+    //     {"num": 2, "date": "today", "status": "shipped", "item": "drugs", "units": 7, "priceUnit": 5, "price": 35},
+    //     {"num": 1, "date": "yesterday", "status": "packing", "item": "other drugs", "units": 3, "priceUnit": 2, "price": 6}
+    // ]
 
     sortMe(event, sortKey){
-        const orders = this.orders;
+        const orders = this.state.orders;
         orders.sort((a,b) => a[sortKey].localeCompare(b[sortKey]))
         this.setState({orders})
       }
@@ -36,12 +44,15 @@ export class Manorders extends React.Component {
                         Orders
                 </h1>
             </nav>
-                <select id = "range">
-                                    <option disabled selected value = "default">Sort By</option>
-                                    <option value = "time" onChange={e => this.sortMe(e, "num")}>Order #</option>
-                                    <option value = "date" onChange={e => this.sortMe(e, "date")}>Date</option>
-                                    <option value = "status" onChange={e => this.sortMe(e, "status")}>Status</option>
-                    </select>
+                <h1>Sort By</h1>
+                <form>
+                    <input type="radio" id="sortNum" name="sort" value="num" onClick={e => this.sortMe(e, "num")}></input>
+                    <label for="sortNum">Order #</label>
+                    <input type="radio" id="sortDate" name="sort" value="date" onClick={e => this.sortMe(e, "date")}></input>
+                    <label for="sortDate">Date</label>
+                    <input type="radio" id="sortStatus" name="sort" value="status" onClick={e => this.sortMe(e, "status")}></input>
+                    <label for="sortStatus">Status</label>
+                </form>
             <h1 className = "tableHeader">Recent Outgoing Orders</h1>
                 <div className = "itemsTable">
                     <table>
@@ -54,7 +65,7 @@ export class Manorders extends React.Component {
                             <th>Price Per Unit</th>
                             <th>Total Price</th>
                         </tr>
-                        {this.orders.slice(0, 1).map(item => (
+                        {this.state.orders.slice(0, 1).map(item => (
                             <tr>
                                 <td id="item">{item.num}</td>
                                 <td id="item">{item.date}</td>
@@ -79,7 +90,7 @@ export class Manorders extends React.Component {
                             <th>Price Per Unit</th>
                             <th>Total Price</th>
                         </tr>
-                        {this.orders.map(item => (
+                        {this.state.orders.map(item => (
                             <tr>
                                 <td id="item">{item.num}</td>
                                 <td id="item">{item.date}</td>

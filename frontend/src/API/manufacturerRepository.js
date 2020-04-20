@@ -2,17 +2,17 @@ import axios from 'axios'
 
 export class ManufacturerRepository {
     
-    url = ''
+    url = 'http://localhost:8000'
 
-    config = {
-        headers: {
-            Authorization: ''
-        }
-    };
+    // config = {
+    //     headers: {
+    //         Authorization: ''
+    //     }
+    // };
 
     getInventory() {
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}`, this.config)
+            axios.get('http://localhost:8000/manufacturerinventory')
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error
@@ -45,7 +45,7 @@ export class ManufacturerRepository {
 
     getOrders() {
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}`, this.config)
+            axios.get('http://localhost:8000/manufacturerorders')
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error
@@ -54,9 +54,9 @@ export class ManufacturerRepository {
         });
     }
 
-    getSaless() {
+    getSales() {
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}`, this.config)
+            axios.get('http://localhost:8000/manufacturersales')
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error

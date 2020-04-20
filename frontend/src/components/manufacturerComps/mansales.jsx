@@ -12,12 +12,15 @@ export class Mansales extends React.Component {
     constructor(props) {
         super(props);
         this.username = localStorage['username']
+        this.state = {
+            sales:[],
+        }
     }
 
-    sales = [
-        {"name": "drug", "units": 7, "cost": 2, "price": 14},
-        {"name": "other drug", "units": 1, "cost": 2, "price": 2}
-    ]
+    componentDidMount(){
+        this.manufacturerRepository.getSales()
+            .then(Drug => this.setState({sales : Drug.data}))
+    }
 
     // searchFor(item) {
     //     this.manufacturerRepository.getSales(item)
@@ -43,7 +46,7 @@ export class Mansales extends React.Component {
                             <th>Cost Per Unit</th>
                             <th>Total Price</th>
                         </tr>
-                        {this.sales.slice(0, 1).map(item => (
+                        {this.state.sales.slice(0, 1).map(item => (
                             <tr>
                                 <td id="item">{item.name}</td>
                                 <td id="item">{item.units}</td>
@@ -62,7 +65,7 @@ export class Mansales extends React.Component {
                             <th>Cost Per Unit</th>
                             <th>Total Price</th>
                         </tr>
-                        {this.sales.map(item => (
+                        {this.state.sales.map(item => (
                             <tr>
                                 <td id="item">{item.name}</td>
                                 <td id="item">{item.units}</td>
