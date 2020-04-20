@@ -8,22 +8,31 @@ export class Maninventory extends React.Component {
     manufacturerRepository = new ManufacturerRepository();
 
     username;
-    
+
     constructor(props) {
         super(props);
         this.username = localStorage['username']
+        this.state = {
+            drugs:[],
+        }
+        this.formatDate = this.formatDate.bind(this);
     }
 
-    currInventory = [
-        {"name": "first", "madeOn": "date", "expires": "never", "acqFrom": "SMU", "expired": true, "okToBuy": true}
-    ]
+    componentDidMount(){
+        this.manufacturerRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}))
+    }
 
     toggleExpired(item) {
-        this.manufacturerRepository.markExpired(item)
+        // this.manufacturerRepository.markExpired(item)
     }
 
-    toggleBuy(item) {
-        this.manufacturerRepository.markBuy(item)
+    toggleSell(item) {
+        // this.manufacturerRepository.markBuy(item)
+    }
+
+    formatDate(myDate){
+        var d = myDate.substring(5,7) + "-" + myDate.substring(8,10) + "-" + myDate.substring(0,4);
+        return d;
     }
 
     render() {
@@ -43,19 +52,17 @@ export class Maninventory extends React.Component {
                         <tr>
                             <th>Name</th>
                             <th>Made On</th>
-                            <th>Expires</th>
                             <th>Acq From</th>
                             <th>Expired?</th>
-                            <th>OK to Buy?</th>
+                            <th>OK to Sell?</th>
                         </tr>
-                        {this.currInventory.map(item => (
+                        {this.state.drugs.map(item => (
                             <tr>
                                 <td id="item">{item.name}</td>
-                                <td id="item">{item.madeOn}</td>
-                                <td id="item">{item.expires}</td>
+                                <td id="item">{this.formatDate(item.madeOn)}</td>
                                 <td id="item">{item.acqFrom}</td>
-                                <td id="item"><input type="checkbox" id="item" value={item.expired}></input></td>
-                                <td id="item"><input type="checkbox" id="item" value={item.okToBuy}></input></td>
+                                <td id="item">{item.expired}<form><button onClick = {this.toggleExpired(item)}>Flip Expired</button></form></td>
+                                <td id="item">{item.okToBuy}<form><button onClick = {this.toggleSell(item)}>Flip Ok to Sell</button></form></td>
                             </tr>
                         ))}
                     </table>

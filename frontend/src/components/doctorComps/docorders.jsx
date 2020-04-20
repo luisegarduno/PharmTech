@@ -12,12 +12,35 @@ export class Docorders extends React.Component {
     constructor(props) {
         super(props);
         this.username = localStorage['username']
+        this.state = {
+            orders:[],
+        }
+        this.orderDate = this.orderDate.bind(this);
+        this.getStatus = this.getStatus.bind(this);
+        this.formatQuantity = this.numberWithCommas.bind(this);
     }
 
-    orders = [
-        {"name": "drug", "date": "today", "status": "shipping", "units": 7},
-        {"name": "other drug", "date": "yesterday", "status": "in mail room", "units": 2}
-    ]
+    componentDidMount(){
+        this.doctorRepository.getOrders().then(Order => this.setState({orders : Order.data}));
+    }
+
+    orderDate(order_date){
+        var orderdate = order_date.substring(5,7) + "-" + order_date.substring(8,10) + "-" + order_date.substring(0,4);
+        return orderdate;
+    }
+
+    getStatus(fulfillDate){
+        if (fulfillDate == null){
+            return "Preparing to Ship";
+        } else {
+            var shipDate = fulfillDate.substring(5,7) + "-" + fulfillDate.substring(8,10) + "-" + fulfillDate.substring(0,4);
+            return "Arrived on " + shipDate;
+        }
+    }
+
+    numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
     render() {
         return (
@@ -34,17 +57,17 @@ export class Docorders extends React.Component {
                 <div className = "itemsTable">
                     <table>
                         <tr>
-                            <th>Item</th>
-                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Ordered On</th>
                             <th>Status</th>
                             <th>Units</th>
                         </tr>
-                        {this.orders.map(item => (
+                        {this.state.orders.map(item => (
                             <tr>
                                 <td id="item">{item.name}</td>
-                                <td id="item">{item.date}</td>
-                                <td id="item">{item.status}</td>
-                                <td id="item">{item.units}</td>
+                                <td id="item">{this.orderDate(item.order_date)}</td>
+                                <td id="item">{this.getStatus(item.fulfill_date)}</td>
+                                <td id="item">{this.formatQuantity(item.quantity)} {item.unit_measure}</td>
                             </tr>
                         ))}
                     </table>

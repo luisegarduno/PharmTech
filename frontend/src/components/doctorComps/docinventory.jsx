@@ -12,15 +12,28 @@ export class Docinventory extends React.Component {
     constructor(props) {
         super(props);
         this.username = localStorage['username']
+        this.state = {
+            drugs:[],
+        }
+        this.formatQuantity = this.numberWithCommas.bind(this);
+        this.formatDate = this.formatDate.bind(this);
     }
 
-    currInventory = [
-        {"name": "drug", "instock": 7, "tags": "medicine", "related": "otherdrug"},
-        {"name": "otherdrug", "instock": 0, "tags": "not medicine", "related": "drug"}
-    ]
+    componentDidMount(){
+        this.doctorRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}))
+    }
 
     pickFilter(filterBy) {
-        this.currInventory.filter((filterBy,status) => status > 0)
+        this.currInventory.filter((filterBy,exp_date) => exp_date > "2020-04-19T00:00:00.000Z")
+    }
+
+    numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    formatDate(myDate){
+        var d = myDate.substring(5,7) + "-" + myDate.substring(8,10) + "-" + myDate.substring(0,4);
+        return d;
     }
 
     render() {
@@ -43,16 +56,18 @@ export class Docinventory extends React.Component {
                 <div className = "itemsTable">
                     <table>
                         <tr>
-                            <th>Name</th>
-                            <th>In-Stock?</th>
-                            <th>Tags</th>
+                            <th>Batch</th>
+                            <th>Name (Drug ID)</th>
+                            <th>Quantity</th>
+                            <th>Expiration Date</th>
                             <th>Related Drugs</th>
                         </tr>
-                        {this.currInventory.map(item => (
+                        {this.state.drugs.map(item => (
                             <tr>
-                                <td id="item">{item.name}</td>
-                                <td id="item">{item.instock}</td>
-                                <td id="item">{item.tags}</td>
+                                <td id="item">{item.batch_id}</td>
+                                <td id="item">{item.name} ({item.drug_id})</td>
+                                <td id="item">{this.formatQuantity(item.quantity)}</td>
+                                <td id="item">{this.formatDate(item.exp_date)}</td>
                                 <td id="item">{item.related}</td>
                             </tr>
                         ))}

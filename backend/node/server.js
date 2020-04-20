@@ -45,7 +45,7 @@ app.get('/', (req, res) => {
 });
 
 //inventory for pharmacist, manager, and doctor
-app.get('/pharmacyinventory', (req, res) => {
+app.get('/getInventory', (req, res) => {
   connection.query('SELECT * FROM `pharmtech`.`inventory`', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
@@ -63,7 +63,7 @@ app.get('/pharmacyinventory', (req, res) => {
 });
 
 //pharmacy revenues
-app.get('/pharmacyrev', (req, res) => {
+app.get('/getRevenues', (req, res) => {
   connection.query('SELECT d.name, d.sell_price * p.quantity FROM `pharmtech`.`perscriptions` p join `pharmtech`.`drugs` d on d.id = p.drug_id WHERE p.fill_date IS NOT NULL', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
@@ -81,7 +81,7 @@ app.get('/pharmacyrev', (req, res) => {
 });
 
 //pharmacy expenses
-app.get('/pharmacyexp', (req, res) => {
+app.get('/getExpenses', (req, res) => {
   connection.query('SELECT d.name, d.purchase_price * io.quantity FROM `pharmtech`.`inventory_orders` io join `pharmtech`.`drugs` d on d.id = io.drug_id WHERE io.fulfill_date IS NOT NULL', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
@@ -99,7 +99,7 @@ app.get('/pharmacyexp', (req, res) => {
 });
 
 //pharmacy sales
-app.get('/pharmacysales', (req, res) => {
+app.get('/getSales', (req, res) => {
   connection.query('SELECT u.first_name, u.last_name, d.name, d.sell_price FROM `pharmtech`.`perscriptions` p join `pharmtech`.`drugs` d on d.id = p.drug_id join `pharmtech`.`user` u on u.id = p.patient_id WHERE p.fill_date IS NOT NULL LIMIT 5', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
@@ -173,7 +173,7 @@ app.get('/pharmacycart', (req, res) => {
 
 //inventory for manufacturer
 app.get('/manufacturerinventory', (req, res) => { 
-  connection.query('SELECT * FROM `pharmtech`.`XXXX`', function (err, rows, fields) {
+  connection.query('SELECT * FROM `pharmtech`.`manufacturer_inventory`', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -190,8 +190,26 @@ app.get('/manufacturerinventory', (req, res) => {
 });
 
 //outgoing orders for manufacturer
-app.get('/manufacturerinventory', (req, res) => { 
-  connection.query('SELECT * FROM `pharmtech`.`inventory_orders` WHERE fulfill_date IS NOT NULL', function (err, rows, fields) {
+app.get('/manufacturerorders', (req, res) => { 
+  connection.query('SELECT *, sum(io.quantity) dollars FROM `pharmtech`.`inventory_orders` io join `pharmtech`.`drugs` d on d.id = io.drug_id group by d.id', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
+//sales for manufacturer
+app.get('/manufacturersales', (req, res) => { 
+  connection.query('SELECT d.name, d.purchase_price, sum(io.quantity) dollars FROM `pharmtech`.`inventory_orders` io join `pharmtech`.`drugs` d on d.id = io.drug_id WHERE fulfill_date IS NOT NULL group by d.id', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
