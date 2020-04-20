@@ -26,14 +26,21 @@ export class Manorders extends React.Component {
     }
 
     sortMe(event, sortKey){
-        const orders = this.state.orders;
-        orders.sort((a,b) => a[sortKey].localeCompare(b[sortKey]))
-        this.setState({orders})
+        //sort the data
     }
 
     formatDate(myDate){
         var d = myDate.substring(5,7) + "-" + myDate.substring(8,10) + "-" + myDate.substring(0,4);
         return d;
+    }
+
+    getStatus(fulfillDate){
+        if (fulfillDate == null){
+            return "Packing";
+        } else {
+            var shipDate = fulfillDate.substring(5,7) + "-" + fulfillDate.substring(8,10) + "-" + fulfillDate.substring(0,4);
+            return "Shipped on " + shipDate;
+        }
     }
 
     numberWithCommas(x) {
@@ -47,7 +54,7 @@ export class Manorders extends React.Component {
     getTotal(price, purchase_price){
         var total = price * purchase_price;
         total = total.toFixed(2);
-        return total;
+        return total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     render() {
@@ -103,19 +110,19 @@ export class Manorders extends React.Component {
                             <th>Date</th>
                             <th>Status</th>
                             <th>Item</th>
-                            <th>Units Sold</th>
-                            <th>Price Per Unit</th>
-                            <th>Total Price</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Total</th>
                         </tr>
                         {this.state.orders.map(item => (
                             <tr>
                                 <td id="item">{item.id}</td>
-                                <td id="item">{this.formatDate(item.date)}</td>
-                                <td id="item">{item.status}</td>
+                                <td id="item">{this.formatDate(item.order_date)}</td>
+                                <td id="item">{this.getStatus(item.fulfill_date)}</td>
                                 <td id="item">{item.name}</td>
-                                <td id="item">{this.formatQuantity(item.quantity)}</td>
-                                <td id="item">${this.formatPrice(item.purchase_price)}</td>
-                                <td id="item">${this.getTotal(item.quantity, item.purchase_price)}</td>
+                                <td id="item">{this.formatQuantity(item.quantity)} {item.unit_measure}</td>
+                                <td id="item">${this.formatPrice(item.sell_price)}/{item.unit_measure}</td>
+                                <td id="item">${this.getTotal(item.quantity, item.sell_price)}</td>
                             </tr>
                         ))}
                     </table>

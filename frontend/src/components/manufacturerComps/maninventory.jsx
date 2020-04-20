@@ -26,7 +26,7 @@ export class Maninventory extends React.Component {
         // this.manufacturerRepository.markExpired(item)
     }
 
-    toggleBuy(item) {
+    toggleSell(item) {
         // this.manufacturerRepository.markBuy(item)
     }
 
@@ -54,7 +54,7 @@ export class Maninventory extends React.Component {
                             <th>Made On</th>
                             <th>Acq From</th>
                             <th>Expired?</th>
-                            <th>OK to Buy?</th>
+                            <th>OK to Sell?</th>
                         </tr>
                         {this.state.drugs.map(item => (
                             <tr>
@@ -62,7 +62,7 @@ export class Maninventory extends React.Component {
                                 <td id="item">{this.formatDate(item.madeOn)}</td>
                                 <td id="item">{item.acqFrom}</td>
                                 <td id="item">{item.expired}<form><button onClick = {this.toggleExpired(item)}>Flip Expired</button></form></td>
-                                <td id="item">{item.okToBuy}<form><button onClick = {this.toggleBuy(item)}>Flip Ok to Buy</button></form></td>
+                                <td id="item">{item.okToBuy}<form><button onClick = {this.toggleSell(item)}>Flip Ok to Sell</button></form></td>
                             </tr>
                         ))}
                     </table>
