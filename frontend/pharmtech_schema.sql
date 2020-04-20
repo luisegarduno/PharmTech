@@ -167,3 +167,30 @@ INSERT INTO inventory_orders (drug_id, order_date, fulfill_date, quantity) VALUE
     (3, '2020-05-13', null, 3000),
     (10, '2020-04-03', null, 1000),
     (5, '2020-04-27', null, 2000);
+
+DROP TABLE IF EXISTS manufacturer_inventory;
+CREATE TABLE manufacturer_inventory(
+	batch_id INT AUTO_INCREMENT,
+    drug_id INT NOT NULL,    
+    quantity INT NOT NULL,
+    exp_date DATE NOT NULL,
+    PRIMARY KEY (batch_id),
+    FOREIGN KEY (drug_id)
+		REFERENCES drugs(id)
+        ON UPDATE CASCADE
+);
+
+INSERT INTO manufacturer_inventory (drug_id, quantity, exp_date) VALUES
+	(1, 12000, '2020-09-20'),
+    (2, 10000, '2021-10-30'),
+    (3, 95000, '2019-06-28'),
+    (12, 8000, '2022-01-20'),
+    (8, 15000, '2023-04-09'),
+    (10, 13000, '2019-05-10'),
+    (7, 20000, '2019-04-29'),
+    (4, 17080, '2020-03-16'),
+    (5, 12976, '2021-02-13'),
+    (6, 13732,'2023-12-15'),
+    (11, 10204, '2020-12-31'),
+    (9, 11701, '2024-01-20');
+    
