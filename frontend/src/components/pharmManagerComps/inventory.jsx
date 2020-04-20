@@ -11,20 +11,10 @@ export class Inventory extends React.Component {
     constructor(props) {
         super(props);
         this.username = localStorage['username']
+        this.state = {
+            drugs: []
+        }
     }
-
-    drugs  = [{
-        "name": "Symbyzide Parodafinil",
-        "sell_price": 6,
-        "quantity": 10,
-        "exp_date" : "2/5/20"
-    },
-    {
-        "name": "Ibuprofen",
-        "sell_price": 8,
-        "quantity": 11,
-        "exp_date" : "2/5/20"
-    }]
 
 
     onSort(event, sortKey){
@@ -52,7 +42,7 @@ export class Inventory extends React.Component {
                             <th><button type = "button" id = "expDate" onClick={e => this.onSort(e, "sell_price")}>Cost per Unit</button></th>
                             <th><button type = "button" id = "expDate">Expiration Date</button></th>
                         </tr>
-                            {this.drugs.map(item => (
+                            {this.state.drugs.map(item => (
                                 <tr>
                                   <td id = "item">{item.name}
                                   </td>
