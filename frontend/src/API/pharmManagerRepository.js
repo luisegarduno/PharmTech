@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export class PharmManagerRepository {
     
-    url = 'http://localhost:3000'
+    url = 'http://localhost:8000'
 
     config = {
         headers: {
@@ -22,14 +22,16 @@ export class PharmManagerRepository {
         });
     }
 
-    getInventory() {
-        return new Promise((resolve, reject) => {
-            axios.get(`${this.url}`, this.config)
-                .then(x => resolve(x.data))
+    getInventory(){
+        return new Promise((resolve,reject) =>{
+            axios.get('http://localhost:8000/getInventory')
+                .then(x => {
+                    resolve(x.data);
+                })
                 .catch(x => {
-                    alert(x); // handle error
+                    alert(x);
                     reject(x);
-                });
-        });
+                })
+        })
     }
 }

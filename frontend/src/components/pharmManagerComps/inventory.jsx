@@ -15,15 +15,15 @@ export class Inventory extends React.Component {
 
     drugs  = [{
         "name": "Symbyzide Parodafinil",
-        "cost": 6,
-        "units": 10,
-        "expire" : "2/5/20"
+        "sell_price": 6,
+        "quantity": 10,
+        "exp_date" : "2/5/20"
     },
     {
         "name": "Ibuprofen",
-        "cost": 8,
-        "units": 11,
-        "expire" : "2/5/20"
+        "sell_price": 8,
+        "quantity": 11,
+        "exp_date" : "2/5/20"
     }]
 
 
@@ -49,7 +49,7 @@ export class Inventory extends React.Component {
                         <tr>
                         <th><button type = "button" id = "expDate">Item Name</button></th>
                             <th><button type = "button" id = "expDate">Units</button></th>
-                            <th><button type = "button" id = "expDate" onClick={e => this.onSort(e, "cost")}>Cost per Unit</button></th>
+                            <th><button type = "button" id = "expDate" onClick={e => this.onSort(e, "sell_price")}>Cost per Unit</button></th>
                             <th><button type = "button" id = "expDate">Expiration Date</button></th>
                         </tr>
                             {this.drugs.map(item => (
@@ -57,11 +57,11 @@ export class Inventory extends React.Component {
                                   <td id = "item">{item.name}
                                   </td>
                                   <td id = "item">
-                                      {item.units}
+                                      {item.quantity}
                                     </td>
 
-                                    <td id = "item">${item.cost}</td>
-                                    <td id = "item">{item.expire}</td>
+                                    <td id = "item">${item.sell_price}</td>
+                                    <td id = "item">{item.exp_date}</td>
                                 </tr>
                             ))}
                     </table>
