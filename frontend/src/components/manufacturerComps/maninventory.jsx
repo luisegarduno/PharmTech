@@ -15,11 +15,11 @@ export class Maninventory extends React.Component {
         this.state = {
             drugs:[],
         }
+        this.formatDate = this.formatDate.bind(this);
     }
 
     componentDidMount(){
-        this.manufacturerRepository.getInventory()
-            .then(Drug => this.setState({drugs : Drug.data}))
+        this.manufacturerRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}))
     }
 
     toggleExpired(item) {
@@ -28,6 +28,11 @@ export class Maninventory extends React.Component {
 
     toggleBuy(item) {
         // this.manufacturerRepository.markBuy(item)
+    }
+
+    formatDate(myDate){
+        var d = myDate.substring(5,7) + "-" + myDate.substring(8,10) + "-" + myDate.substring(0,4);
+        return d;
     }
 
     render() {
@@ -47,7 +52,6 @@ export class Maninventory extends React.Component {
                         <tr>
                             <th>Name</th>
                             <th>Made On</th>
-                            <th>Expires</th>
                             <th>Acq From</th>
                             <th>Expired?</th>
                             <th>OK to Buy?</th>
@@ -55,8 +59,7 @@ export class Maninventory extends React.Component {
                         {this.state.drugs.map(item => (
                             <tr>
                                 <td id="item">{item.name}</td>
-                                <td id="item">{item.madeOn}</td>
-                                <td id="item">{item.exp_date}</td>
+                                <td id="item">{this.formatDate(item.madeOn)}</td>
                                 <td id="item">{item.acqFrom}</td>
                                 <td id="item">{item.expired}<form><button onClick = {this.toggleExpired(item)}>Flip Expired</button></form></td>
                                 <td id="item">{item.okToBuy}<form><button onClick = {this.toggleBuy(item)}>Flip Ok to Buy</button></form></td>
