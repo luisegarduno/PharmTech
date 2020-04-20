@@ -209,7 +209,7 @@ app.get('/manufacturerorders', (req, res) => {
 
 //sales for manufacturer
 app.get('/manufacturersales', (req, res) => { 
-  connection.query('SELECT d.name, d.purchase_price, io.quantity FROM `pharmtech`.`inventory_orders` io join `pharmtech`.`drugs` d on d.id = io.drug_id WHERE fulfill_date IS NOT NULL', function (err, rows, fields) {
+  connection.query('SELECT d.name, d.purchase_price, sum(io.quantity) FROM `pharmtech`.`inventory_orders` io join `pharmtech`.`drugs` d on d.id = io.drug_id WHERE fulfill_date IS NOT NULL group by d.id', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
