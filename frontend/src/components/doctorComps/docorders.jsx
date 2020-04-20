@@ -12,12 +12,25 @@ export class Docorders extends React.Component {
     constructor(props) {
         super(props);
         this.username = localStorage['username']
+        this.state = {
+            orders:[],
+        }
+        this.formatDate = this.formatDate.bind(this);
+        this.formatQuantity = this.numberWithCommas.bind(this);
     }
 
-    orders = [
-        {"name": "drug", "date": "today", "status": "shipping", "units": 7},
-        {"name": "other drug", "date": "yesterday", "status": "in mail room", "units": 2}
-    ]
+    componentDidMount(){
+        this.doctorRepository.getOrders().then(Order => this.setState({orders : Order.data}))
+    }
+
+    formatDate(myDate){
+        var d = myDate.substring(5,7) + "-" + myDate.substring(8,10) + "-" + myDate.substring(0,4);
+        return d;
+    }
+
+    numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
     render() {
         return (
@@ -39,12 +52,12 @@ export class Docorders extends React.Component {
                             <th>Status</th>
                             <th>Units</th>
                         </tr>
-                        {this.orders.map(item => (
+                        {this.state.orders.map(item => (
                             <tr>
                                 <td id="item">{item.name}</td>
-                                <td id="item">{item.date}</td>
+                                <td id="item">{this.formatDate(item.date)}</td>
                                 <td id="item">{item.status}</td>
-                                <td id="item">{item.units}</td>
+                                <td id="item">{this.formatQuantity(item.units)}</td>
                             </tr>
                         ))}
                     </table>
