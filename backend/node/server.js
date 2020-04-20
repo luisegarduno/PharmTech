@@ -173,7 +173,7 @@ app.get('/pharmacycart', (req, res) => {
 
 //inventory for manufacturer
 app.get('/manufacturerinventory', (req, res) => { 
-  connection.query('SELECT * FROM `pharmtech`.`XXXX`', function (err, rows, fields) {
+  connection.query('SELECT * FROM `pharmtech`.`manufacturer_inventory`', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -190,7 +190,7 @@ app.get('/manufacturerinventory', (req, res) => {
 });
 
 //outgoing orders for manufacturer
-app.get('/manufacturerinventory', (req, res) => { 
+app.get('/manufacturerorders', (req, res) => { 
   connection.query('SELECT * FROM `pharmtech`.`inventory_orders` WHERE fulfill_date IS NOT NULL', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
