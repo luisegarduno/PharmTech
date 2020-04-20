@@ -15,23 +15,40 @@ export class Manorders extends React.Component {
         this.state = {
             orders:[],
         }
+        this.formatDate = this.formatDate.bind(this);
+        this.formatQuantity = this.numberWithCommas.bind(this);
+        this.formatPrice = this.formatPrice.bind(this);
+        this.getTotal = this.getTotal.bind(this);
     }
 
     componentDidMount(){
-        this.manufacturerRepository.getOrders()
-            .then(Drug => this.setState({orders : Drug.data}))
+        this.manufacturerRepository.getOrders().then(Order => this.setState({orders : Order.data}))
     }
-
-    // orders = [
-    //     {"num": 2, "date": "today", "status": "shipped", "item": "drugs", "units": 7, "priceUnit": 5, "price": 35},
-    //     {"num": 1, "date": "yesterday", "status": "packing", "item": "other drugs", "units": 3, "priceUnit": 2, "price": 6}
-    // ]
 
     sortMe(event, sortKey){
         const orders = this.state.orders;
         orders.sort((a,b) => a[sortKey].localeCompare(b[sortKey]))
         this.setState({orders})
-      }
+    }
+
+    formatDate(myDate){
+        var d = myDate.substring(5,7) + "-" + myDate.substring(8,10) + "-" + myDate.substring(0,4);
+        return d;
+    }
+
+    numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    formatPrice(price){
+        return price.toFixed(2);
+    }
+
+    getTotal(price, purchase_price){
+        var total = price * purchase_price;
+        total = total.toFixed(2);
+        return total;
+    }
 
     render() {
         return (
@@ -53,7 +70,7 @@ export class Manorders extends React.Component {
                     <input type="radio" id="sortStatus" name="sort" value="status" onClick={e => this.sortMe(e, "status")}></input>
                     <label for="sortStatus">Status</label>
                 </form>
-            <h1 className = "tableHeader">Recent Outgoing Orders</h1>
+            {/* <h1 className = "tableHeader">Recent Outgoing Orders</h1>
                 <div className = "itemsTable">
                     <table>
                         <tr>
@@ -77,7 +94,7 @@ export class Manorders extends React.Component {
                             </tr>
                         ))}
                     </table>
-                </div>
+                </div> */}
                 <h1 className = "tableHeader">All Outgoing Orders</h1>
                 <div className = "itemsTable">
                     <table>
@@ -92,13 +109,13 @@ export class Manorders extends React.Component {
                         </tr>
                         {this.state.orders.map(item => (
                             <tr>
-                                <td id="item">{item.num}</td>
-                                <td id="item">{item.date}</td>
+                                <td id="item">{item.id}</td>
+                                <td id="item">{this.formatDate(item.date)}</td>
                                 <td id="item">{item.status}</td>
-                                <td id="item">{item.item}</td>
-                                <td id="item">{item.units}</td>
-                                <td id="item">${item.priceUnit}</td>
-                                <td id="item">${item.price}</td>
+                                <td id="item">{item.name}</td>
+                                <td id="item">{this.formatQuantity(item.quantity)}</td>
+                                <td id="item">${this.formatPrice(item.purchase_price)}</td>
+                                <td id="item">${this.getTotal(item.quantity, item.purchase_price)}</td>
                             </tr>
                         ))}
                     </table>
