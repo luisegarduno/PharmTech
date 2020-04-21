@@ -49,7 +49,7 @@ export class Maninventory extends React.Component {
             <h1 className = "tableHeader">All Inventory</h1>
                 <div className = "itemsTable">
                     <table>
-                        <tr>
+                        <tr class="headerFixed">
                             <th>Name</th>
                             <th>Made On</th>
                             <th>Acq From</th>

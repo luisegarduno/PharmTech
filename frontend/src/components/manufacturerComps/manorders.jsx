@@ -68,8 +68,8 @@ export class Manorders extends React.Component {
                         Orders
                 </h1>
             </nav>
-                <h1>Sort By</h1>
-                <form>
+                <h1 class="tableHeader">Sort By</h1>
+                <form class="sortBy">
                     <input type="radio" id="sortNum" name="sort" value="num" onClick={e => this.sortMe(e, "num")}></input>
                     <label for="sortNum">Order #</label>
                     <input type="radio" id="sortDate" name="sort" value="date" onClick={e => this.sortMe(e, "date")}></input>
@@ -103,9 +103,9 @@ export class Manorders extends React.Component {
                     </table>
                 </div> */}
                 <h1 className = "tableHeader">All Outgoing Orders</h1>
-                <div className = "itemsTable">
+                <div className = "itemsTable scrollTableSort">
                     <table>
-                        <tr>
+                        <tr class="headerFixed">
                             <th>Order #</th>
                             <th>Date</th>
                             <th>Status</th>

@@ -64,7 +64,7 @@ export class Manfinancial extends React.Component {
                     <h1 className="tableHeader">Revenues and Expenses</h1>
                     <div className = "itemsTable">
                     <table>
-                        <tr>
+                        <tr class="headerFixed">
                             <th>Item</th>
                             <th>Quantity</th>
                             <th>Production Cost per Unit</th>
