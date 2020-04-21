@@ -47,15 +47,19 @@ export class Docinventory extends React.Component {
                         Inventory
                 </h1>
             </nav>
-            <select id = "range">
-                                    <option disabled selected value = "default">Filter For</option>
-                                    <option value = "time" onChange={e => this.pickFilter(e, "instock")}>In-Stock</option>
-                                    <option value = "date">Other Options</option>
-                    </select>
+            <h1 className="tableHeader">Sort By</h1>
+                <form className="sortBy">
+                    <input type="radio" id="sortNum" name="sort" value="num" onClick={e => this.sortMe(e, "num")}></input>
+                    <label for="sortNum">Order #</label>
+                    <input type="radio" id="sortDate" name="sort" value="date" onClick={e => this.sortMe(e, "date")}></input>
+                    <label for="sortDate">Date</label>
+                    <input type="radio" id="sortStatus" name="sort" value="status" onClick={e => this.sortMe(e, "status")}></input>
+                    <label for="sortStatus">Status</label>
+                </form>
             <h1 className = "tableHeader">All Inventory</h1>
-                <div className = "itemsTable">
+                <div className = "itemsTable scrollTableSort">
                     <table>
-                        <tr>
+                        <tr class="headerFixed">
                             <th>Batch</th>
                             <th>Name (Drug ID)</th>
                             <th>Quantity</th>

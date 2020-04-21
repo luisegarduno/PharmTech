@@ -259,6 +259,22 @@ table {
     margin: .3em;
 }
 
+.sortBy > input {
+    margin-left: 1em;
+}
+
+.scrollTableSort {
+    display: block;
+    height: 30em;
+    max-height: fit-content;
+    overflow-y: scroll;
+}
+
+.headerFixed {
+    position: sticky;
+    top: 0px;
+}
+
 #expDate {
     background: none;
     font-size: x-large;

@@ -76,7 +76,7 @@ export class Mansales extends React.Component {
                 <h1 className = "tableHeader">All Sales</h1>
                 <div className = "itemsTable">
                     <table>
-                        <tr>
+                        <tr class="headerFixed">
                             <th>Item</th>
                             <th>Quantity</th>
                             <th>Unit Price</th>
@@ -92,11 +92,11 @@ export class Mansales extends React.Component {
                         ))}
                     </table>
                 </div>
-                <Link to="maninventory">
-                    <button className = "return" id = "viewInventory">View All Inventory</button>
-                    </Link> 
                 <Link to="/manufacturer">
                     <button className = "return">Return to Homepage</button>
+                    </Link> 
+                <Link to="manfinancial">
+                    <button className = "return" id = "viewInventory">View Financial Info</button>
                     </Link> 
            </div>
         );
