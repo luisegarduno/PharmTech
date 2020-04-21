@@ -12,7 +12,7 @@ export class ManufacturerRepository {
 
     getInventory() {
         return new Promise((resolve, reject) => {
-            axios.get('http://localhost:8000/manufacturerinventory')
+            axios.get('http://localhost:8000/manufacturerorders')
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error
@@ -56,7 +56,7 @@ export class ManufacturerRepository {
 
     getSales() {
         return new Promise((resolve, reject) => {
-            axios.get('http://localhost:8000/manufacturersales')
+            axios.get('http://localhost:8000/manufacturerorders')
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error
@@ -67,7 +67,7 @@ export class ManufacturerRepository {
 
     getFinancials() {
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}`, this.config)
+            axios.get('http://localhost:8000/manufacturerorders')
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error
