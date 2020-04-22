@@ -6,10 +6,10 @@ const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
 
 //mysql connection
 var connection = mysql.createConnection({
-  host: '10.59.43.164',
+  host: 'backend-db',
   port: '3306',
-  user: 'dbgui',
-  password: 'dbgui',
+  user: 'manager',
+  password: 'Password',
   database: 'pharmtech'
 });
 
