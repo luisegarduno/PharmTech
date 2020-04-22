@@ -76,7 +76,7 @@ export class Mansales extends React.Component {
                 <h1 className = "tableHeader">All Sales</h1>
                 <div className = "itemsTable">
                     <table>
-                        <tr>
+                        <tr class="headerFixed">
                             <th>Item</th>
                             <th>Quantity</th>
                             <th>Unit Price</th>
@@ -85,18 +85,18 @@ export class Mansales extends React.Component {
                         {this.state.sales.map(item => (
                             <tr>
                                 <td id="item">{item.name}</td>
-                                <td id="item">{this.formatQuantity(item.dollars)}</td>
-                                <td id="item">${this.formatPrice(item.purchase_price)}</td>
-                                <td id="item">${this.getTotal(item.dollars, item.purchase_price)}</td>
+                                <td id="item">{this.formatQuantity(item.dollars)}/{item.unit_measure}</td>
+                                <td id="item">${this.formatPrice(item.sell_price)}/{item.unit_measure}</td>
+                                <td id="item">${this.getTotal(item.dollars, item.sell_price)}</td>
                             </tr>
                         ))}
                     </table>
                 </div>
-                <Link to="maninventory">
-                    <button className = "return" id = "viewInventory">View All Inventory</button>
-                    </Link> 
                 <Link to="/manufacturer">
                     <button className = "return">Return to Homepage</button>
+                    </Link> 
+                <Link to="manfinancial">
+                    <button className = "return" id = "viewInventory">View Financial Info</button>
                     </Link> 
            </div>
         );

@@ -49,7 +49,7 @@ export class Maninventory extends React.Component {
             <h1 className = "tableHeader">All Inventory</h1>
                 <div className = "itemsTable">
                     <table>
-                        <tr>
+                        <tr class="headerFixed">
                             <th>Name</th>
                             <th>Made On</th>
                             <th>Acq From</th>
@@ -59,7 +59,7 @@ export class Maninventory extends React.Component {
                         {this.state.drugs.map(item => (
                             <tr>
                                 <td id="item">{item.name}</td>
-                                <td id="item">{this.formatDate(item.madeOn)}</td>
+                                <td id="item">{this.formatDate(item.fulfill_date)}</td>
                                 <td id="item">{item.acqFrom}</td>
                                 <td id="item">{item.expired}<form><button onClick = {this.toggleExpired(item)}>Flip Expired</button></form></td>
                                 <td id="item">{item.okToBuy}<form><button onClick = {this.toggleSell(item)}>Flip Ok to Sell</button></form></td>

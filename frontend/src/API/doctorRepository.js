@@ -23,7 +23,7 @@ export class DoctorRepository {
 
     getOrders() {
         return new Promise((resolve, reject) => {
-            axios.get('http://localhost:8000/doctororders')
+            axios.get('http://localhost:8000/manufacturerorders')
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error

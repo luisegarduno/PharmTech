@@ -54,9 +54,9 @@ export class Docorders extends React.Component {
                 </h1>
             </nav>
             <h1 className = "tableHeader">All Incoming Orders</h1>
-                <div className = "itemsTable">
+                <div className = "itemsTable scrollTable">
                     <table>
-                        <tr>
+                        <tr class="headerFixed">
                             <th>Name</th>
                             <th>Ordered On</th>
                             <th>Status</th>
