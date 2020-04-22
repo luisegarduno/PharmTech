@@ -34,7 +34,8 @@ export class PharmManager extends React.Component {
                <div className = "menu">
                     <Link to ="/pharmManager/yourPharmacy"><button type = "button" id = "menuButton">Your<br />Pharmacy</button></Link>
                     <Link to ="/pharmManager/inventory"><button type = "button" id = "menuButton">View<br/>Inventory</button></Link>
-                    <Link to ="/pharmManager/sales"><button type = "button" id = "menuButton">View<br/>Sales</button></Link>               </div>
+                    <Link to ="/pharmManager/sales"><button type = "button" id = "menuButton">View<br/>Sales</button></Link>               
+                </div>
            </div>
         );
     }
