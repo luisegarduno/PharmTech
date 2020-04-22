@@ -44,7 +44,6 @@ class App extends React.Component {
                 <Route exact path="/pharmManager/yourPharmacy" ><YourPharmacy /></Route>
                 <Route exact path="/pharmManager/inventory" ><Inventory /></Route>
                 <Route exact path="/pharmManager/sales" ><Sales /></Route>
-                <Route exact path="/pharmManager/request" ><Request /></Route>
             <Route exact path="/Manufacturer" ><Manufacturer /></Route>
                 <Route exact path="/Manufacturer/mansales" ><Mansales /></Route>
                 <Route exact path="/Manufacturer/maninventory" ><Maninventory /></Route>
