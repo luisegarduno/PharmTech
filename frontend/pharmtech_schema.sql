@@ -66,11 +66,11 @@ INSERT INTO drugs (name, description, sell_price, purchase_price, manu_price, re
 	('Amoxicillin', 'Penicillin antibiotic that fights bacteria. Used to treat many different types of infection caused by bacteria, such as tonsillitis, bronchitis, pneumonia, and infections of the ear, nose, throat, skin, or urinary tract.', 2.50, 1.00, 0.50, 5000, 'mg', 1),
     ('Doxyxycline', 'Tetracycline antibiotic that fights bacteria in the body. Used to treat many different bacterial infections, such as acne, urinary tract infections, intestinal infections, respiratory infections, eye infections, gonorrhea, chlamydia, syphilis, periodontitis (gum disease), and others.', 4.00, 2.50, 1.00, 3000, 'mg', 1),
     ('Cephalexin', 'Cephalosporin antibiotic. It works by fighting bacteria in your body. Used to treat infections caused by bacteria, including upper respiratory infections, ear infections, skin infections, urinary tract infections and bone infections.',3.25, 1.75, 0.75, 2000, 'mg', 1),
-    ('Diazepam', 'Benzodiazepine. Affects chemicals in the brain that may be unbalanced in people with anxiety. Used to treat anxiety disorders, alcohol withdrawal symptoms, or muscle spasms.', 3.00, 2.00, 4000, 'mg', 2),
-    ('Alprazolam', 'Benzodiazepine. Affects chemicals in the brain that may be unbalanced in people with anxiety. Used to treat anxiety disorders, alcohol withdrawal symptoms, or muscle spasms.',2.75, 1.10, 4000, 'mg', 2),
+    ('Diazepam', 'Benzodiazepine. Affects chemicals in the brain that may be unbalanced in people with anxiety. Used to treat anxiety disorders, alcohol withdrawal symptoms, or muscle spasms.', 3.00, 2.00, 1.00, 4000, 'mg', 2),
+    ('Alprazolam', 'Benzodiazepine. Affects chemicals in the brain that may be unbalanced in people with anxiety. Used to treat anxiety disorders, alcohol withdrawal symptoms, or muscle spasms.',2.75, 1.10, 0.75, 4000, 'mg', 2),
     ('Clonazepam', 'Benzodiazepine. Affects chemicals in the brain that may be unbalanced to treat seizures and certain types of anxiety disorders. Type of anti-epileptic drug. Used to treat certain seizure disorders (including absence seizures or Lennox-Gastaut syndrome) in adults and children.', 4.00, 2.90, 1.50, 2000, 'mg', 2),
     ('Aspirin', 'Salicylate. Reduces substances in the body that cause pain, fever, and inflammation. Used to treat pain, and reduce fever or inflammation. It is sometimes used to treat or prevent heart attacks, strokes, and chest pain (angina).',2.00, 0.90, 0.25, 6000, 'mg', 3),
-    ('Acetaminophen', 'Pain reliever and a fever reducer. Used to treat mild to moderate and pain, to treat moderate to severe pain in conjunction with opiates, or to reduce fever. ',1.80, .50, 4000, 'tablets', 3),
+    ('Acetaminophen', 'Pain reliever and a fever reducer. Used to treat mild to moderate and pain, to treat moderate to severe pain in conjunction with opiates, or to reduce fever. ',1.80, .50, 0.10 ,4000, 'tablets', 3),
     ('Ibuprofen', 'Nonsteroidal anti-inflammatory drug. Reduces hormones that cause inflammation and pain in the body. Used to reduce fever and treat pain or inflammation caused by many conditions such as headache, toothache, back pain, arthritis, menstrual cramps, or minor injury.', 1.90, 0.80, 0.30, 6000, 'mg', 3),
     ('Naproxen', 'Nonsteroidal anti-inflammatory drug. Reduces hormones that cause inflammation and pain in the body. Used to treat pain or inflammation caused by conditions such as arthritis, ankylosing spondylitis, tendinitis, bursitis, gout, or menstrual cramps.', 1.50, 0.50, 0.10, 6000, 'ml', 4),
     ('Diclofenac', 'Nonsteroidal anti-inflammatory drug. Reduces substances in the body that cause pain and inflammation. Used to treat mild to moderate pain, or signs and symptoms of osteoarthritis or rheumatoid arthritis. ', 2.30, 1.40, 1.00, 5000, 'mg', 4),
@@ -107,8 +107,8 @@ INSERT INTO inventory (drug_id, quantity, exp_date) VALUES
     (2, 500, '2019-03-31'),
     (11, 25, '202-03-31');
 
-DROP TABLE IF EXISTS perscriptions;
-CREATE TABLE perscriptions(
+DROP TABLE IF EXISTS prescriptions;
+CREATE TABLE prescriptions(
 	id INT AUTO_INCREMENT,
     patient_id INT NOT NULL,
     drug_id INT NOT NULL,
@@ -128,7 +128,7 @@ CREATE TABLE perscriptions(
         ON UPDATE CASCADE
 );
 
-INSERT INTO perscriptions (patient_id, drug_id, quantity, fill_date, create_date, doctor_id) VALUES
+INSERT INTO prescriptions (patient_id, drug_id, quantity, fill_date, create_date, doctor_id) VALUES
 	(6, 3, 100, '2019-01-20', '2018-10-23', 3),
     (7, 10, 120, null, '2020-03-31', 4),
     (8, 6, 50, '2020-03-21', '2020-03-20', 3),
