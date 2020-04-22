@@ -2,8 +2,11 @@ import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 import { PharmManagerRepository } from "../../API";
+import CartService from "./cartService";
 
 export class CartInventory extends React.Component {
+
+    cartService = new CartService();
 
     pharmManagerRepository = new PharmManagerRepository();
 
@@ -14,12 +17,14 @@ export class CartInventory extends React.Component {
     }
 
     drugs = [{
+        "id" : 1,
         "name": "Symbyzide Parodafinil",
         "cost": 6,
         "units": 10,
         "expire" : "2/5/20"
     },
     {
+        "id" : 2,
         "name": "Ibuprofen",
         "cost": 8,
         "units": 11,
@@ -50,9 +55,9 @@ export class CartInventory extends React.Component {
                             <th>Cost Per Unit</th>
                         </tr>
                             {this.drugs.map(item => (
-                                <tr>
+                                <tr key = {item.id}>
                                   <td id = "item">{item.name}
-                                  <Link to="/pharmManager/cart"><button type = "button" id = "swap" onClick={ () => this.onSubmit(item.name) }>Select</button></Link>
+                                  <Link to="/pharmManager/cart"><button type = "button" id = "swap" onClick = {e => this.cartService.addToCart(item)}>Select</button></Link>
                                   </td>
                                     <td id = "item">${item.cost}</td>
                                 </tr>
@@ -69,7 +74,7 @@ export class CartInventory extends React.Component {
         );    
     }
     componentDidMount() {
-        this.pharmManagerRepository.getCart()
+        this.pharmManagerRepository.getInventory()
             .then(drugs => this.setState({ drugs }));
     }
 }

@@ -2,10 +2,12 @@ import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 import { PharmManagerRepository } from "../../API";
+import CartService from "./cartService";
 
 
 export class ViewCart extends React.Component {
 
+    cartService = new CartService();
     pharmManagerRepository = new PharmManagerRepository();
     username;
 
@@ -13,6 +15,7 @@ export class ViewCart extends React.Component {
         super(props);
         this.username = localStorage['username']
         this.state = {
+            cart: this.cartService.getCart(),
             total: 0,
             drugs: [{
                 "name": "Symbyzide Parodafinil",
@@ -57,13 +60,13 @@ export class ViewCart extends React.Component {
                             <th>Quantity</th>
                             <th>Subtotal</th>
                         </tr>
-                            {this.state.drugs.map(item => (
-                                <tr>
-                                  <td id = "item">{item.name}
+                            {this.state.cart.items.map(item => (
+                                <tr key = {item.product.id}>
+                                  <td id = "item">{item.product.name}
                                   <Link to="cart/inventory"><button type = "button" id = "swap">Swap</button></Link>
                                   </td>
                                   <td id = "item">
-                                <select id = "quantity" onChange={this.findQuantity(item.name)}>
+                                <select id = "quantity">
                                     <option value = "1">1</option>
                                     <option value = "2">2</option>
                                     <option value = "3">3</option>
@@ -74,7 +77,7 @@ export class ViewCart extends React.Component {
                                     <option value = "8">8</option>
                                     <option value = "9">9</option>
                                 </select>
-                                    <button type = "button" id = "delete">Delete</button>
+                                    <button type = "button" id = "delete" onClick = {e => this.cartService.removeItem(item.product.id)}>Delete</button>
                                     </td>
 
                                     <td id = "item">${item.cost}</td>
@@ -87,7 +90,7 @@ export class ViewCart extends React.Component {
                                 </div>
                             </td>
                             <td colSpan = "2"> 
-                            <h3 id = "total">Total: ${this.state.total}</h3> <br/>
+                            <h3 id = "total">Total: ${this.state.cart.total}</h3> <br/>
                             </td>
                         </tr>
                         <tr>
