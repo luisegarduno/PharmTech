@@ -13,6 +13,7 @@
     "bootstrap-table": "^1.16.0",
     "express": "^4.17.1",
     "jquery": "^3.5.0",
+    "lodash": "^4.17.15",
     "mdbreact": "^4.25.5",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",

@@ -2,6 +2,7 @@ import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 import { PharmManagerRepository } from "../../API";
+import _ from 'lodash';
 
 export class Inventory extends React.Component {
 
@@ -12,16 +13,47 @@ export class Inventory extends React.Component {
         super(props);
         this.username = localStorage['username']
         this.state = {
-            drugs: []
+            sortDirection : 'desc',
+            drugs : [{
+                "id" : 1,
+                "name": "Symbyzide Parodafinil",
+                "sell_price": 6,
+                "quantity": 10,
+                "exp_date" : "2021-5-20"
+            },
+            {
+                "id" : 2,
+                "name": "Ibuprofen",
+                "sell_price": 8,
+                "quantity": 11,
+                "exp_date" : "2021-5-19"
+            },
+            {
+                "id" : 3,
+                "name": "test",
+                "sell_price": 12,
+                "quantity": 10,
+                "exp_date" : "2019-10-5"
+            },
+            ]
         }
     }
 
 
-    onSort(event, sortKey){
-        const drugs = this.drugs;
-        drugs.sort((a,b) => a[sortKey].localeCompare(b[sortKey]))
-        this.setState({drugs})
-      }
+    sortBy(field) {        
+        if (this.state.sortDirection == 'asc') {
+            this.setState({sortDirection: 'desc'})
+            this.setState({ 
+                drugs: _.orderBy(this.state.drugs, field, this.state.sortDirection) 
+            });
+        }
+        if (this.state.sortDirection == 'desc') {
+            this.setState({sortDirection: 'asc'})
+            this.setState({ 
+                drugs: _.orderBy(this.state.drugs, field, this.state.sortDirection) 
+            });
+        }
+    }
 
     render() {
         return (
@@ -37,10 +69,10 @@ export class Inventory extends React.Component {
                 <div className = "itemsTable">
                     <table>
                         <tr>
-                        <th><button type = "button" id = "expDate">Item Name</button></th>
-                            <th><button type = "button" id = "expDate">Units</button></th>
-                            <th><button type = "button" id = "expDate" onClick={e => this.onSort(e, "sell_price")}>Cost per Unit</button></th>
-                            <th><button type = "button" id = "expDate">Expiration Date</button></th>
+                        <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'name')}>Item Name</button></th>
+                            <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'quantity')}>Units</button></th>
+                            <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'sell_price')}>Cost per Unit</button></th>
+                            <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'exp_date')}>Expiration Date</button></th>
                         </tr>
                             {this.state.drugs.map(item => (
                                 <tr>
@@ -63,8 +95,8 @@ export class Inventory extends React.Component {
         );
     }
 
-    componentDidMount() {
-        this.pharmManagerRepository.getInventory()
-            .then(drugs => this.setState({ drugs }));
-    }
+    // componentDidMount() {
+    //     this.pharmManagerRepository.getInventory()
+    //         .then(drugs => this.setState({ drugs }));
+    // }
 }

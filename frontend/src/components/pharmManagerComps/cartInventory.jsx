@@ -73,8 +73,8 @@ export class CartInventory extends React.Component {
            </div>
         );    
     }
-    componentDidMount() {
-        this.pharmManagerRepository.getInventory()
-            .then(drugs => this.setState({ drugs }));
-    }
+    // componentDidMount() {
+    //     this.pharmManagerRepository.getInventory()
+    //         .then(drugs => this.setState({ drugs }));
+    // }
 }

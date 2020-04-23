@@ -11,6 +11,7 @@ export class ViewCart extends React.Component {
     pharmManagerRepository = new PharmManagerRepository();
     username;
 
+
     constructor(props) {
         super(props);
         this.username = localStorage['username']
@@ -29,18 +30,15 @@ export class ViewCart extends React.Component {
             },
             ]
         }
-        this.findTotal = this.findTotal.bind(this);
-        this.findQuantity = this.findQuantity.bind(this);
     }
 
-    findTotal(e, total) {
-        this.setState({total: this.state.total});
-    }
-    findQuantity(e, itemName) {
-        var value = e.target.value;
-        var drug = this.state.drugs.find(drug => drug.name == itemName);
-        this.setState({quantity: value});
-    }
+
+    onDelete(ID) {
+        var index = ID
+        if (index !== -1) {
+          this.setState({cart: this.state.cart.splice(index, 1)});
+        }
+      }
 
     render() {
         return (    
@@ -60,8 +58,8 @@ export class ViewCart extends React.Component {
                             <th>Quantity</th>
                             <th>Subtotal</th>
                         </tr>
-                            {this.state.cart.items.map(item => (
-                                <tr key = {item.product.id}>
+                            {this.state.cart.items.map(({item, index}) => (
+                                <tr key = {item.product.id} value={item}>
                                   <td id = "item">{item.product.name}
                                   <Link to="cart/inventory"><button type = "button" id = "swap">Swap</button></Link>
                                   </td>
@@ -77,7 +75,7 @@ export class ViewCart extends React.Component {
                                     <option value = "8">8</option>
                                     <option value = "9">9</option>
                                 </select>
-                                    <button type = "button" id = "delete" onClick = {e => this.cartService.removeItem(item.product.id)}>Delete</button>
+                                    <button type = "button" id = "delete" onClick={ () => this.onDelete(item.product.id) }>Delete</button>
                                     </td>
 
                                     <td id = "item">${item.cost}</td>
