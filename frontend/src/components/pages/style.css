@@ -72,7 +72,7 @@ nav {
 
 
 #menuButton:hover {
-    background-color: #4a64a8;
+    background-color: rgb(74,100,168, 0.8);
 }
 
 /*specfic buttons for manufacturer dashboard*/

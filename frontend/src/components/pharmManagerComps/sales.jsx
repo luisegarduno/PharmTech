@@ -105,7 +105,7 @@ export class Sales extends React.Component {
                         </tr>
                     </table>
                 </div>
-                    <input type = "text" placeholder="Search for a drug..." id ="range" className = "searchBar" onChange={this.findDrug}></input>
+                    <input type = "text" placeholder="Search for a drug..." id ="range" className = "searchBar" autoCorrect={true} onChange={this.findDrug}></input>
                     <div className = "itemsTable">
                         <table>
                         {(() => {

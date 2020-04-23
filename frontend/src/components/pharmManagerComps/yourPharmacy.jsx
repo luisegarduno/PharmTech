@@ -23,12 +23,12 @@ export class YourPharmacy extends React.Component {
                 </h1>
                 </nav>
                 <div className = "financeInfo">
-                    <h1>Revenues
+                    <h1 className = "tableHeader">Revenues
                     <select id = "range">
                                     <option value = "0">Specify date range...</option>
                     </select>
                     </h1>
-                    <h1>Expenses
+                    <h1 className = "tableHeader">Expenses
                     <select id = "range">
                                     <option value = "0">Specify date range...</option>
                     </select>
