@@ -96,6 +96,7 @@ nav {
 
 #manMenuButton:hover {
     background-color: #4a64a8;
+    background-color: rgb(74,100,168, 0.8);
 }
 
 /*formatting for the view cart page of pharmacy manager*/
