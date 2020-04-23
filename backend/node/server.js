@@ -6,11 +6,7 @@ const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
 
 //mysql connection
 var connection = mysql.createConnection({
-<<<<<<< HEAD
   host: 'backend-db',
-=======
-  host: '34.68.28.176',
->>>>>>> c25105ee913d57679fd1f173a69cd6a4d8146acf
   port: '3306',
   user: 'manager',
   password: 'Password',
