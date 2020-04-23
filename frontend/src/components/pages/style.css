@@ -112,7 +112,7 @@ nav {
 .itemsTable {
     background-color: rgb(206, 207, 207, 0.7);
     margin: 1em;
-    text-align: center;
+    text-align: left;
 }
 
 .itemsTable table, th, #item{
@@ -287,4 +287,10 @@ table {
 
 #expDate:hover {
     text-decoration: underline;
+}
+
+.searchBar {
+    border-radius: .3em;
+    height: 2em;
+    font-size: xx-large;
 }

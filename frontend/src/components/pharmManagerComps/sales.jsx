@@ -1,6 +1,7 @@
 import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
+import _ from 'lodash';
 
 export class Sales extends React.Component {
 
@@ -9,6 +10,54 @@ export class Sales extends React.Component {
     constructor(props) {
         super(props);
         this.username = localStorage['username']
+        this.findDrug = this.findDrug.bind(this);
+    }
+
+    findDrug(e) {
+        this.setState({ selectedDrug: e.target.value });
+    }
+
+    state = {
+        sortDirection : 'desc',
+        selectedDrug: 'none',
+        sales: [
+            {
+                "id" : 1,
+                "name": "Symbyzide Parodafinil",
+                "sold_units": 10,
+                "sell_price": 7,
+                "total_price": 0
+            },
+            {
+                "id" : 2,
+                "name": "Ibuprofen",
+                "sold_units": 18,
+                "sell_price": 4,
+                "total_price": 0
+            },
+            {
+                "id" : 3,
+                "name": "Cephalexin",
+                "sold_units": 24,
+                "sell_price": 12,
+                "total_price": 0
+            },
+        ]
+    }
+
+    sortBy(field) {        
+        if (this.state.sortDirection == 'asc') {
+            this.setState({sortDirection: 'desc'})
+            this.setState({ 
+                sales: _.orderBy(this.state.sales, field, this.state.sortDirection) 
+            });
+        }
+        if (this.state.sortDirection == 'desc') {
+            this.setState({sortDirection: 'asc'})
+            this.setState({ 
+                sales: _.orderBy(this.state.sales, field, this.state.sortDirection) 
+            });
+        }
     }
 
     render() {
@@ -26,11 +75,23 @@ export class Sales extends React.Component {
                 <div className = "itemsTable">
                     <table>
                         <tr>
-                            <th>Item</th>
-                            <th>Units Sold</th>
-                            <th>Cost Per Unit</th>
+                            <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'name')}>Item</button></th>
+                            <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'sold_units')}>Units Sold</button></th>
+                            <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'sell_price')}>Cost Per Unit</button></th>
                             <th>Total Price</th>
                         </tr>
+                        {this.state.sales.map(item => (
+                                <tr>
+                                  <td id = "item">{item.name}
+                                  </td>
+                                  <td id = "item">
+                                      {item.sold_units}
+                                    </td>
+
+                                    <td id = "item">${item.sell_price}</td>
+                                    <td id = "item">${item.sold_units * item.sell_price}</td>
+                                </tr>
+                            ))}
                     </table>
                 </div>
                 <h1 className = "tableHeader">All Sales</h1>
@@ -44,12 +105,39 @@ export class Sales extends React.Component {
                         </tr>
                     </table>
                 </div>
-                <h1 className = "tableHeader">Search
-                <select id = "range">
-                                    <option value = "0">Specify drug...</option>
-                                    //once we have data we need to make a table here 
-                                    //this table will show specific information about each drug
-                    </select></h1>
+                    <input type = "text" placeholder="Search for a drug..." id ="range" className = "searchBar" onChange={this.findDrug}></input>
+                    <div className = "itemsTable">
+                        <table>
+                        {(() => {
+                            if (this.state.selectedDrug != "none" && this.state.selectedDrug != "Specify drug..." && this.state.selectedDrug != 0) {
+                                    return (
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Units Sold</th>
+                                            <th>Cost Per Unit</th>
+                                            <th>Total Price</th>
+                                        </tr>
+                                    )
+                                }
+                        })()}
+                        {this.state.sales.map(item => (
+                            <tr>
+                                        {(() => {
+                                            if (this.state.selectedDrug.length > 0 && item.name.toLowerCase().includes(this.state.selectedDrug.toLowerCase())) {
+                                                return (
+                                                    <>
+                                                    <td id = "item">{item.name}</td>
+                                                    <td id = "item">{item.sold_units}</td>
+                                                    <td id = "item">${item.sell_price}</td>
+                                                    <td id = "item">${item.sold_units * item.sell_price}</td>
+                                                    </>
+                                                )
+                                            }
+                                        })()}
+                            </tr>
+                         ))}
+                        </table>
+                    </div>
                 <Link to="inventory">
                     <button className = "return" id = "viewInventory">View All Inventory</button>
                     </Link> 

@@ -17,6 +17,7 @@
     "mdbreact": "^4.25.5",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
+    "react-autocomplete": "^1.8.1",
     "react-bootstrap-table": "^4.3.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",

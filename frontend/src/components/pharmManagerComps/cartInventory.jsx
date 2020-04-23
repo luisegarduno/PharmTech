@@ -3,6 +3,7 @@ import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 import { PharmManagerRepository } from "../../API";
 import CartService from "./cartService";
+import Autocomplete from './Autocomplete';
 
 export class CartInventory extends React.Component {
 
