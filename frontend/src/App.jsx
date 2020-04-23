@@ -33,6 +33,7 @@ class App extends React.Component {
     render () {
       return (
         <div className = "background">
+        <div className = "layer">
         <Router>
           <Switch>
             <Route exact path="/" ><Login /></Route>
@@ -61,6 +62,7 @@ class App extends React.Component {
                 <Route exact path="/doctor/docinventory" ><Docinventory /></Route>
           </Switch>
         </Router>
+        </div>
         </div>
       )
     }
