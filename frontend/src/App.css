@@ -29,6 +29,7 @@
 }
 /*./components/pages/141990.jpg */
 .background {
+  font-family: 'Raleway', sans-serif;
   background-image: url(./images/background.jpg);
   height: 130%; 
   background-position: center;
