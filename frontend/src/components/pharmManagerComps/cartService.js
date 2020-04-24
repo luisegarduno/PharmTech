@@ -8,7 +8,7 @@ export class CartService {
 
     addToCart(product) {
         let cart = window.cart || new Cart();
-        let existing = cart.items.find(x => x.product.id == product.id);
+        let existing = cart.items.find(x => x.product.id === product.id);
         if (existing) {
             existing.quantity += 1;
             existing.cost = existing.product.cost * existing.quantity;
@@ -23,7 +23,7 @@ export class CartService {
     removeItem(id) {
         let cart = window.cart
             for(var i = 0; i < cart.length; i++) {
-            if(cart[i].id == id) {
+            if(cart[i].id === id) {
                 cart.splice(i, 1);
             }
         }

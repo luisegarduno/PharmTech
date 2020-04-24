@@ -15,7 +15,7 @@ import { PharmacistIn } from './components/pharmacistComps';
 import { PCart } from './components/pharmacistComps'
 import { Doctor } from './components/pages/doctor';
 import { ViewCart } from './components/pharmManagerComps/viewCart';
-import { YourPharmacy, Inventory, Sales, Request, CartInventory } from './components/pharmManagerComps';
+import { YourPharmacy, Inventory, Sales, CartInventory } from './components/pharmManagerComps';
 import { Mansales, Maninventory, Manorders, Manfinancial } from './components/manufacturerComps';
 import { Docorders, Docinventory } from './components/doctorComps';
 

@@ -2,6 +2,7 @@ import React from "react";
 import Logo from "../../images/pharmtechblue.png";
 import Logo2 from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
+import { sha256, sha224 } from 'js-sha256';
 
 export class Login extends React.Component {
 
@@ -15,6 +16,7 @@ export class Login extends React.Component {
         this.findLoginType = this.findLoginType.bind(this);
         this.getUsername = this.getUsername.bind(this);
         this.getPassword = this.getPassword.bind(this);
+        this.onLogin = this.onLogin.bind(this)
     }
     findLoginType(e) {
         this.setState({ loginType: e.target.value });
@@ -22,12 +24,17 @@ export class Login extends React.Component {
     getUsername(e) {
         var value = e.target.value;
         this.setState({username: value});
-        localStorage.setItem('username', this.state.username);
     }
 
     getPassword(e) {
         var value = e.target.value;
         this.setState({password: value});
+    }
+
+    onLogin() {
+        localStorage.setItem('username', this.state.username);
+        let password = this.state.password
+        password = sha256(password);
     }
 
     render() {
@@ -70,30 +77,22 @@ export class Login extends React.Component {
                         {(() => {
                         if (this.state.loginType === "pharmManager" && this.state.username) {
                             return (
-                                <Link to={{pathname:"/pharmManager",
-                                params: {username: this.state.username}
-                                }}><button type = "button" className="button">Login</button></Link>
+                                <Link to={"/pharmManager"}><button type = "button" className="button" onClick ={this.onLogin}>Login</button></Link>
                             )
                         }
                         else if (this.state.loginType === "Manufacturer" && this.state.username) {
                             return (
-                                <Link to={{pathname:"/Manufacturer",
-                                params: {username: this.state.username},
-                                hash: this.state.username,}}><button type = "button" className="button">Login</button></Link>
+                                <Link to={"/Manufacturer"}><button type = "button" className="button" onClick ={this.onLogin}>Login</button></Link>
                             )
                         }
                         else if (this.state.loginType === "Pharmacist" && this.state.username) {
                             return (
-                                <Link to={{pathname:"/Pharmacist",
-                                params: {username: this.state.username},
-                                hash: this.state.username,}}><button type = "button" className="button">Login</button></Link>
+                                <Link to={"/Pharmacist"}><button type = "button" className="button" onClick ={this.onLogin}>Login</button></Link>
                             )
                         }  
                         else if (this.state.loginType === "Doctor" && this.state.username) {
                             return (
-                                <Link to={{pathname:"/Doctor",
-                                params: {username: this.state.username},
-                                hash: this.state.username,}}><button type = "button" className="button">Login</button></Link>
+                                <Link to={"/Doctor"}><button type = "button" className="button" onClick ={this.onLogin}>Login</button></Link>
                             )
                         }
                         })()}

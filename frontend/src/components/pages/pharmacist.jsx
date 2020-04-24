@@ -18,7 +18,7 @@ export class Pharmacist extends React.Component {
 
     render(){
         function LimitList(input) {  // Set the number of notifications that needs to be displayed. EX: If the bound is 3, it will only show three newest notifications. 
-            var ret = new Array;
+            var ret = new Array();
             if(input.length <= 3){
                 ret = input;
             }

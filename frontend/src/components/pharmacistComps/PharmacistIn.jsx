@@ -26,7 +26,7 @@ export class PharmacistIn extends React.Component {
 
     colorforunit(quantity){
         var color = '';
-        if(quantity == 0){
+        if(quantity === 0){
             color = 'red'
         }
         else if(quantity > 0 && quantity <= 500){

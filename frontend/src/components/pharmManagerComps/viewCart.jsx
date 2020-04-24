@@ -33,7 +33,7 @@ export class ViewCart extends React.Component {
     }
 
 
-    onDelete(ID) {
+    onDelete(i) {
         var index = ID
         if (index !== -1) {
           this.setState({cart: this.state.cart.splice(index, 1)});
@@ -58,7 +58,7 @@ export class ViewCart extends React.Component {
                             <th>Quantity</th>
                             <th>Subtotal</th>
                         </tr>
-                            {this.state.cart.items.map(({item, index}) => (
+                            {this.state.cart.items.map((item, index) => (
                                 <tr key = {item.product.id} value={item}>
                                   <td id = "item">{item.product.name}
                                   <Link to="cart/inventory"><button type = "button" id = "swap">Swap</button></Link>
@@ -75,7 +75,7 @@ export class ViewCart extends React.Component {
                                     <option value = "8">8</option>
                                     <option value = "9">9</option>
                                 </select>
-                                    <button type = "button" id = "delete" onClick={ () => this.onDelete(item.product.id) }>Delete</button>
+                                    <button type = "button" id = "delete" onClick={ () => this.onDelete(index) }>Delete</button>
                                     </td>
 
                                     <td id = "item">${item.cost}</td>
