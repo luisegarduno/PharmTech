@@ -174,23 +174,25 @@ CREATE TABLE manufacturer_inventory(
     drug_id INT NOT NULL,    
     quantity INT NOT NULL,
     exp_date DATE NOT NULL,
+    expired BOOLEAN,
+    ok_to_sell BOOLEAN,
     PRIMARY KEY (batch_id),
     FOREIGN KEY (drug_id)
 		REFERENCES drugs(id)
         ON UPDATE CASCADE
 );
 
-INSERT INTO manufacturer_inventory (drug_id, quantity, exp_date) VALUES
-	(1, 12000, '2020-09-20'),
-    (2, 10000, '2021-10-30'),
-    (3, 95000, '2019-06-28'),
-    (12, 8000, '2022-01-20'),
-    (8, 15000, '2023-04-09'),
-    (10, 13000, '2019-05-10'),
-    (7, 20000, '2019-04-29'),
-    (4, 17080, '2020-03-16'),
-    (5, 12976, '2021-02-13'),
-    (6, 13732,'2023-12-15'),
-    (11, 10204, '2020-12-31'),
-    (9, 11701, '2024-01-20');
+INSERT INTO manufacturer_inventory (drug_id, quantity, exp_date, expired, ok_to_sell) VALUES
+	(1, 12000, '2020-09-20', false, true),
+    (2, 10000, '2021-10-30', false, true),
+    (3, 95000, '2019-06-28', true, false),
+    (12, 8000, '2022-01-20', false, true),
+    (8, 15000, '2023-04-09', false, true),
+    (10, 13000, '2019-05-10', true, false),
+    (7, 20000, '2019-04-29', true, false),
+    (4, 17080, '2020-03-16', true, false),
+    (5, 12976, '2021-02-13', false, true),
+    (6, 13732,'2023-12-15', false, true),
+    (11, 10204, '2020-12-31', false, true),
+    (9, 11701, '2024-01-20', false, true);
     
