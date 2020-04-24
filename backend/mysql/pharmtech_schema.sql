@@ -17,7 +17,7 @@ CREATE TABLE user(
 	id INT AUTO_INCREMENT,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
-    password VARCHAR(100),
+    username VARCHAR(100),
     hashpass VARCHAR(500),
     email VARCHAR(500),
     userType_id INT NOT NULL,
@@ -27,15 +27,15 @@ CREATE TABLE user(
         ON UPDATE CASCADE
 );
 
-INSERT INTO user (first_name, last_name, password, hashpass, email, userType_id) VALUES 
-	('Jane', 'Doe', 'Password123', '008c70392e3abfbd0fa47bbc2ed96aa99bd49e159727fcba0f2e6abeb3a9d601', 'jdoe@pharmtech.com', 1),
-    ('John', 'Smith', '123Password', '78e1ff0deb8d9b3cbaa934b8f1773cd117edea714dcab0e62109233a3e36293b', 'jadoe@pharmtech.com', 2),
-    ('Sarah', 'Jones', '_asdf_123', '1ea99aec6fa7ed38356ecab95920f8bf92c8cbc1d45591ecebe574bcf30b56af', 'svega@pharmtech.com', 3),
-    ('Sam', 'Free', 'pass_doctor987', 'bdb5d62282c2c5761a3a15cd5968429dd37f4920751e55aaf5a01a04e3211d45', 'sfree@pharmtech.com', 3),
-    ('Will', 'Vega', '0123&passcode', 'eba60cfdde3b1564fa26e6930b953bcf5b8900880d81519122529c51477ac063', 'wvega@pharmtech.com', 4),
-    ('Emily', 'Smith', null, null, 5),
-    ('Ryan', 'Jones', null, null, 5),
-    ('Leslie', 'Wan', null, null, 5);
+INSERT INTO user (first_name, last_name, username, hashpass, email, userType_id) VALUES 
+	('Jane', 'Doe', 'JDoe', '008c70392e3abfbd0fa47bbc2ed96aa99bd49e159727fcba0f2e6abeb3a9d601', 'jdoe@pharmtech.com', 1),
+    ('John', 'Smith', 'JSmith', '78e1ff0deb8d9b3cbaa934b8f1773cd117edea714dcab0e62109233a3e36293b', 'jadoe@pharmtech.com', 2),
+    ('Sarah', 'Jones', 'SJones', '1ea99aec6fa7ed38356ecab95920f8bf92c8cbc1d45591ecebe574bcf30b56af', 'svega@pharmtech.com', 3),
+    ('Sam', 'Free', 'SFree', 'bdb5d62282c2c5761a3a15cd5968429dd37f4920751e55aaf5a01a04e3211d45', 'sfree@pharmtech.com', 3),
+    ('Will', 'Vega', 'WVega', 'eba60cfdde3b1564fa26e6930b953bcf5b8900880d81519122529c51477ac063', 'wvega@pharmtech.com', 4),
+    ('Emily', 'Smith', 'ESmith', null, null, 5),
+    ('Ryan', 'Jones', 'RJones', null, null, 5),
+    ('Leslie', 'Wan', null, null, null, 5);
 
 DROP TABLE IF EXISTS drug_types;
 CREATE TABLE drug_types(
@@ -177,23 +177,24 @@ CREATE TABLE manufacturer_inventory(
     exp_date DATE NOT NULL,
     expired BOOLEAN,
     ok_to_sell BOOLEAN,
+    aquired_from VARCHAR(50),
     PRIMARY KEY (batch_id),
     FOREIGN KEY (drug_id)
 		REFERENCES drugs(id)
         ON UPDATE CASCADE
 );
 
-INSERT INTO manufacturer_inventory (drug_id, quantity, exp_date, expired, ok_to_sell) VALUES
-	(1, 12000, '2020-09-20', false, true),
-    (2, 10000, '2021-10-30', false, true),
-    (3, 95000, '2019-06-28', true, false),
-    (12, 8000, '2022-01-20', false, true),
-    (8, 15000, '2023-04-09', false, true),
-    (10, 13000, '2019-05-10', true, false),
-    (7, 20000, '2019-04-29', true, false),
-    (4, 17080, '2020-03-16', true, false),
-    (5, 12976, '2021-02-13', false, true),
-    (6, 13732,'2023-12-15', false, true),
-    (11, 10204, '2020-12-31', false, true),
-    (9, 11701, '2024-01-20', false, true);
+INSERT INTO manufacturer_inventory (drug_id, quantity, exp_date, expired, ok_to_sell, aquired_from) VALUES
+	(1, 12000, '2020-09-20', false, true, 'China'),
+    (2, 10000, '2021-10-30', false, true,'China'),
+    (3, 95000, '2019-06-28', true, false, 'Germany'),
+    (12, 8000, '2022-01-20', false, true, 'China'),
+    (8, 15000, '2023-04-09', false, true, 'Boston'),
+    (10, 13000, '2019-05-10', true, false, 'China'),
+    (7, 20000, '2019-04-29', true, false, 'Germany'),
+    (4, 17080, '2020-03-16', true, false, 'China'),
+    (5, 12976, '2021-02-13', false, true, 'China'),
+    (6, 13732,'2023-12-15', false, true, 'Minneapolis'),
+    (11, 10204, '2020-12-31', false, true, 'China'),
+    (9, 11701, '2024-01-20', false, true, 'South Africa');
     
