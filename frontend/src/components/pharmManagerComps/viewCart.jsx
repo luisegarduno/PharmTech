@@ -3,6 +3,7 @@ import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 import { PharmManagerRepository } from "../../API";
 import CartService from "./cartService";
+import _ from 'lodash';
 
 
 export class ViewCart extends React.Component {
@@ -30,15 +31,39 @@ export class ViewCart extends React.Component {
             },
             ]
         }
+        this.onDelete = this.onDelete.bind(this);
+        this.findQuantity = this.findQuantity.bind(this);
+        this.submitOrder = this.submitOrder.bind(this)
     }
 
+    findQuantity(e, i) {
+        var newCart = this.state.cart
+        var quantity = parseInt(e.target.value)
+        newCart.items[i].quantity = quantity;
+        newCart.items[i].cost = quantity * newCart.items[i].cost
+        newCart.total = newCart.items.map(x => x.cost).reduce((x, y) => x + y);
+        this.setState({cart: newCart})
+    }
 
     onDelete(i) {
-        var index = ID
-        if (index !== -1) {
-          this.setState({cart: this.state.cart.splice(index, 1)});
+        var newCart = this.state.cart
+        newCart.items.splice(i, 1)
+        if(newCart.items.length === 0) {
+            newCart.total = 0;
         }
-      }
+        else {
+            newCart.total = newCart.items.map(x => x.cost).reduce((x, y) => x + y);
+        }
+        this.setState({cart: newCart})
+    }
+
+    submitOrder() {
+        var newCart = this.state.cart
+        newCart.items.splice(0, newCart.items.length)
+        newCart.total = 0;
+        this.setState({cart: newCart})
+        alert("Thank you for your order!")
+    }
 
     render() {
         return (    
@@ -53,6 +78,7 @@ export class ViewCart extends React.Component {
                 </nav>
                 <div className = "itemsTable">
                     <table>
+                        <tbody>
                         <tr>
                             <th>Item</th>
                             <th>Quantity</th>
@@ -61,10 +87,11 @@ export class ViewCart extends React.Component {
                             {this.state.cart.items.map((item, index) => (
                                 <tr key = {item.product.id} value={item}>
                                   <td id = "item">{item.product.name}
-                                  <Link to="cart/inventory"><button type = "button" id = "swap">Swap</button></Link>
+                                  <Link to="cart/inventory"><button type = "button" id = "swap" onClick={ () => this.onDelete(index) }>Swap</button></Link>
                                   </td>
                                   <td id = "item">
-                                <select id = "quantity">
+                                <select id = "quantity" placeholder={item.quantity} onChange={(e) => {this.findQuantity(e, index)}}>
+                                    <option value = "default" selected disabled>{item.quantity}</option>
                                     <option value = "1">1</option>
                                     <option value = "2">2</option>
                                     <option value = "3">3</option>
@@ -94,10 +121,11 @@ export class ViewCart extends React.Component {
                         <tr>
                             <td colSpan = "3">
                                 <div className = "extraButtons">
-                                    <button type = "button" className = "placeOrder">Place Order</button>
+                                    <button type = "button" className = "placeOrder" onClick={ () => this.submitOrder() }>Place Order</button>
                                 </div>
                             </td>
                         </tr>
+                        </tbody>
                     </table>
                 </div>
                 <Link to="/pharmManager">
