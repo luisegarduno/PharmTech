@@ -12,7 +12,7 @@ export class ManufacturerRepository {
 
     getInventory() {
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}/manufacturerinventory`, this.config)
+            axios.get(`${this.url}/manuInventory`, this.config)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error
@@ -56,7 +56,7 @@ export class ManufacturerRepository {
 
     getSales() {
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}/manufacturersales`)
+            axios.get(`${this.url}/manuInventory`)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error
@@ -67,7 +67,7 @@ export class ManufacturerRepository {
 
     getFinancials() {
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}/manufacturerorders`)
+            axios.get(`${this.url}/manuInventory`)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error
