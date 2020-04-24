@@ -49,7 +49,7 @@ app.get('/getUser', (req, res) => {
   console.log(req.body.email);
   var email = req.body.email
   
-  connection.query('SELECT * FROM `pharmtech`.`user` u WHERE user = email', function (err, rows, fields) {
+  connection.query('SELECT * FROM `pharmtech`.`user` u WHERE user = ?', email, function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -268,7 +268,19 @@ app.get('/manufacturersales', (req, res) => {
 });
 
 //POST
-//add inventory item
+//add user
+app.post('/addUser', (req, res) => {
+
+  connection.query('INSERT INTO `pharmtech`.`user` (email, hashpass) VALUES(?, ?)', [req.body.email, req.body.hashpass], function (err, rows, fields) {
+    if (err){
+      logger.error("Problem inserting into inventory table");
+    }
+    else {
+      res.status(200).send(`added to the table!`);
+    }
+  });
+});
+
 app.post('/addInventory', (req, res) => {
 
   connection.query('INSERT INTO `pharmtech`.`inventory` (drug_id, quantity, exp_date) VALUES(?, ?, ?)', [req.body.drug_id, req.body.quantity, req.body.exp_date], function (err, rows, fields) {
