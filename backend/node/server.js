@@ -284,7 +284,7 @@ app.post('/addInventory', (req, res) => {
 //add order to manufacturer
 app.post('/placeOrder', (req, res) => {
 
-  connection.query('INSERT INTO `pharmtech`.`inventory_orders` (drug_id, order_date, quantity) VALUES(?, ?, ?)', [req.body.drug_id, req.body.order_date, req.body.quantity],function (err, rows, fields) {
+  connection.query('INSERT INTO `pharmtech`.`inventory_orders` (drug_id, order_date, quantity, expired, ok_to_sell) VALUES(?, ?, ?, ?, ?)', [req.body.drug_id, req.body.order_date, req.body.quantity, req.body.expired, req.body.ok_to_sell],function (err, rows, fields) {
     if (err){
       logger.error("Problem inserting into inventory_orders table");
     }
@@ -297,7 +297,7 @@ app.post('/placeOrder', (req, res) => {
 // PUT 
 //update expirations on manu inventory
 app.put('/updateExpiration', async (req, res) => {
-  con.query("UPDATE `pharmtech`.`manufacturer_inventory` SET `expired` = ? WHERE `expired` = ?",function (err, result, fields) {
+  con.query("UPDATE `pharmtech`.`manufacturer_inventory` SET `expired` = ? WHERE `expired` = ?", [req.body.expired, req.body.expired], function (err, result, fields) {
   if (err) throw err;
   res.end(JSON.stringify(result)); 
   });
