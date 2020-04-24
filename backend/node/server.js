@@ -44,9 +44,12 @@ app.get('/', (req, res) => {
   res.status(200).send('Go to 0.0.0.0:3000.');
 });
 
-//inventory for pharmacist, manager, and doctor
-app.get('/getInventory', (req, res) => {
-  connection.query('SELECT * FROM `pharmtech`.`inventory`', function (err, rows, fields) {
+//get user
+app.get('/getUser', (req, res) => {
+  console.log(req.body.email);
+  var email = req.body.email
+  
+  connection.query('SELECT * FROM `pharmtech`.`user` u WHERE user = ?', email, function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -61,6 +64,45 @@ app.get('/getInventory', (req, res) => {
     }
   });
 });
+
+//inventory for pharmacist, manager, and doctor
+app.get('/getInventory', (req, res) => {
+  connection.query('SELECT d.name, i.quantity, i.exp_date FROM inventory i join drugs d on i.drug_id = d.id', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
+//get specific drug from inventory
+app.get('/getInventory/:id', (req, res) => {
+
+  connection.query('SELECT d.name, i.quantity, i.exp_date FROM inventory i join drugs d on d.id = i.drug_id WHERE i.drug_id = ?', [req.params.id], function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
+
 
 //pharmacy revenues
 app.get('/getRevenues', (req, res) => {
@@ -173,7 +215,7 @@ app.get('/pharmacycart', (req, res) => {
 
 //inventory for manufacturer
 app.get('/manufacturerinventory', (req, res) => { 
-  connection.query('SELECT * FROM `pharmtech`.`manufacturer_inventory`', function (err, rows, fields) {
+  connection.query('SELECT * FROM manufacturer_inventory', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -191,7 +233,7 @@ app.get('/manufacturerinventory', (req, res) => {
 
 //outgoing orders for manufacturer
 app.get('/manufacturerorders', (req, res) => { 
-  connection.query('SELECT *, sum(io.quantity) dollars FROM `pharmtech`.`inventory_orders` io join `pharmtech`.`drugs` d on d.id = io.drug_id group by d.id', function (err, rows, fields) {
+  connection.query('SELECT * FROM `pharmtech`.`inventory_orders` io join `pharmtech`.`drugs` d on d.id = io.drug_id order by d.id', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -223,6 +265,91 @@ app.get('/manufacturersales', (req, res) => {
       });
     }
   });
+});
+
+//POST
+//add user
+app.post('/addUser', (req, res) => {
+
+  connection.query('INSERT INTO `pharmtech`.`user` (email, hashpass) VALUES(?, ?)', [req.body.email, req.body.hashpass], function (err, rows, fields) {
+    if (err){
+      logger.error("Problem inserting into inventory table");
+    }
+    else {
+      res.status(200).send(`added to the table!`);
+    }
+  });
+});
+
+app.post('/addInventory', (req, res) => {
+
+  connection.query('INSERT INTO `pharmtech`.`inventory` (drug_id, quantity, exp_date) VALUES(?, ?, ?)', [req.body.drug_id, req.body.quantity, req.body.exp_date], function (err, rows, fields) {
+    if (err){
+      logger.error("Problem inserting into inventory table");
+    }
+    else {
+      res.status(200).send(`added to the table!`);
+    }
+  });
+});
+
+//add order to manufacturer
+app.post('/placeOrder', (req, res) => {
+
+  connection.query('INSERT INTO `pharmtech`.`inventory_orders` (drug_id, order_date, quantity) VALUES(?, ?, ?)', [req.body.drug_id, req.body.order_date, req.body.quantity],function (err, rows, fields) {
+    if (err){
+      logger.error("Problem inserting into inventory_orders table");
+    }
+    else {
+      res.status(200).send(`added to the table!`);
+    }
+  });
+});
+
+// PUT 
+//update expirations on manu inventory
+app.put('/updateExpiration', async (req, res) => {
+  con.query("UPDATE `pharmtech`.`manufacturer_inventory` SET `expired` = ? WHERE `batch_id` = ?", [req.body.expired, req.body.batch_id], function (err, result, fields) {
+  if (err) throw err;
+  res.end(JSON.stringify(result)); 
+  });
+})
+
+//add perscription
+app.post('/addPrescription', (req, res) => {
+
+  connection.query("INSERT INTO prescription (patient_id, drug_id, quantity, create_date, doctor_id) VALUES(?, ?, ?, ?, ?)", [req.body.patient_id, req.body.drug_id, req.body.quantity, req.body.create_date, req.body.doctor_id], function (err, rows, fields) {
+    if (err){
+      logger.error("Problem inserting into prescription table");
+    }
+    else {
+      res.status(200).send(`added to the table!`);
+    }
+  });
+});
+
+// PUT 
+//update inventory quantity
+app.put('/putQuantity', async (req, res) => {
+  //var id = req.params.drugID;
+  var quantity = req.body.quantity;
+
+  con.query("UPDATE `pharmtech`.`inventory` SET `quantity` = ? WHERE `productCode` = ?", [req.body.quantity, req.body.drugID],function (err, result, fields) {
+  if (err) throw err;
+  //console.log(result);
+  res.end(JSON.stringify(result)); 
+  });
+});
+
+//DELETE
+//pharmacist delete inventory item
+app.delete('/delete/:drugID', async (req, res) => {
+  
+  con.query("DELETE FROM `pharmtech`.`inventory` WHERE `drug_id` = ?", [req.params.drugID], function (err, result, fields) {
+		if (err) 
+			return console.error(error.message);
+		res.end(JSON.stringify(result)); 
+	  });
 });
 
 //connecting the express object to listen on a particular port as defined in the config object.
