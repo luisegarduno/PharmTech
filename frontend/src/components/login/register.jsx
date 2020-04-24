@@ -30,7 +30,7 @@ export class Register extends React.Component {
                 <div className = "navBar">
                     <nav>
                         <div className = "img">
-                            <img src={Logo2} />
+                            <img src={Logo2} alt="Logo2"/>
                         </div>
                         <h1 className = "welcome">
                             Welcome To PharmTech!
