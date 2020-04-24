@@ -65,9 +65,26 @@ app.get('/getUser', (req, res) => {
   });
 });
 
-//inventory for pharmacist, manager, and doctor
+//inventory for pharmacist and manager
 app.get('/getInventory', (req, res) => {
   connection.query('SELECT d.name, i.quantity, i.exp_date FROM inventory i join drugs d on i.drug_id = d.id', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
+app.get('/getDoctorInventory', (req, res) => {
+  connection.query('SELECT batch_id, CONCAT(d.name, " (", drug_id, ")"), quantity, exp_date, t.related FROM inventory AS i LEFT JOIN drugs AS d ON d.id = i.drug_id LEFT JOIN (SELECT drug_type, GROUP_CONCAT(DISTINCT name) AS related FROM drugs GROUP BY drug_type) AS t ON d.drug_type = t.drug_type;', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
