@@ -247,7 +247,7 @@ app.get('/pharmacycart', (req, res) => {
 
 //inventory for manufacturer
 app.get('/manufacturerinventory', (req, res) => { 
-  connection.query('SELECT * FROM `pharmtech`.`manufacturer_inventory` WHERE expired IS NOT NULL', function (err, rows, fields) {
+  connection.query('SELECT * FROM `pharmtech`.`manufacturer_inventory`', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
