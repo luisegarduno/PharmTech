@@ -46,7 +46,10 @@ app.get('/', (req, res) => {
 
 //get user
 app.get('/getUser', (req, res) => {
-  connection.query('SELECT * FROM `pharmtech`.`inventory`', function (err, rows, fields) {
+  console.log(req.body.email);
+  var email = req.body.email
+  
+  connection.query('SELECT * FROM `pharmtech`.`user` u WHERE user = email', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -79,6 +82,29 @@ app.get('/getInventory', (req, res) => {
     }
   });
 });
+
+//get specific drug from inventory
+app.get('/getInventory/:id', (req, res) => {
+  console.log(req.params.drugID)
+  var paramid = req.params.drugID;
+
+  connection.query('SELECT d.name, i.quantity, i.exp_date FROM `pharmtech`.`inventory` i join `pharmtech`.`drugs` d on d.id = i.drug_id` WHERE i.id = paramid', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
+
 
 //pharmacy revenues
 app.get('/getRevenues', (req, res) => {
@@ -259,7 +285,7 @@ app.post('/addInventory', (req, res) => {
 });
 
 //add order to manufacturer
-app.post('/AddRequest', (req, res) => {
+app.post('/placeOrder', (req, res) => {
   console.log(req.body.product);
 
   connection.query('INSERT INTO `pharmtech`.`inventory_orders` (drug_id, order_date, fulfill_date, quantity) VALUES(\'' + req.body.product + '\')', function (err, rows, fields) {
@@ -273,7 +299,7 @@ app.post('/AddRequest', (req, res) => {
 });
 
 //add perscription
-app.post('/AddPerscription', (req, res) => {
+app.post('/addPerscription', (req, res) => {
   console.log(req.body.product);
 
   connection.query('INSERT INTO `pharmtech`.`perscription` (patient_id, drug_id, quantity, fill_date, create_date, doctor_id) VALUES(\'' + req.body.product + '\')', function (err, rows, fields) {
@@ -297,6 +323,18 @@ router.put('/putQuantity/:drugID', async (req, res) => {
   //console.log(result);
   res.end(JSON.stringify(result)); 
   });
+});
+
+//DELETE
+//pharmacist delete inventory item
+router.delete('/delete/:drugID', async (req, res) => {
+  var id = req.params.drugID;
+  
+	con.query("DELETE FROM `pharmtech`.`inventory` WHERE drug_id = id", function (err, result, fields) {
+		if (err) 
+			return console.error(error.message);
+		res.end(JSON.stringify(result)); 
+	  });
 });
 
 //connecting the express object to listen on a particular port as defined in the config object.
