@@ -44,9 +44,27 @@ app.get('/', (req, res) => {
   res.status(200).send('Go to 0.0.0.0:3000.');
 });
 
+//get user
+app.get('/getUser', (req, res) => {
+  connection.query('SELECT * FROM `pharmtech`.`inventory`', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
 //inventory for pharmacist, manager, and doctor
 app.get('/getInventory', (req, res) => {
-  connection.query('SELECT * FROM `pharmtech`.`inventory`', function (err, rows, fields) {
+  connection.query('SELECT d.name, i.quantity, i.exp_date FROM `pharmtech`.`inventory` i join `pharmtech`.`drugs` d on d.id = i.drug_id`', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -222,6 +240,62 @@ app.get('/manufacturersales', (req, res) => {
         "data": rows
       });
     }
+  });
+});
+
+//POST
+//add inventory item
+app.post('/addInventory', (req, res) => {
+  console.log(req.body.product);
+
+  connection.query('INSERT INTO `pharmtech`.`inventory` (drug_id, quantity, exp_date) VALUES(\'' + req.body.product + '\')', function (err, rows, fields) {
+    if (err){
+      logger.error("Problem inserting into inventory table");
+    }
+    else {
+      res.status(200).send(`added ${req.body.product} to the table!`);
+    }
+  });
+});
+
+//add order to manufacturer
+app.post('/AddRequest', (req, res) => {
+  console.log(req.body.product);
+
+  connection.query('INSERT INTO `pharmtech`.`inventory_orders` (drug_id, order_date, fulfill_date, quantity) VALUES(\'' + req.body.product + '\')', function (err, rows, fields) {
+    if (err){
+      logger.error("Problem inserting into inventory_orders table");
+    }
+    else {
+      res.status(200).send(`added ${req.body.product} to the table!`);
+    }
+  });
+});
+
+//add perscription
+app.post('/AddPerscription', (req, res) => {
+  console.log(req.body.product);
+
+  connection.query('INSERT INTO `pharmtech`.`perscription` (patient_id, drug_id, quantity, fill_date, create_date, doctor_id) VALUES(\'' + req.body.product + '\')', function (err, rows, fields) {
+    if (err){
+      logger.error("Problem inserting into perscription table");
+    }
+    else {
+      res.status(200).send(`added ${req.body.product} to the table!`);
+    }
+  });
+});
+
+// PUT 
+//update inventory quantity
+router.put('/putQuantity/:drugID', async (req, res) => {
+  var id = req.params.drugID;
+  var quantity = req.body.quantity;
+
+  con.query("UPDATE `pharmtech`.`inventory` SET quantity = quantity WHERE productCode = id", quantity,function (err, result, fields) {
+  if (err) throw err;
+  //console.log(result);
+  res.end(JSON.stringify(result)); 
   });
 });
 
