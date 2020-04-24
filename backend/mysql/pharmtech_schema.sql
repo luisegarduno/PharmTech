@@ -33,9 +33,9 @@ INSERT INTO user (first_name, last_name, username, hashpass, email, userType_id)
     ('Sarah', 'Jones', 'SJones', '1ea99aec6fa7ed38356ecab95920f8bf92c8cbc1d45591ecebe574bcf30b56af', 'svega@pharmtech.com', 3),
     ('Sam', 'Free', 'SFree', 'bdb5d62282c2c5761a3a15cd5968429dd37f4920751e55aaf5a01a04e3211d45', 'sfree@pharmtech.com', 3),
     ('Will', 'Vega', 'WVega', 'eba60cfdde3b1564fa26e6930b953bcf5b8900880d81519122529c51477ac063', 'wvega@pharmtech.com', 4),
-    ('Emily', 'Smith', 'ESmith', null, 5),
-    ('Ryan', 'Jones', 'RJones', null, 5),
-    ('Leslie', 'Wan', null, null, 5);
+    ('Emily', 'Smith', 'ESmith', null, null, 5),
+    ('Ryan', 'Jones', 'RJones', null, null, 5),
+    ('Leslie', 'Wan', null, null, null, 5);
 
 DROP TABLE IF EXISTS drug_types;
 CREATE TABLE drug_types(
