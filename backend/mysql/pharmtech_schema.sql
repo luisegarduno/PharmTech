@@ -17,7 +17,7 @@ CREATE TABLE user(
 	id INT AUTO_INCREMENT,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
-    password VARCHAR(100),
+    username VARCHAR(100),
     hashpass VARCHAR(500),
     email VARCHAR(500),
     userType_id INT NOT NULL,
@@ -27,15 +27,15 @@ CREATE TABLE user(
         ON UPDATE CASCADE
 );
 
-INSERT INTO user (first_name, last_name, password, hashpass, email, userType_id) VALUES 
-	('Jane', 'Doe', 'Password123', '008c70392e3abfbd0fa47bbc2ed96aa99bd49e159727fcba0f2e6abeb3a9d601', 'jdoe@pharmtech.com', 1),
-    ('John', 'Smith', '123Password', '78e1ff0deb8d9b3cbaa934b8f1773cd117edea714dcab0e62109233a3e36293b', 'jadoe@pharmtech.com', 2),
-    ('Sarah', 'Jones', '_asdf_123', '1ea99aec6fa7ed38356ecab95920f8bf92c8cbc1d45591ecebe574bcf30b56af', 'svega@pharmtech.com', 3),
-    ('Sam', 'Free', 'pass_doctor987', 'bdb5d62282c2c5761a3a15cd5968429dd37f4920751e55aaf5a01a04e3211d45', 'sfree@pharmtech.com', 3),
-    ('Will', 'Vega', '0123&passcode', 'eba60cfdde3b1564fa26e6930b953bcf5b8900880d81519122529c51477ac063', 'wvega@pharmtech.com', 4),
-    ('Emily', 'Smith', null, null, 5),
-    ('Ryan', 'Jones', null, null, 5),
-    ('Leslie', 'Wan', null, null, 5);
+INSERT INTO user (first_name, last_name, username, hashpass, email, userType_id) VALUES 
+	('Jane', 'Doe', 'JDoe', '008c70392e3abfbd0fa47bbc2ed96aa99bd49e159727fcba0f2e6abeb3a9d601', 'jdoe@pharmtech.com', 1),
+    ('John', 'Smith', 'JSmith', '78e1ff0deb8d9b3cbaa934b8f1773cd117edea714dcab0e62109233a3e36293b', 'jadoe@pharmtech.com', 2),
+    ('Sarah', 'Jones', 'SJones', '1ea99aec6fa7ed38356ecab95920f8bf92c8cbc1d45591ecebe574bcf30b56af', 'svega@pharmtech.com', 3),
+    ('Sam', 'Free', 'SFree', 'bdb5d62282c2c5761a3a15cd5968429dd37f4920751e55aaf5a01a04e3211d45', 'sfree@pharmtech.com', 3),
+    ('Will', 'Vega', 'WVega', 'eba60cfdde3b1564fa26e6930b953bcf5b8900880d81519122529c51477ac063', 'wvega@pharmtech.com', 4),
+    ('Emily', 'Smith', 'ESmith', null, null, 5),
+    ('Ryan', 'Jones', 'RJones', null, null, 5),
+    ('Leslie', 'Wan', null, null, null, 5);
 
 DROP TABLE IF EXISTS drug_types;
 CREATE TABLE drug_types(

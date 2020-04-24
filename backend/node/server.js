@@ -36,7 +36,8 @@ app.use(ExpressAPILogMiddleware(logger, { request: true }));
 connection.connect(function (err) {
   if (err)
     logger.error("Cannot connect to DB!");
-  logger.info("Connected to the DB!");
+  else
+    logger.info("Connected to the DB!");
 });
 
 //GET /
@@ -45,11 +46,8 @@ app.get('/', (req, res) => {
 });
 
 //get user
-app.get('/getUser', (req, res) => {
-  console.log(req.body.email);
-  var email = req.body.email
-  
-  connection.query('SELECT * FROM `pharmtech`.`user` u WHERE user = ?', email, function (err, rows, fields) {
+app.post('/verifyUser', (req, res) => {
+  connection.query('SELECT EXISTS(SELECT * FROM user WHERE username = ? AND hashpass = ? AND userType_id = ?);', [req.body.username, req.body.password, req.body.type], function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -65,9 +63,43 @@ app.get('/getUser', (req, res) => {
   });
 });
 
-//inventory for pharmacist, manager, and doctor
+app.put('/registerUser', (req, res) => {
+  connection.query('INSERT INTO user (first_name, last_name, username, hashpass, email, userType_id) VALUES ();', [req.body.firstname, req.body.lastname, req.body.username, req.body.password, req.body.email, req.body.type], function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+})
+
+//inventory for pharmacist and manager
 app.get('/getInventory', (req, res) => {
   connection.query('SELECT d.name, i.quantity, i.exp_date FROM inventory i join drugs d on i.drug_id = d.id', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
+app.get('/getDoctorInventory', (req, res) => {
+  connection.query('SELECT batch_id, CONCAT(d.name, " (", drug_id, ")"), quantity, exp_date, t.related FROM inventory AS i LEFT JOIN drugs AS d ON d.id = i.drug_id LEFT JOIN (SELECT drug_type, GROUP_CONCAT(DISTINCT name) AS related FROM drugs GROUP BY drug_type) AS t ON d.drug_type = t.drug_type;', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
