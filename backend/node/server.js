@@ -46,11 +46,8 @@ app.get('/', (req, res) => {
 });
 
 //get user
-app.get('/getUser', (req, res) => {
-  console.log(req.body.email);
-  var email = req.body.email
-  
-  connection.query('SELECT * FROM `pharmtech`.`user` u WHERE user = ?', email, function (err, rows, fields) {
+app.post('/verifyUser', (req, res) => {
+  connection.query('SELECT EXISTS(SELECT * FROM user WHERE username = ? AND hashpass = ? AND userType_id = ?);', [req.body.username, req.body.password, req.body.type], function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -65,6 +62,23 @@ app.get('/getUser', (req, res) => {
     }
   });
 });
+
+app.put('/registerUser', (req, res) => {
+  connection.query('INSERT INTO user (first_name, last_name, username, hashpass, email, userType_id) VALUES ();', [req.body.firstname, req.body.lastname, req.body.username, req.body.password, req.body.email, req.body.type], function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+})
 
 //inventory for pharmacist and manager
 app.get('/getInventory', (req, res) => {
