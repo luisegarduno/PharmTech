@@ -299,7 +299,7 @@ app.get('/manufacturersales', (req, res) => {
   });
 });
 
-app.get('/manuInventory', (req, res) => { 
+app.get('/manuinventory', (req, res) => { 
   connection.query('SELECT * FROM `pharmtech`.`manufacturer_inventory` io join `pharmtech`.`drugs` d on d.id = io.drug_id WHERE expired IS NOT NULL', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
