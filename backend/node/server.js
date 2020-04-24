@@ -294,6 +294,15 @@ app.post('/placeOrder', (req, res) => {
   });
 });
 
+// PUT 
+//update expirations on manu inventory
+app.put('/updateExpiration', async (req, res) => {
+  con.query("UPDATE `pharmtech`.`manufacturer_inventory` SET `quantity` = ? WHERE `expired` = ?",function (err, result, fields) {
+  if (err) throw err;
+  res.end(JSON.stringify(result)); 
+  });
+})
+
 //add perscription
 app.post('/addPrescription', (req, res) => {
 
