@@ -284,7 +284,7 @@ app.post('/addInventory', (req, res) => {
 //add order to manufacturer
 app.post('/placeOrder', (req, res) => {
 
-  connection.query('INSERT INTO `pharmtech`.`inventory_orders` (drug_id, order_date, quantity, expired, ok_to_sell) VALUES(?, ?, ?, ?, ?)', [req.body.drug_id, req.body.order_date, req.body.quantity, req.body.expired, req.body.ok_to_sell],function (err, rows, fields) {
+  connection.query('INSERT INTO `pharmtech`.`inventory_orders` (drug_id, order_date, quantity) VALUES(?, ?, ?)', [req.body.drug_id, req.body.order_date, req.body.quantity],function (err, rows, fields) {
     if (err){
       logger.error("Problem inserting into inventory_orders table");
     }
