@@ -27,11 +27,12 @@ export class Maninventory extends React.Component {
     }
 
     toggleSell(item) {
-        // this.manufacturerRepository.markBuy(item)
+        this.manufacturerRepository.markBuy(item);
+        this.manufacturerRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}));
     }
 
     formatDate(myDate){
-        var d = myDate.substring(5,7) + "-" + myDate.substring(8,10) + "-" + myDate.substring(0,4);
+        var d = myDate.getMonth() + "-" + myDate.getDate() + "-" + myDate.getFullYear();
         return d;
     }
 

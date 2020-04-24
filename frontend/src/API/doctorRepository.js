@@ -12,7 +12,7 @@ export class DoctorRepository {
 
     getInventory() {
         return new Promise((resolve, reject) => {
-            axios.get('http://localhost:8000/getInventory')
+            axios.get(`${this.url}/getInventory`)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error
@@ -23,7 +23,7 @@ export class DoctorRepository {
 
     getOrders() {
         return new Promise((resolve, reject) => {
-            axios.get('http://localhost:8000/manufacturerorders')
+            axios.get(`${this.url}/manufacturerorders`)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error
