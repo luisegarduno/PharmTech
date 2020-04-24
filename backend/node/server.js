@@ -299,6 +299,23 @@ app.get('/manufacturersales', (req, res) => {
   });
 });
 
+app.get('/manuInventory', (req, res) => { 
+  connection.query('SELECT * FROM `pharmtech`.`manufacturer_inventory` io join `pharmtech`.`drugs` d on d.id = io.drug_id WHERE expired IS NOT NULL', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
 //POST
 //add user
 app.post('/addUser', (req, res) => {
