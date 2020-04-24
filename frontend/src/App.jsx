@@ -5,6 +5,7 @@ import {
   Route,
   Switch
 } from "react-router-dom";
+import {Link} from "react-router-dom";
 import { Login } from "./components/login"
 import { Register } from "./components/login"
 import { PharmManager } from "./components/pages"
@@ -18,6 +19,7 @@ import { ViewCart } from './components/pharmManagerComps/viewCart';
 import { YourPharmacy, Inventory, Sales, CartInventory } from './components/pharmManagerComps';
 import { Mansales, Maninventory, Manorders, Manfinancial } from './components/manufacturerComps';
 import { Docorders, Docinventory } from './components/doctorComps';
+import { Footer } from './Footer';
 
 
 class App extends React.Component {
@@ -39,27 +41,27 @@ class App extends React.Component {
             <Route exact path="/" ><Login /></Route>
             <Route exact path="/login" ><Login /></Route>
             <Route exact path="/register"><Register /></Route>
-            <Route exact path="/pharmManager/"><PharmManager /></Route>
-                <Route exact path="/pharmManager/cart" ><ViewCart /></Route>
-                  <Route exact path="/pharmManager/cart/inventory" ><CartInventory /></Route>
-                <Route exact path="/pharmManager/yourPharmacy" ><YourPharmacy /></Route>
-                <Route exact path="/pharmManager/inventory" ><Inventory /></Route>
-                <Route exact path="/pharmManager/sales" ><Sales /></Route>
-            <Route exact path="/Manufacturer" ><Manufacturer /></Route>
-                <Route exact path="/Manufacturer/mansales" ><Mansales /></Route>
-                <Route exact path="/Manufacturer/maninventory" ><Maninventory /></Route>
-                <Route exact path="/Manufacturer/manorders" ><Manorders /></Route>
-                <Route exact path="/Manufacturer/manfinancial" ><Manfinancial /></Route>
-            <Route exact path="/pharmacist" ><Pharmacist /></Route>
-                <Route exact path="/pharmacist/IncomingOrder" ><IncomingOrder /></Route>
-                <Route exact path="/pharmacist/OutgoingOrder" ><OutgoingOrder /></Route>
-                <Route exact path="/pharmacist/ReceivedOrder" ><ReceivedOrder /></Route>
-                <Route exact path="/pharmacist/Prescription" ><Prescription /></Route>
-                <Route exact path="/pharmacist/PharmacistIn" ><PharmacistIn /></Route>
-                <Route exact path="/pharmacist/PCart"><PCart /></Route>
-            <Route exact path="/Doctor" ><Doctor /></Route>
-                <Route exact path="/doctor/docorders" ><Docorders /></Route>
-                <Route exact path="/doctor/docinventory" ><Docinventory /></Route>
+            <Route exact path="/pharmManager/"><Footer/><PharmManager /></Route>
+                <Route exact path="/pharmManager/cart" ><Footer/><ViewCart /></Route>
+                  <Route exact path="/pharmManager/cart/inventory" ><Footer/><CartInventory /></Route>
+                <Route exact path="/pharmManager/yourPharmacy" ><Footer/><YourPharmacy /></Route>
+                <Route exact path="/pharmManager/inventory" ><Footer/><Inventory /></Route>
+                <Route exact path="/pharmManager/sales" ><Footer/><Sales /></Route>
+            <Route exact path="/Manufacturer" ><Footer/><Manufacturer /></Route>
+                <Route exact path="/Manufacturer/mansales" ><Footer/><Mansales /></Route>
+                <Route exact path="/Manufacturer/maninventory" ><Footer/><Maninventory /></Route>
+                <Route exact path="/Manufacturer/manorders" ><Footer/><Manorders /></Route>
+                <Route exact path="/Manufacturer/manfinancial" ><Footer/><Manfinancial /></Route>
+            <Route exact path="/pharmacist" ><Footer/><Pharmacist /></Route>
+                <Route exact path="/pharmacist/IncomingOrder" ><Footer/><IncomingOrder /></Route>
+                <Route exact path="/pharmacist/OutgoingOrder" ><Footer/><OutgoingOrder /></Route>
+                <Route exact path="/pharmacist/ReceivedOrder" ><Footer/><ReceivedOrder /></Route>
+                <Route exact path="/pharmacist/Prescription" ><Footer/><Prescription /></Route>
+                <Route exact path="/pharmacist/PharmacistIn" ><Footer/><PharmacistIn /></Route>
+                <Route exact path="/pharmacist/PCart"><Footer/><PCart /></Route>
+            <Route exact path="/Doctor" ><Footer/><Doctor /></Route>
+                <Route exact path="/doctor/docorders" ><Footer/><Docorders /></Route>
+                <Route exact path="/doctor/docinventory" ><Footer/><Docinventory /></Route>
           </Switch>
         </Router>
         </div>
