@@ -315,6 +315,15 @@ app.put('/updateExpiration', async (req, res) => {
   });
 })
 
+// PUT 
+//update sellabilty on manu inventory
+app.put('/updateOK', async (req, res) => {
+  con.query("UPDATE `pharmtech`.`manufacturer_inventory` SET `ok_to_sell` = ? WHERE `batch_id` = ?", [req.body.expired, req.body.batch_id], function (err, result, fields) {
+  if (err) throw err;
+  res.end(JSON.stringify(result)); 
+  });
+})
+
 //add perscription
 app.post('/addPrescription', (req, res) => {
 
