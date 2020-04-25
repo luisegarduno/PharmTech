@@ -263,24 +263,6 @@ app.get('/pharmacyoutgoing', (req, res) => {
   });
 });
 
-//cart
-app.get('/pharmacycart', (req, res) => {
-  connection.query('SELECT name, description, purchase_price, rec_stock_amount, unit_measure, drug_type FROM `pharmtech`.`drugs`', function (err, rows, fields) {
-    if (err) {
-      logger.error("Error while executing Query");
-      res.status(400).json({
-        "data": [],
-        "error": "MySQL error"
-      })
-    }
-    else{
-      res.status(200).json({
-        "data": rows
-      });
-    }
-  });
-});
-
 
 //inventory for manufacturer
 app.get('/manufacturerinventory', (req, res) => { 
@@ -354,19 +336,6 @@ app.get('/manuinventory', (req, res) => {
 });
 
 //POST
-//add user
-app.post('/addUser', (req, res) => {
-
-  connection.query('INSERT INTO `pharmtech`.`user` (email, hashpass) VALUES(?, ?)', [req.body.email, req.body.hashpass], function (err, rows, fields) {
-    if (err){
-      logger.error("Problem inserting into inventory table");
-    }
-    else {
-      res.status(200).send(`added to the table!`);
-    }
-  });
-});
-
 app.post('/addInventory', (req, res) => {
 
   connection.query('INSERT INTO `pharmtech`.`inventory` (drug_id, quantity, exp_date) VALUES(?, ?, ?)', [req.body.drug_id, req.body.quantity, req.body.exp_date], function (err, rows, fields) {
