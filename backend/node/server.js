@@ -411,7 +411,7 @@ app.put('/putQuantity', async (req, res) => {
   //var id = req.params.drugID;
   var quantity = req.body.quantity;
 
-  connnection.query("UPDATE `pharmtech`.`inventory` SET `quantity` = ? WHERE `productCode` = ?", [req.body.quantity, req.body.drugID],function (err, result, fields) {
+  connection.query("UPDATE `pharmtech`.`inventory` SET `quantity` = ? WHERE `productCode` = ?", [req.body.quantity, req.body.drugID],function (err, result, fields) {
   if (err) throw err;
   //console.log(result);
   res.end(JSON.stringify(result)); 
@@ -422,7 +422,7 @@ app.put('/putQuantity', async (req, res) => {
 //pharmacist delete inventory item
 app.delete('/delete/:drugID', async (req, res) => {
   
-  connnection.query("DELETE FROM `pharmtech`.`inventory` WHERE `drug_id` = ?", [req.params.drugID], function (err, result, fields) {
+  connection.query("DELETE FROM `pharmtech`.`inventory` WHERE `drug_id` = ?", [req.params.drugID], function (err, result, fields) {
 		if (err) 
 			return console.error(error.message);
 		res.end(JSON.stringify(result)); 
