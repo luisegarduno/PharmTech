@@ -82,7 +82,7 @@ app.put('/registerUser', (req, res) => {
 
 //inventory for pharmacist and manager
 app.get('/getInventory', (req, res) => {
-  connection.query('SELECT d.name, i.quantity, i.exp_date, d.sell_price FROM inventory i join drugs d on i.drug_id = d.id', function (err, rows, fields) {
+  connection.query('SELECT d.name, i.quantity, d.unit_measure, i.exp_date, d.sell_price FROM inventory i join drugs d on i.drug_id = d.id', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -137,7 +137,7 @@ app.get('/getDoctorInventory', (req, res) => {
 //get specific drug from inventory
 app.get('/getInventory/:id', (req, res) => {
 
-  connection.query('SELECT d.name, i.quantity, i.exp_date FROM inventory i join drugs d on d.id = i.drug_id WHERE i.drug_id = ?', [req.params.id], function (err, rows, fields) {
+  connection.query('SELECT d.name, i.quantity, d.unit_measure, i.exp_date FROM inventory i join drugs d on d.id = i.drug_id WHERE i.drug_id = ?', [req.params.id], function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
