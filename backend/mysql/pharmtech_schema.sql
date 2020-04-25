@@ -44,7 +44,7 @@ CREATE TABLE drug_types(
     PRIMARY KEY (id)
 );
 
-INSERT INTO drug_types (name) VALUES ('antibiotic'), ('tranquilizer'), ('antipyretics'), ('analgesics');
+INSERT INTO drug_types (name) VALUES ('antibiotic'), ('tranquilizer'), ('antipyretic'), ('analgesic');
 
 DROP TABLE IF EXISTS drugs;
 CREATE TABLE drugs(

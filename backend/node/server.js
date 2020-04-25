@@ -99,7 +99,7 @@ app.get('/getInventory', (req, res) => {
 });
 
 app.get('/getDoctorInventory', (req, res) => {
-  connection.query('SELECT batch_id, CONCAT(d.name, " (", drug_id, ")"), quantity, exp_date, t.related FROM inventory AS i LEFT JOIN drugs AS d ON d.id = i.drug_id LEFT JOIN (SELECT drug_type, GROUP_CONCAT(DISTINCT name) AS related FROM drugs GROUP BY drug_type) AS t ON d.drug_type = t.drug_type;', function (err, rows, fields) {
+  connection.query('SELECT batch_id, d.name, i.drug_id, quantity, exp_date, t.name AS drug_type, r.related FROM inventory AS i LEFT JOIN drugs AS d ON d.id = i.drug_id LEFT JOIN (SELECT drug_type, GROUP_CONCAT(DISTINCT name) AS related FROM drugs GROUP BY drug_type) AS r ON d.drug_type = r.drug_type JOIN drug_types AS t ON t.id = d.drug_type;', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
