@@ -32,7 +32,7 @@ export class OutgoingOrder extends React.Component {
                 </div>
             </nav>
             <div className = "bg-secondary pb-2 mb-4 pt-1 mt-2">
-                    <h2>Incoming Order List</h2>
+                    <h2  className = "ml-3 mt-1">Incoming Order List</h2>
             </div>
 
             <div className = "container">
@@ -61,7 +61,7 @@ export class OutgoingOrder extends React.Component {
            </div>
                 <div>
                 <Link to="/Pharmacist">
-                    <button className = "return">Return to Homepage</button>
+                    <button className = "btn btn-info mb-5 ml-5">Return to Homepage</button>
                 </Link> 
             </div> 
         </div>        

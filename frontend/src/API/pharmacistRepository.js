@@ -2,7 +2,6 @@ import axios from 'axios'
 
 export class PharmacistRepository {
 
-    url = 'http://localhost:8000'
 
     getIncoming(){
         return new Promise((resolve,reject) =>{
@@ -30,12 +29,52 @@ export class PharmacistRepository {
         })
     }
 
-    getInventory(){
-        return new Promise((resolve,reject) =>{
-            axios.get('http://localhost:8000/pharmacyinventory')
+
+    getInventory(param){
+        if(param == undefined){
+            return new Promise((resolve,reject) =>{
+                axios.get('http://localhost:8000/getInventory/')
+                    .then(x => {
+                        resolve(x.data);
+                    })
+                    .catch(x => {
+                        alert(x);
+                        reject(x);
+                    })
+            })
+        }
+        else{
+            return new Promise((resolve,reject) =>{
+                axios.get('http://localhost:8000/getInventory/' + param)
+                    .then(x => {
+                        resolve(x.data);
+                    })
+                    .catch(x => {
+                        alert(x);
+                        reject(x);
+                    })
+            })
+        }
+    }
+
+    addinventory(param){
+        return new Promise((resolve, reject) => {
+            axios.post('http://localhost:8000/addInventory', param)
                 .then(x => {
                     resolve(x.data);
                 })
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                })
+        })
+    }
+
+    deleteinventory(drug_id){
+        debugger;
+        return new Promise((resolve, reject) => {
+            axios.delete('http://localhost:8000/delete/' + drug_id)
+                .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x);
                     reject(x);

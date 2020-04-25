@@ -8,6 +8,7 @@ class PrescriptForm extends React.Component {
         title : "",
         patient : "",
         drugs : [],
+        upper : [],
     }
 
     savedrugs() {
@@ -17,15 +18,19 @@ class PrescriptForm extends React.Component {
         this.setState({drugs});
     }
 
-    saveunits() {
-        var units = [...this.state.units];
-        units.push(this.newText2.value);
-        this.setState({units});
+
+
+    handleAddDrug = (e) => {                            
+        e.preventDefault();
+        e.target.reset();
+        this.setState({upper : this.state.drugs})
+
     }
 
     handleSubmit = (e) => {                            
         e.preventDefault();
         e.target.reset();
+        this.setState({drugs : []})
     }
 
     render(){
@@ -36,7 +41,7 @@ class PrescriptForm extends React.Component {
                         <h3>Edit Prescription</h3>
                     </div>
                     <div className = "card-body">
-                        <form  onSubmit={this.handleSubmit.bind(this)}>
+                        <form  onSubmit={this.handleAddDrug.bind(this)}>
                             <div className = "form-group">
                                 <div className = "row">
                                     <div className = "col-6">
@@ -57,8 +62,14 @@ class PrescriptForm extends React.Component {
                                     </div>
                                 </div>
                                 <button className = "btn btn-info btn-block mt-3" onClick={this.savedrugs.bind(this)}>Add Drug</button>
+                            </div>
+                        </form>
+
+                        <form onSubmit={this.handleSubmit.bind(this)}>
+                            <div className = "form-group">
                                 <ul className="list-group mt-3">
-                                    {this.state.drugs.map(function(drug, i) {
+                                    {
+                                        this.state.drugs.map(function(drug, i) {
                                         return( <li className="list-group-item" key = {i}>{drug.name} with quantity {drug.unit}</li>)
                                     })}
                                 </ul>

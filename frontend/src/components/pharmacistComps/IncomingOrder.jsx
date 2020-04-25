@@ -21,7 +21,7 @@ export class IncomingOrder extends React.Component {
     
     componentDidMount(){
         this.pharmacistRepository.getIncoming()
-            .then(Order => this.setState({orders : Order.data}))
+            .then(Order => this.setState({orders : Order.data}));
     }
 
     render() {
@@ -35,16 +35,17 @@ export class IncomingOrder extends React.Component {
             </nav>
 
             <div className = "bg-secondary pb-2 mb-4 pt-1 mt-2">
-                    <h2>Incoming Order List</h2>
+                    <h2  className = "ml-3 mt-1">Incoming Order List</h2>
             </div>
 
             <div className = "container">
                     <table  className = "table">
                         <thead>
                             <tr className = "bg-secondary">
-                                <th>Drug_id</th>
-                                <th>Docter_id</th>
-                                <th>Create_Date</th>
+                                <th>Drug Id</th>
+                                <th>Patient Id</th>
+                                <th>Docter Id</th>
+                                <th>Create Date</th>
                                 <th>Quantity</th>
                             </tr>
                         </thead>
@@ -53,9 +54,10 @@ export class IncomingOrder extends React.Component {
                         {this.state.orders.map(item => (
                                 <tr className = " bg-light" key = {item.id}>
                                     <td>{item.drug_id}</td>
-                                    <td>{item.doctor_id}</td>
+                                    <td>{item.patient_id}</td>
                                     <td>{item.create_date}</td>
                                     <td>{item.quantity}</td>
+                                    <td>{item.doctor_id}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -66,7 +68,7 @@ export class IncomingOrder extends React.Component {
 
            <div>
                 <Link to="/Pharmacist">
-                    <button className = "return">Return to Homepage</button>
+                    <button className = "btn btn-info mb-5 ml-5">Return to Homepage</button>
                 </Link> 
             </div> 
            </div>
