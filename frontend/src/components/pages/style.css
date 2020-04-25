@@ -4,6 +4,9 @@ nav {
     padding-top: 0.6rem;
 }
 
+.img img{
+    width: 30%;
+}
 .welcome {
     color: white;
     float: right;

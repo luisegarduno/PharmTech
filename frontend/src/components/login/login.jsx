@@ -52,7 +52,7 @@ export class Login extends React.Component {
                 </div>
                 <div className = "base-container">
                     <div className = "contents">
-                        <div className = "img">
+                        <div className = "image">
                             <img src={Logo} alt="Logo"/>
                         </div>
                         <div className="form">
