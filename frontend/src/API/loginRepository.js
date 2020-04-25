@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-export class PharmManagerRepository {
+export class LoginRepository {
 
-    getInventory(){
+    registerUser(){
             return new Promise((resolve,reject) =>{
-                axios.get('http://localhost:8000/getInventory')
+                axios.get('http://localhost:8000/registerUser')
                     .then(x => {
                         resolve(x.data);
                     })
@@ -15,22 +15,9 @@ export class PharmManagerRepository {
             })
         }
 
-        getCartInventory(){
+    verifyUser(){
             return new Promise((resolve,reject) =>{
-                axios.get('http://localhost:8000/getCartInventory')
-                    .then(x => {
-                        resolve(x.data);
-                    })
-                    .catch(x => {
-                        alert(x);
-                        reject(x);
-                    })
-            })
-        }
-
-    getSales(){
-            return new Promise((resolve,reject) =>{
-                axios.get('http://localhost:8000/getSales')
+                axios.get('http://localhost:8000/verifyUser')
                     .then(x => {
                         resolve(x.data);
                     })

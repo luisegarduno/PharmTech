@@ -46,7 +46,7 @@ export class Inventory extends React.Component {
     }
 
     formatDate(myDate){
-        var d = (myDate.getMonth() + 1) + "-" + (myDate.getDate()+1) + "-" + (myDate.getFullYear()+1);
+        var d = myDate.substring(5,7) + "-" + myDate.substring(8,10) + "-" + myDate.substring(0,4);
         return d;
     }
 
@@ -94,7 +94,7 @@ export class Inventory extends React.Component {
                                     </td>
 
                                     <td id = "item">${item.sell_price}</td>
-                                    <td id = "item">{item.exp_date}</td>
+                                    <td id = "item">{this.formatDate(item.exp_date)}</td>
                                 </tr>
                             ))}
                     </table>

@@ -40,8 +40,8 @@ export class ViewCart extends React.Component {
         var newCart = this.state.cart
         var quantity = parseInt(e.target.value)
         newCart.items[i].quantity = quantity;
-        newCart.items[i].cost = quantity * newCart.items[i].cost
-        newCart.total = newCart.items.map(x => x.cost).reduce((x, y) => x + y);
+        newCart.items[i].sell_price = quantity * newCart.items[i].sell_price
+        newCart.total = newCart.items.map(x => x.sell_price).reduce((x, y) => x + y);
         this.setState({cart: newCart})
     }
 
@@ -52,7 +52,7 @@ export class ViewCart extends React.Component {
             newCart.total = 0;
         }
         else {
-            newCart.total = newCart.items.map(x => x.cost).reduce((x, y) => x + y);
+            newCart.total = newCart.items.map(x => x.sell_price).reduce((x, y) => x + y);
         }
         this.setState({cart: newCart})
     }
@@ -105,7 +105,7 @@ export class ViewCart extends React.Component {
                                     <button type = "button" id = "delete" onClick={ () => this.onDelete(index) }>Delete</button>
                                     </td>
 
-                                    <td id = "item">${item.cost}</td>
+                                    <td id = "item">${item.sell_price}</td>
                                 </tr>
                             ))}
                         <tr className = "lastRow">

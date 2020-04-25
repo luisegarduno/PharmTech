@@ -2,8 +2,11 @@ import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 import _ from 'lodash';
+import { PharmManagerRepository } from "../../API";
 
 export class Sales extends React.Component {
+
+    pharmManagerRepository = new PharmManagerRepository();
 
     username;
     
@@ -43,6 +46,10 @@ export class Sales extends React.Component {
                 "total_price": 0
             },
         ]
+    }
+
+    componentDidMount(){
+        this.pharmManagerRepository.getSales().then(Sale => this.setState({sales : Sale.data}))
     }
 
     sortBy(field) {        
@@ -98,11 +105,23 @@ export class Sales extends React.Component {
                 <div className = "itemsTable">
                     <table>
                         <tr>
-                            <th>Item</th>
-                            <th>Units Sold</th>
-                            <th>Cost Per Unit</th>
+                            <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'name')}>Item</button></th>
+                            <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'sold_units')}>Units Sold</button></th>
+                            <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'sell_price')}>Cost Per Unit</button></th>
                             <th>Total Price</th>
                         </tr>
+                        {this.state.sales.map(item => (
+                                <tr>
+                                  <td id = "item">{item.name}
+                                  </td>
+                                  <td id = "item">
+                                      {item.sold_units}
+                                    </td>
+
+                                    <td id = "item">${item.sell_price}</td>
+                                    <td id = "item">${item.sold_units * item.sell_price}</td>
+                                </tr>
+                            ))}
                     </table>
                 </div>
                     <input type = "text" placeholder="Search for a drug..." id ="range" className = "searchBar" autoCorrect={true} onChange={this.findDrug}></input>
