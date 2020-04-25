@@ -43,7 +43,7 @@ export class Maninventory extends React.Component {
     }
 
     formatDate(myDate){
-        var d = myDate.getMonth() + "-" + myDate.getDate() + "-" + myDate.getFullYear();
+        var d = myDate.substring(5,7) + "-" + myDate.substring(8,10) + "-" + myDate.substring(0,4);
         return d;
     }
 
