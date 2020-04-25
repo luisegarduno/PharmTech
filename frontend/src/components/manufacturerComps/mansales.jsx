@@ -85,9 +85,9 @@ export class Mansales extends React.Component {
                         {this.state.sales.map(item => (
                             <tr>
                                 <td id="item">{item.name}</td>
-                                <td id="item">{this.formatQuantity(item.dollars)}/{item.unit_measure}</td>
-                                <td id="item">${this.formatPrice(item.sell_price)}/{item.unit_measure}</td>
-                                <td id="item">${this.getTotal(item.dollars, item.sell_price)}</td>
+                                <td id="item">{this.formatQuantity(item.quantity)} {item.unit_measure}</td>
+                                <td id="item">${this.formatPrice(item.purchase_price)}/{item.unit_measure}</td>
+                                <td id="item">${this.getTotal(item.quantity, item.purchase_price)}</td>
                             </tr>
                         ))}
                     </table>
