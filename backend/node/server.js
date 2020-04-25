@@ -281,6 +281,25 @@ app.get('/pharmacyoutgoing', (req, res) => {
   });
 });
 
+//get cart
+app.get('/getCartInventory', (req, res) => {
+
+  connection.query('SELECT id, name, purchase_price FROM drugs', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
 
 //inventory for manufacturer
 app.get('/manufacturerinventory', (req, res) => { 
