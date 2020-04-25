@@ -82,7 +82,7 @@ app.put('/registerUser', (req, res) => {
 
 //inventory for pharmacist and manager
 app.get('/getInventory', (req, res) => {
-  connection.query('SELECT d.name, i.quantity, i.exp_date FROM inventory i join drugs d on i.drug_id = d.id', function (err, rows, fields) {
+  connection.query('SELECT d.name, i.quantity, i.exp_date, d.sell_price FROM inventory i join drugs d on i.drug_id = d.id', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
