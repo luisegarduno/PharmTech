@@ -377,7 +377,7 @@ app.post('/placeOrder', (req, res) => {
 // PUT 
 //update expirations on manu inventory
 app.put('/updateExpiration', async (req, res) => {
-  con.query("UPDATE `pharmtech`.`manufacturer_inventory` SET `expired` = ? WHERE `batch_id` = ?", [req.body.expired, req.body.batch_id], function (err, result, fields) {
+  connection.query("UPDATE `pharmtech`.`manufacturer_inventory` SET `expired` = ? WHERE `batch_id` = ?", [req.body.expired, req.body.batch_id], function (err, result, fields) {
   if (err) throw err;
   res.end(JSON.stringify(result)); 
   });
@@ -386,7 +386,7 @@ app.put('/updateExpiration', async (req, res) => {
 // PUT 
 //update sellabilty on manu inventory
 app.put('/updateOK', async (req, res) => {
-  con.query("UPDATE `pharmtech`.`manufacturer_inventory` SET `ok_to_sell` = ? WHERE `batch_id` = ?", [req.body.expired, req.body.batch_id], function (err, result, fields) {
+  connection.query("UPDATE `pharmtech`.`manufacturer_inventory` SET `ok_to_sell` = ? WHERE `batch_id` = ?", [req.body.expired, req.body.batch_id], function (err, result, fields) {
   if (err) throw err;
   res.end(JSON.stringify(result)); 
   });
@@ -411,7 +411,7 @@ app.put('/putQuantity', async (req, res) => {
   //var id = req.params.drugID;
   var quantity = req.body.quantity;
 
-  con.query("UPDATE `pharmtech`.`inventory` SET `quantity` = ? WHERE `productCode` = ?", [req.body.quantity, req.body.drugID],function (err, result, fields) {
+  connnection.query("UPDATE `pharmtech`.`inventory` SET `quantity` = ? WHERE `productCode` = ?", [req.body.quantity, req.body.drugID],function (err, result, fields) {
   if (err) throw err;
   //console.log(result);
   res.end(JSON.stringify(result)); 
@@ -422,7 +422,7 @@ app.put('/putQuantity', async (req, res) => {
 //pharmacist delete inventory item
 app.delete('/delete/:drugID', async (req, res) => {
   
-  con.query("DELETE FROM `pharmtech`.`inventory` WHERE `drug_id` = ?", [req.params.drugID], function (err, result, fields) {
+  connnection.query("DELETE FROM `pharmtech`.`inventory` WHERE `drug_id` = ?", [req.params.drugID], function (err, result, fields) {
 		if (err) 
 			return console.error(error.message);
 		res.end(JSON.stringify(result)); 
