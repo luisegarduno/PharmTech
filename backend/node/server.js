@@ -211,7 +211,7 @@ app.get('/getSales', (req, res) => {
 
 //pharmacist incoming orders
 app.get('/pharmacyincoming', (req, res) => {
-  connection.query('SELECT * FROM `pharmtech`.`perscriptions` WHERE fill_date IS NULL', function (err, rows, fields) {
+  connection.query('SELECT * FROM `pharmtech`.`prescriptions` WHERE fill_date IS NULL', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -229,7 +229,7 @@ app.get('/pharmacyincoming', (req, res) => {
 
 //pharmacist outgoing orders
 app.get('/pharmacyoutgoing', (req, res) => {
-  connection.query('SELECT * FROM `pharmtech`.`perscriptions` WHERE fill_date IS NOT NULL', function (err, rows, fields) {
+  connection.query('SELECT * FROM `pharmtech`.`prescriptions` WHERE fill_date IS NOT NULL', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
