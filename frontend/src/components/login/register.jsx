@@ -40,7 +40,7 @@ export class Register extends React.Component {
                 <div className = "base-container" id = "register">
                     <div className = "contents">
                         <div className = "img">
-                            <img src={Logo} alt="Logo"/>
+                            <img id = "logo" src={Logo} alt="Logo"/>
                         </div>
                         <div className="form">
                             <div className = "firstName">

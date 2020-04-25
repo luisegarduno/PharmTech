@@ -35,9 +35,10 @@ export class Login extends React.Component {
     }
 
     onLogin() {
-        localStorage.setItem('username', this.state.username);
         let password = this.state.password
         password = sha256(password);
+        this.loginRepository.verifyUser(this.state.username, this.state.password, this.state.loginType)
+        localStorage.setItem('username', this.state.username);
     }
 
     render() {
@@ -56,7 +57,7 @@ export class Login extends React.Component {
                 <div className = "base-container">
                     <div className = "contents">
                         <div className = "image">
-                            <img src={Logo} alt="Logo"/>
+                            <img id = "logo" src={Logo} alt="Logo"/>
                         </div>
                         <div className="form">
                             <div className = "username" onChange={this.getUsername}>
@@ -68,32 +69,32 @@ export class Login extends React.Component {
                             <div className = "loginType">
                                 <select id = "type" onChange={this.findLoginType}>
                                     <option value = "default" selected disabled>Select an account type...</option>
-                                    <option value = "pharmManager">Pharmacy Manager</option>
-                                    <option value = "Manufacturer">Manufacturer</option>
-                                    <option value = "Pharmacist">Pharmacist</option>
-                                    <option value = "Doctor">Doctor</option>
+                                    <option value = "2">Pharmacy Manager</option>
+                                    <option value = "4">Manufacturer</option>
+                                    <option value = "1">Pharmacist</option>
+                                    <option value = "3">Doctor</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div className="footer">
                         {(() => {
-                        if (this.state.loginType === "pharmManager" && this.state.username) {
+                        if (this.state.loginType === "2" && this.state.username) {
                             return (
                                 <Link to={"/pharmManager"}><button type = "button" className="button" onClick ={this.onLogin}>Login</button></Link>
                             )
                         }
-                        else if (this.state.loginType === "Manufacturer" && this.state.username) {
+                        else if (this.state.loginType === "4" && this.state.username) {
                             return (
                                 <Link to={"/Manufacturer"}><button type = "button" className="button" onClick ={this.onLogin}>Login</button></Link>
                             )
                         }
-                        else if (this.state.loginType === "Pharmacist" && this.state.username) {
+                        else if (this.state.loginType === "1" && this.state.username) {
                             return (
                                 <Link to={"/Pharmacist"}><button type = "button" className="button" onClick ={this.onLogin}>Login</button></Link>
                             )
                         }  
-                        else if (this.state.loginType === "Doctor" && this.state.username) {
+                        else if (this.state.loginType === "3" && this.state.username) {
                             return (
                                 <Link to={"/Doctor"}><button type = "button" className="button" onClick ={this.onLogin}>Login</button></Link>
                             )

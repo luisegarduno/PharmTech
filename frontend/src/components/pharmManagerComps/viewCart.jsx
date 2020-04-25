@@ -3,6 +3,7 @@ import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 import { PharmManagerRepository } from "../../API";
 import CartService from "./cartService";
+import { Redirect } from "react-router-dom";
 import _ from 'lodash';
 
 
@@ -56,7 +57,11 @@ export class ViewCart extends React.Component {
     }
 
     render() {
-        return (    
+        if (!this.state.cart.items) {
+            var newCart = this.cartService.getCart
+            this.setState({cart: newCart})
+        }
+        return ( 
            <div className = "body">
             <nav>
                 <div className = "img" id = "logo">

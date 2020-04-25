@@ -49,7 +49,7 @@ export class Sales extends React.Component {
     }
 
     componentDidMount(){
-        this.pharmManagerRepository.getSales().then(Sale => this.setState({sales : Sale.data}))
+        this.pharmManagerRepository.getPharmManagerSales().then(Sale => this.setState({sales : Sale.data}))
     }
 
     sortBy(field) {        
