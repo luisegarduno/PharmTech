@@ -78,6 +78,10 @@ nav {
     background-color: rgb(74,100,168, 0.8);
 }
 
+.capWord {
+    text-transform: capitalize;
+}
+
 /*specfic buttons for manufacturer dashboard*/
 
 #manMenuButton {
