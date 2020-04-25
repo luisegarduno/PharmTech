@@ -13,14 +13,16 @@ export class Docinventory extends React.Component {
         super(props);
         this.username = localStorage['username']
         this.state = {
-            drugs:[],
+            drugs: [],
+            drugtypes: []
         }
         this.formatQuantity = this.numberWithCommas.bind(this);
         this.formatDate = this.formatDate.bind(this);
     }
 
     componentDidMount(){
-        this.doctorRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}))
+        this.doctorRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}));
+        this.doctorRepository.getDrugTypes().then(Type => this.setState({drugtypes : Type.data}));      
     }
 
     pickFilter(filterBy) {
@@ -49,32 +51,28 @@ export class Docinventory extends React.Component {
             </nav>
             <h1 className="tableHeader">Filter for Drug Type</h1>
                 <form className="sortBy">
-                    <input type="radio" id="sortNum" name="sort" value="all" onClick={e => this.pickFilter(e, 0)}></input>
+                    <input type="radio" id="sortNum" name="sort" value="all" onClick={e => this.pickFilter(e, 0)} checked></input>
                     <label htmlFor="sortNum">All</label>
-                    <input type="radio" id="sortNum" name="sort" value="1" onClick={e => this.pickFilter(e, 1)}></input>
-                    <label htmlFor="sortNum">1</label>
-                    <input type="radio" id="sortDate" name="sort" value="2" onClick={e => this.pickFilter(e, 2)}></input>
-                    <label htmlFor="sortDate">2</label>
-                    <input type="radio" id="sortStatus" name="sort" value="3" onClick={e => this.pickFilter(e, 3)}></input>
-                    <label htmlFor="sortStatus">3</label>
-                    <input type="radio" id="sortNum" name="sort" value="4" onClick={e => this.pickFilter(e, 4)}></input>
-                    <label htmlFor="sortNum">4</label>
+                    {this.state.drugtypes.map(item => (
+                        <><input type="radio" id="sort" name="sort" value={item.drug_type} onClick={e => this.pickFilter(e, item.drug_type)}></input>
+                        <label htmlFor="sortNum" className="capWord">{item.drug_type}</label></>
+                    ))}
                 </form>
             <h1 className = "tableHeader">All Inventory</h1>
-                <div className = "itemsTable scrollTableSort">
+                <div className = "itemsTable">
                     <table>
                         <thead><tr className="headerFixed">
                             <th>Drug Type</th>
-                            <th>Name (Drug ID)</th>
+                            <th>Name (Batch ID)</th>
                             <th>Quantity</th>
                             <th>Expiration Date</th>
                             <th>Related Drugs</th>
                         </tr></thead>
                         <tbody>
                             {this.state.drugs.map(item => (
-                                <tr key={ item.drug_id }>
+                                <tr key={ item.batch_id }>
                                     <td id="item">{item.drug_type}</td>
-                                    <td id="item">{item.name} ({item.drug_id})</td>
+                                    <td id="item">{item.name} ({item.batch_id})</td>
                                     <td id="item">{this.formatQuantity(item.quantity)}</td>
                                     <td id="item">{this.formatDate(item.exp_date)}</td>
                                     <td id="item">{item.related}</td>
