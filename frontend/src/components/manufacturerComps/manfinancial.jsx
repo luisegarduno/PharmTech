@@ -75,9 +75,9 @@ export class Manfinancial extends React.Component {
                             <tr>
                                 <td id="item">{item.name}</td>
                                 <td id="item">{this.formatQuantity(item.quantity)} {item.unit_measure}</td>
+                                <td id="item">${this.formatPrice(item.manu_price)}/{item.unit_measure}</td>
                                 <td id="item">${this.formatPrice(item.purchase_price)}/{item.unit_measure}</td>
-                                <td id="item">${this.formatPrice(item.sell_price)}/{item.unit_measure}</td>
-                                <td id="item">${this.getTotal(item.quantity, item.sell_price, item.purchase_price)}</td>
+                                <td id="item">${this.getTotal(item.quantity, item.purchase_price, item.manu_price)}</td>
                             </tr>
                         ))}
                         </table>
