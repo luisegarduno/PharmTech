@@ -43,8 +43,8 @@ export class Maninventory extends React.Component {
     }
 
     formatDate(myDate){
-        var d = myDate.getMonth() + "-" + myDate.getDate() + "-" + myDate.getFullYear();
-        return d;
+        // var d = myDate.getMonth() + "-" + myDate.getDate() + "-" + myDate.getFullYear();
+        return myDate;
     }
 
     render() {
@@ -71,7 +71,7 @@ export class Maninventory extends React.Component {
                         {this.state.drugs.map(item => (
                             <tr>
                                 <td id="item">{item.name}</td>
-                                <td id="item">{this.formatDate(item.fulfill_date)}</td>
+                                <td id="item">{this.formatDate(item.exp_date)}</td>
                                 <td id="item">{item.acquired_from}</td>
                                 <td id="item">{item.expired}<form><button onClick = {this.toggleExpired(item)}>Flip Expired</button></form></td>
                                 <td id="item">{item.ok_to_sell}<form><button onClick = {this.toggleSell(item)}>Flip Ok to Sell</button></form></td>
