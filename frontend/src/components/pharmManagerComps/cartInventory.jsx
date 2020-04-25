@@ -16,29 +16,37 @@ export class CartInventory extends React.Component {
         super(props);
         this.username = localStorage['username']
     }
-
-    drugs = [{
-        "id" : 1,
-        "name": "Symbyzide Parodafinil",
-        "cost": 6,
-        "units": 10,
-        "expire" : "2/5/20"
-    },
-    {
-        "id" : 2,
-        "name": "Ibuprofen",
-        "cost": 8,
-        "units": 11,
-        "expire" : "2/5/20"
-    },
-    ]
+    state = {
+        drugs :[{
+            "id" : 1,
+            "name": "Symbyzide Parodafinil",
+            "cost": 6,
+            "units": 10,
+            "expire" : "2/5/20"
+        },
+        {
+            "id" : 2,
+            "name": "Ibuprofen",
+            "cost": 8,
+            "units": 11,
+            "expire" : "2/5/20"
+        },
+        ]
+    }
 
     onSubmit(itemName) {
             this.pharmManagerRepository
             .addCartItem(itemName)
     }
 
+    componentDidMount(){
+        this.pharmManagerRepository.getCartInventory().then(Drug => this.setState({drugs : Drug.data}))
+    }
+
     render() {
+        if (!this.state.drugs) {
+            return (<h1>Loading...</h1>)
+        }
         return (
            <div className = "body">
                 <nav>
@@ -55,12 +63,12 @@ export class CartInventory extends React.Component {
                             <th>Item</th>
                             <th>Cost Per Unit</th>
                         </tr>
-                            {this.drugs.map(item => (
+                            {this.state.drugs.map(item => (
                                 <tr key = {item.id}>
                                   <td id = "item">{item.name}
                                   <Link to="/pharmManager/cart"><button type = "button" id = "swap" onClick = {e => this.cartService.addToCart(item)}>Select</button></Link>
                                   </td>
-                                    <td id = "item">${item.cost}</td>
+                                    <td id = "item">${parseFloat(item.purchase_price).toFixed(2)}</td>
                                 </tr>
                             ))}
                     </table>
@@ -74,8 +82,4 @@ export class CartInventory extends React.Component {
            </div>
         );    
     }
-    // componentDidMount() {
-    //     this.pharmManagerRepository.getInventory()
-    //         .then(drugs => this.setState({ drugs }));
-    // }
 }

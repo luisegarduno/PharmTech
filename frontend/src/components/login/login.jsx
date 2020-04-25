@@ -3,8 +3,11 @@ import Logo from "../../images/pharmtechblue.png";
 import Logo2 from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 import { sha256 } from 'js-sha256';
+import { LoginRepository } from "../../API";
 
 export class Login extends React.Component {
+
+    loginRepository = new LoginRepository()
 
     constructor(props) {
         super(props);

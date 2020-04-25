@@ -19,17 +19,7 @@ export class ViewCart extends React.Component {
         this.state = {
             cart: this.cartService.getCart(),
             total: 0,
-            drugs: [{
-                "name": "Symbyzide Parodafinil",
-                "cost": 6,
-                "quantity": 1
-            },
-            {
-                "name": "Ibuprofen",
-                "cost": 8,
-                "quantity": 1
-            },
-            ]
+            drugs: []
         }
         this.onDelete = this.onDelete.bind(this);
         this.findQuantity = this.findQuantity.bind(this);
@@ -40,8 +30,8 @@ export class ViewCart extends React.Component {
         var newCart = this.state.cart
         var quantity = parseInt(e.target.value)
         newCart.items[i].quantity = quantity;
-        newCart.items[i].cost = quantity * newCart.items[i].cost
-        newCart.total = newCart.items.map(x => x.cost).reduce((x, y) => x + y);
+        newCart.items[i].purchase_price = quantity * newCart.items[i].purchase_price
+        newCart.total = newCart.items.map(x => x.purchase_price).reduce((x, y) => x + y);
         this.setState({cart: newCart})
     }
 
@@ -52,7 +42,7 @@ export class ViewCart extends React.Component {
             newCart.total = 0;
         }
         else {
-            newCart.total = newCart.items.map(x => x.cost).reduce((x, y) => x + y);
+            newCart.total = newCart.items.map(x => x.purchase_price).reduce((x, y) => x + y);
         }
         this.setState({cart: newCart})
     }
@@ -90,22 +80,12 @@ export class ViewCart extends React.Component {
                                   <Link to="cart/inventory"><button type = "button" id = "swap" onClick={ () => this.onDelete(index) }>Swap</button></Link>
                                   </td>
                                   <td id = "item">
-                                <select id = "quantity" placeholder={item.quantity} onChange={(e) => {this.findQuantity(e, index)}}>
-                                    <option value = "default" selected disabled>{item.quantity}</option>
-                                    <option value = "1">1</option>
-                                    <option value = "2">2</option>
-                                    <option value = "3">3</option>
-                                    <option value = "4">4</option>
-                                    <option value = "5">5</option>
-                                    <option value = "6">6</option>
-                                    <option value = "7">7</option>
-                                    <option value = "8">8</option>
-                                    <option value = "9">9</option>
-                                </select>
+                                <input id = "quantity" placeholder={item.quantity} onChange={(e) => {this.findQuantity(e, index)}}>
+                                </input>
                                     <button type = "button" id = "delete" onClick={ () => this.onDelete(index) }>Delete</button>
                                     </td>
 
-                                    <td id = "item">${item.cost}</td>
+                                    <td id = "item">${item.purchase_price.toFixed(2)}</td>
                                 </tr>
                             ))}
                         <tr className = "lastRow">
@@ -115,7 +95,7 @@ export class ViewCart extends React.Component {
                                 </div>
                             </td>
                             <td colSpan = "2"> 
-                            <h3 id = "total">Total: ${this.state.cart.total}</h3> <br/>
+                            <h3 id = "total">Total: ${this.state.cart.total.toFixed(2)}</h3> <br/>
                             </td>
                         </tr>
                         <tr>

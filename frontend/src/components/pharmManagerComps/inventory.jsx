@@ -13,6 +13,7 @@ export class Inventory extends React.Component {
         super(props);
         this.username = localStorage['username']
         this.state = {
+            inventory: [],
             sortDirection : 'desc',
             drugs : [{
                 "id" : 1,
@@ -37,6 +38,16 @@ export class Inventory extends React.Component {
             },
             ]
         }
+        this.formatDate = this.formatDate.bind(this);
+    }
+
+    componentDidMount(){
+        this.pharmManagerRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}))
+    }
+
+    formatDate(myDate){
+        var d = myDate.substring(5,7) + "-" + myDate.substring(8,10) + "-" + myDate.substring(0,4);
+        return d;
     }
 
 
@@ -83,7 +94,7 @@ export class Inventory extends React.Component {
                                     </td>
 
                                     <td id = "item">${item.sell_price}</td>
-                                    <td id = "item">{item.exp_date}</td>
+                                    <td id = "item">{this.formatDate(item.exp_date)}</td>
                                 </tr>
                             ))}
                     </table>
@@ -93,10 +104,5 @@ export class Inventory extends React.Component {
                     </Link> 
            </div>         
         );
-    }
-
-    componentDidMount() {
-        this.pharmManagerRepository.getInventory()
-            .then(drugs => this.setState({ drugs }));
     }
 }
