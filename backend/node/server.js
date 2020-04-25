@@ -153,6 +153,24 @@ app.get('/getInventory/:id', (req, res) => {
   });
 });
 
+//get specific prescription from prescription list
+app.get('/getPrescription/:id', (req, res) => {
+  //user u on u.id = p.patient_id join user u on u.id = p.doctor_id
+  connection.query('SELECT p.id as prescription_id, CONCAT(u.first_name, " ", u.last_name) as patient_name, d.name, p.quantity, p.fill_date, p.create_date, CONCAT(u2.first_name, " ", u2.last_name) AS doctor_name FROM prescriptions p join user u on u.id = p.patient_id join user u2 on u2.id = p.doctor_id join drugs d on d.id = p.drug_id WHERE p.id = ?', [req.params.id], function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
 
 
 //pharmacy revenues
