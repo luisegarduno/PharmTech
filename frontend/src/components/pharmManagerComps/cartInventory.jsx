@@ -44,6 +44,9 @@ export class CartInventory extends React.Component {
     }
 
     render() {
+        if (!this.state.drugs) {
+            return (<h1>Loading...</h1>)
+        }
         return (
            <div className = "body">
                 <nav>
@@ -65,7 +68,7 @@ export class CartInventory extends React.Component {
                                   <td id = "item">{item.name}
                                   <Link to="/pharmManager/cart"><button type = "button" id = "swap" onClick = {e => this.cartService.addToCart(item)}>Select</button></Link>
                                   </td>
-                                    <td id = "item">${item.sell_price}</td>
+                                    <td id = "item">${parseFloat(item.purchase_price).toFixed(2)}</td>
                                 </tr>
                             ))}
                     </table>

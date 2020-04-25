@@ -11,12 +11,12 @@ export class CartService {
         let existing = cart.items.find(x => x.product.id === product.id);
         if (existing) {
             existing.quantity += 1;
-            existing.sell_price = existing.product.sell_price * existing.quantity;
+            existing.purchase_price = existing.product.purchase_price * existing.quantity;
         } else {
-            cart.items.push(new CartItem(product, 1, product.sell_price));
+            cart.items.push(new CartItem(product, 1, product.purchase_price));
         }
 
-        cart.total = cart.items.map(x => x.sell_price).reduce((x, y) => x + y);
+        cart.total = cart.items.map(x => x.purchase_price).reduce((x, y) => x + y);
         window.cart = cart;
     }
 

@@ -1,7 +1,7 @@
 export default class CartItem {
-    constructor(product, quantity, sell_price) {
+    constructor(product, quantity, purchase_price) {
         this.product = product;
         this.quantity = quantity;
-        this.sell_price = sell_price;
+        this.purchase_price = purchase_price;
     }
 }
