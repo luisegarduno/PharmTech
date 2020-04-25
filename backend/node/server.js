@@ -227,6 +227,24 @@ app.get('/getPharmManagerSales', (req, res) => {
   });
 });
 
+//pharmacist manager recent sales pages
+app.get('/getRecentPharmManagerSales', (req, res) => {
+  connection.query('SELECT d.name, p.quantity, d.sell_price FROM `pharmtech`.`prescriptions` p join `pharmtech`.`drugs` d on d.id = p.drug_id WHERE p.fill_date IS NOT NULL ORDER BY p.fill_date DESC LIMIT 5', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
 //pharmacy sales
 app.get('/getSales', (req, res) => {
   connection.query('SELECT u.first_name, u.last_name, d.name, d.sell_price FROM `pharmtech`.`prescriptions` p join `pharmtech`.`drugs` d on d.id = p.drug_id join `pharmtech`.`user` u on u.id = p.patient_id WHERE p.fill_date IS NOT NULL LIMIT 5', function (err, rows, fields) {
