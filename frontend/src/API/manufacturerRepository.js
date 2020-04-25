@@ -12,7 +12,7 @@ export class ManufacturerRepository {
 
     getInventory() {
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}/manufacturerinventory`, this.config)
+            axios.get(`${this.url}/manuinventory`, this.config)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error
@@ -21,9 +21,9 @@ export class ManufacturerRepository {
         });
     }
 
-    markExpired(item) {
+    markExpired(tf, batchid) {
         return new Promise((resolve, reject) => {
-            axios.put(`${this.url}/updateexpiration`, item, this.config)
+            axios.put(`${this.url}/updateexpiration`, tf, batchid, this.config)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error
@@ -32,9 +32,9 @@ export class ManufacturerRepository {
         });
     }
 
-    markBuy(item) {
+    markBuy(tf, batchid) {
         return new Promise((resolve, reject) => {
-            axios.put(`${this.url}/updateOK`, item, this.config)
+            axios.put(`${this.url}/updateOK`, tf, batchid, this.config)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error
@@ -56,7 +56,7 @@ export class ManufacturerRepository {
 
     getSales() {
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}/manufacturersales`)
+            axios.get(`${this.url}/manuinventory`)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error
@@ -67,7 +67,7 @@ export class ManufacturerRepository {
 
     getFinancials() {
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}/manufacturerorders`)
+            axios.get(`${this.url}/manuinventory`)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error

@@ -2,7 +2,7 @@ import React from "react";
 import Logo from "../../images/pharmtechblue.png";
 import Logo2 from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
-import { sha256, sha224 } from 'js-sha256';
+import { sha256 } from 'js-sha256';
 
 export class Login extends React.Component {
 
@@ -43,7 +43,7 @@ export class Login extends React.Component {
                 <div className = "navBar">
                     <nav>
                         <div className = "img">
-                            <img src={Logo2} />
+                            <img src={Logo2} alt="Logo2"/>
                         </div>
                         <h1 className = "welcome">
                             Welcome To PharmTech!
@@ -52,7 +52,7 @@ export class Login extends React.Component {
                 </div>
                 <div className = "base-container">
                     <div className = "contents">
-                        <div className = "img">
+                        <div className = "image">
                             <img src={Logo} alt="Logo"/>
                         </div>
                         <div className="form">

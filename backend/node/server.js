@@ -98,8 +98,27 @@ app.get('/getInventory', (req, res) => {
   });
 });
 
+//inventory for pharmacist and manager
+app.get('/getDrugTypes', (req, res) => {
+  connection.query('SELECT name AS drug_type FROM drug_types;', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
+//gets inventory information for doctor
 app.get('/getDoctorInventory', (req, res) => {
-  connection.query('SELECT batch_id, CONCAT(d.name, " (", drug_id, ")"), quantity, exp_date, t.related FROM inventory AS i LEFT JOIN drugs AS d ON d.id = i.drug_id LEFT JOIN (SELECT drug_type, GROUP_CONCAT(DISTINCT name) AS related FROM drugs GROUP BY drug_type) AS t ON d.drug_type = t.drug_type;', function (err, rows, fields) {
+  connection.query('SELECT batch_id, d.name, i.drug_id, quantity, exp_date, t.name AS drug_type, r.related FROM inventory AS i LEFT JOIN drugs AS d ON d.id = i.drug_id LEFT JOIN (SELECT drug_type, GROUP_CONCAT(DISTINCT name) AS related FROM drugs GROUP BY drug_type) AS r ON d.drug_type = r.drug_type JOIN drug_types AS t ON t.id = d.drug_type;', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -192,7 +211,7 @@ app.get('/getSales', (req, res) => {
 
 //pharmacist incoming orders
 app.get('/pharmacyincoming', (req, res) => {
-  connection.query('SELECT * FROM `pharmtech`.`perscriptions` WHERE fill_date IS NULL', function (err, rows, fields) {
+  connection.query('SELECT * FROM `pharmtech`.`prescriptions` WHERE fill_date IS NULL', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -210,7 +229,7 @@ app.get('/pharmacyincoming', (req, res) => {
 
 //pharmacist outgoing orders
 app.get('/pharmacyoutgoing', (req, res) => {
-  connection.query('SELECT * FROM `pharmtech`.`perscriptions` WHERE fill_date IS NOT NULL', function (err, rows, fields) {
+  connection.query('SELECT * FROM `pharmtech`.`prescriptions` WHERE fill_date IS NOT NULL', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -358,7 +377,7 @@ app.post('/placeOrder', (req, res) => {
 // PUT 
 //update expirations on manu inventory
 app.put('/updateExpiration', async (req, res) => {
-  con.query("UPDATE `pharmtech`.`manufacturer_inventory` SET `expired` = ? WHERE `batch_id` = ?", [req.body.expired, req.body.batch_id], function (err, result, fields) {
+  connection.query("UPDATE `pharmtech`.`manufacturer_inventory` SET `expired` = ? WHERE `batch_id` = ?", [req.body.expired, req.body.batch_id], function (err, result, fields) {
   if (err) throw err;
   res.end(JSON.stringify(result)); 
   });
@@ -367,7 +386,7 @@ app.put('/updateExpiration', async (req, res) => {
 // PUT 
 //update sellabilty on manu inventory
 app.put('/updateOK', async (req, res) => {
-  con.query("UPDATE `pharmtech`.`manufacturer_inventory` SET `ok_to_sell` = ? WHERE `batch_id` = ?", [req.body.expired, req.body.batch_id], function (err, result, fields) {
+  connection.query("UPDATE `pharmtech`.`manufacturer_inventory` SET `ok_to_sell` = ? WHERE `batch_id` = ?", [req.body.expired, req.body.batch_id], function (err, result, fields) {
   if (err) throw err;
   res.end(JSON.stringify(result)); 
   });
@@ -392,7 +411,7 @@ app.put('/putQuantity', async (req, res) => {
   //var id = req.params.drugID;
   var quantity = req.body.quantity;
 
-  con.query("UPDATE `pharmtech`.`inventory` SET `quantity` = ? WHERE `productCode` = ?", [req.body.quantity, req.body.drugID],function (err, result, fields) {
+  connection.query("UPDATE `pharmtech`.`inventory` SET `quantity` = ? WHERE `productCode` = ?", [req.body.quantity, req.body.drugID],function (err, result, fields) {
   if (err) throw err;
   //console.log(result);
   res.end(JSON.stringify(result)); 
@@ -403,7 +422,7 @@ app.put('/putQuantity', async (req, res) => {
 //pharmacist delete inventory item
 app.delete('/delete/:drugID', async (req, res) => {
   
-  con.query("DELETE FROM `pharmtech`.`inventory` WHERE `drug_id` = ?", [req.params.drugID], function (err, result, fields) {
+  connection.query("DELETE FROM `pharmtech`.`inventory` WHERE `drug_id` = ?", [req.params.drugID], function (err, result, fields) {
 		if (err) 
 			return console.error(error.message);
 		res.end(JSON.stringify(result)); 

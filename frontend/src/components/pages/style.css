@@ -4,6 +4,9 @@ nav {
     padding-top: 0.6rem;
 }
 
+.img img{
+    width: 30%;
+}
 .welcome {
     color: white;
     float: right;
@@ -73,6 +76,10 @@ nav {
 
 #menuButton:hover {
     background-color: rgb(74,100,168, 0.8);
+}
+
+.capWord {
+    text-transform: capitalize;
 }
 
 /*specfic buttons for manufacturer dashboard*/

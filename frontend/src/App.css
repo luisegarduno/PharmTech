@@ -56,3 +56,24 @@
     transform: rotate(360deg);
   }
 }
+
+.foot {
+  position: fixed;
+  height: 3em;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(74,100,168);
+  color: white;
+  text-align: left;
+}
+
+.footText {
+  margin-left: 1em;
+  color: white;
+  font-size: x-large;
+}
+
+.footText:hover {
+  direction: none;
+}

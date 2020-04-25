@@ -12,7 +12,18 @@ export class DoctorRepository {
 
     getInventory() {
         return new Promise((resolve, reject) => {
-            axios.get(`${this.url}/getInventory`)
+            axios.get(`${this.url}/getDoctorInventory`)
+                .then(x => resolve(x.data))
+                .catch(x => {
+                    alert(x); // handle error
+                    reject(x);
+                });
+        });
+    }
+
+    getDrugTypes() {
+        return new Promise((resolve, reject) => {
+            axios.get(`${this.url}/getDrugTypes`)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error

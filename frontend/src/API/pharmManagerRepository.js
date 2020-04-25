@@ -24,7 +24,7 @@ export class PharmManagerRepository {
 
     getInventory(){
         return new Promise((resolve,reject) =>{
-            axios.get('http://localhost:8000/getInventory')
+            axios.get('http://localhost:8000/pharmacyinventory')
                 .then(x => {
                     resolve(x.data);
                 })
