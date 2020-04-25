@@ -27,7 +27,7 @@ export class PCart extends React.Component{
             </div>
                 <div>
                 <Link to="/Pharmacist">
-                    <button className = "return">Return to Homepage</button>
+                    <button className = "btn btn-info mb-5 ml-5">Return to Homepage</button>
                 </Link> 
             </div> 
         </div>        

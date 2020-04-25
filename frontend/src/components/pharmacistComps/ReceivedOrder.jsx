@@ -23,11 +23,11 @@ export class ReceivedOrder extends React.Component {
             </nav>
            </div>
             <div>
-                <h2>Received Order List</h2>
+                <h2  className = "ml-3 mt-1" >Received Order List</h2>
             </div>
            <div>
                 <Link to="/Pharmacist">
-                    <button className = "return">Return to Homepage</button>
+                    <button className = "btn btn-info mb-5 ml-5">Return to Homepage</button>
                 </Link> 
             </div> 
            </div>

@@ -9258,6 +9258,11 @@ react-dom@^16.12.0, react-dom@^16.13.1:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
+react-edit-inline2@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-edit-inline2/-/react-edit-inline2-1.0.2.tgz#db5c2204f03bd57fe1bd791184e46a2d87e63e55"
+  integrity sha512-5+sFBpfoHNf8tj988mbtLJhZUtH9brIHO5mNGyshW95wVmPGvnzoOuLuK2hG+v15o6uKe5aEKS6j+cmj/zwDbw==
+
 react-error-overlay@^6.0.7:
   version "6.0.7"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.7.tgz#1dcfb459ab671d53f660a991513cb2f0a0553108"
