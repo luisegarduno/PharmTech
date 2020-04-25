@@ -307,3 +307,26 @@ table {
     height: 2em;
     font-size: xx-large;
 }
+
+
+#emptycart {
+    margin-top: 3em;
+    text-align: center;
+}
+
+#addItem {
+    color: white;
+    background-color: #4a64a8;
+    border-style: solid;
+    border-color: #233050;
+    border-width: .05em;
+    border-radius: .1em;
+    transition: all 250ms ease-in-out;
+    text-align: center;
+    font-size: x-large;
+    cursor: pointer;
+}
+
+#addItem:hover {
+    background-color: #233050;
+}

@@ -37,7 +37,7 @@ export class Login extends React.Component {
     onLogin() {
         let password = this.state.password
         password = sha256(password);
-        this.loginRepository.verifyUser(this.state.username, this.state.password, this.state.loginType)
+        this.loginRepository.verifyUser(this.state.username, password, this.state.loginType)
         localStorage.setItem('username', this.state.username);
     }
 

@@ -30,7 +30,20 @@ export class PharmManagerRepository {
 
     getPharmManagerSales(){
             return new Promise((resolve,reject) =>{
-                axios.get('http://localhost:8000//getPharmManagerSales')
+                axios.get('http://localhost:8000/getPharmManagerSales')
+                    .then(x => {
+                        resolve(x.data);
+                    })
+                    .catch(x => {
+                        alert(x);
+                        reject(x);
+                    })
+            })
+        }
+
+        getRecentPharmManagerSales(){
+            return new Promise((resolve,reject) =>{
+                axios.get('http://localhost:8000/getRecentPharmManagerSales')
                     .then(x => {
                         resolve(x.data);
                     })

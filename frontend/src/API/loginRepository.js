@@ -15,7 +15,7 @@ export class LoginRepository {
             })
         }
 
-    verifyUser(){
+        verifyUser(username, password, loginType){
             return new Promise((resolve,reject) =>{
                 axios.get('http://localhost:8000/verifyUser')
                     .then(x => {

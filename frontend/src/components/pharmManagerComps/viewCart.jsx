@@ -58,8 +58,22 @@ export class ViewCart extends React.Component {
 
     render() {
         if (!this.state.cart.items) {
-            var newCart = this.cartService.getCart
-            this.setState({cart: newCart})
+            return (
+                <div className = "body">
+                <nav>
+                <div className = "img" id = "logo">
+                        <img src={Logo} alt="Logo"/>
+                </div>
+                <h1 className = "yourCart">
+                        Your Cart
+                </h1>
+                </nav>
+                <div id = "emptycart">
+                <h1>Your Cart is Empty</h1>
+                <Link to="cart/inventory"><button type = "button" id = "addItem">Add Items Here</button></Link>
+                </div>
+                </div>
+            )
         }
         return ( 
            <div className = "body">
