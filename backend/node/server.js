@@ -265,7 +265,7 @@ app.get('/manufacturerinventory', (req, res) => {
 
 //outgoing orders for manufacturer
 app.get('/manufacturerorders', (req, res) => { 
-  connection.query('SELECT * FROM `pharmtech`.`inventory_orders` io join `pharmtech`.`drugs` d on d.id = io.drug_id order by d.id', function (err, rows, fields) {
+  connection.query('SELECT * FROM `pharmtech`.`inventory_orders` io join `pharmtech`.`drugs` d on d.id = io.drug_id order by io.id', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
