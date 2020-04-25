@@ -98,6 +98,25 @@ app.get('/getInventory', (req, res) => {
   });
 });
 
+//inventory for pharmacist and manager
+app.get('/getDrugTypes', (req, res) => {
+  connection.query('SELECT name AS drug_type FROM drug_types;', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
+//gets inventory information for doctor
 app.get('/getDoctorInventory', (req, res) => {
   connection.query('SELECT batch_id, d.name, i.drug_id, quantity, exp_date, t.name AS drug_type, r.related FROM inventory AS i LEFT JOIN drugs AS d ON d.id = i.drug_id LEFT JOIN (SELECT drug_type, GROUP_CONCAT(DISTINCT name) AS related FROM drugs GROUP BY drug_type) AS r ON d.drug_type = r.drug_type JOIN drug_types AS t ON t.id = d.drug_type;', function (err, rows, fields) {
     if (err) {
