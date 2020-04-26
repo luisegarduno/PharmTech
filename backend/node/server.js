@@ -393,6 +393,25 @@ app.get('/pharmacylist', (req, res) => {
   });
 });
 
+// Get list of prescriptions for specific user 
+app.get('/pharmacylist/:id', (req, res) => {
+  //user u on u.id = p.patient_id join user u on u.id = p.doctor_id
+  connection.query('SELECT u.id AS PatientID, CONCAT(u.first_name, " ", u.last_name) AS Patient, d.name AS PrescriptionName, d.id AS DrugID, CONCAT(p.quantity,d.unit_measure) AS Quantity FROM prescriptions p JOIN user u ON u.id = p.patient_id JOIN drugs d ON d.id = p.drug_id WHERE u.id = ?', [req.params.id], function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
 
 
 //get cart
