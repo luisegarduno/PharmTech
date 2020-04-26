@@ -47,7 +47,7 @@ app.get('/', (req, res) => {
 
 //get user
 app.post('/verifyUser', (req, res) => {
-  connection.query('SELECT IF(EXISTS(SELECT * FROM user WHERE username = ? AND hashpass = ? AND userType_id = ?), (SELECT first_name AS result FROM user WHERE hashpass = ?), 0) AS result;', [req.body.username, req.body.password, req.body.type, req.body.password], function (err, rows, fields) {
+  connection.query('SELECT EXISTS(SELECT * FROM user WHERE username = ? AND hashpass = ? AND userType_id = ?) AS result;', [req.body.username, req.body.password, req.body.type], function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -80,7 +80,7 @@ app.put('/registerUser', (req, res) => {
 
 //inventory for pharmacist and manager
 app.get('/getInventory', (req, res) => {
-  connection.query('SELECT d.name, i.quantity, d.unit_measure, i.exp_date, d.sell_price FROM inventory i join drugs d on i.drug_id = d.id', function (err, rows, fields) {
+  connection.query('SELECT d.name, d.id ,i.quantity, d.unit_measure, i.exp_date, d.sell_price FROM inventory i join drugs d on i.drug_id = d.id', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -151,6 +151,25 @@ app.get('/getInventory/:id', (req, res) => {
   });
 });
 
+//inventory for pharmacist and manager
+app.get('/pharmacyInventory', (req, res) => {
+  connection.query('SELECT d.name, d.id, i.quantity, i.exp_date FROM inventory i join drugs d on i.drug_id = d.id', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
+
 //get specific prescription from prescription list
 app.get('/getPrescription/:id', (req, res) => {
   //user u on u.id = p.patient_id join user u on u.id = p.doctor_id
@@ -206,6 +225,8 @@ app.get('/getExpenses', (req, res) => {
     }
   });
 });
+
+
 
 //pharmacist manager sales pages
 app.get('/getPharmManagerSales', (req, res) => {
