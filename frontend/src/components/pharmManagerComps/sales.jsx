@@ -2,8 +2,11 @@ import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 import _ from 'lodash';
+import { PharmManagerRepository } from "../../API";
 
 export class Sales extends React.Component {
+
+    pharmManagerRepository = new PharmManagerRepository();
 
     username;
     
@@ -20,29 +23,13 @@ export class Sales extends React.Component {
     state = {
         sortDirection : 'desc',
         selectedDrug: 'none',
-        sales: [
-            {
-                "id" : 1,
-                "name": "Symbyzide Parodafinil",
-                "sold_units": 10,
-                "sell_price": 7,
-                "total_price": 0
-            },
-            {
-                "id" : 2,
-                "name": "Ibuprofen",
-                "sold_units": 18,
-                "sell_price": 4,
-                "total_price": 0
-            },
-            {
-                "id" : 3,
-                "name": "Cephalexin",
-                "sold_units": 24,
-                "sell_price": 12,
-                "total_price": 0
-            },
-        ]
+        recentSales: [],
+        sales: []
+    }
+
+    componentDidMount(){
+        this.pharmManagerRepository.getPharmManagerSales().then(Sale => this.setState({sales : Sale.data}))
+        this.pharmManagerRepository.getRecentPharmManagerSales().then(Sale => this.setState({recentSales : Sale.data}))
     }
 
     sortBy(field) {        
@@ -56,6 +43,21 @@ export class Sales extends React.Component {
             this.setState({sortDirection: 'asc'})
             this.setState({ 
                 sales: _.orderBy(this.state.sales, field, this.state.sortDirection) 
+            });
+        }
+    }
+
+    recentsortBy(field) {        
+        if (this.state.sortDirection == 'asc') {
+            this.setState({sortDirection: 'desc'})
+            this.setState({ 
+                recentSales: _.orderBy(this.state.recentSales, field, this.state.sortDirection) 
+            });
+        }
+        if (this.state.sortDirection == 'desc') {
+            this.setState({sortDirection: 'asc'})
+            this.setState({ 
+                recentSales: _.orderBy(this.state.recentSales, field, this.state.sortDirection) 
             });
         }
     }
@@ -75,21 +77,21 @@ export class Sales extends React.Component {
                 <div className = "itemsTable">
                     <table>
                         <tr>
-                            <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'name')}>Item</button></th>
-                            <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'sold_units')}>Units Sold</button></th>
-                            <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'sell_price')}>Cost Per Unit</button></th>
+                            <th><button type = "button" id = "expDate" onClick={this.recentsortBy.bind(this, 'name')}>Item</button></th>
+                            <th><button type = "button" id = "expDate" onClick={this.recentsortBy.bind(this, 'quantity')}>Units Sold</button></th>
+                            <th><button type = "button" id = "expDate" onClick={this.recentsortBy.bind(this, 'sell_price')}>Cost Per Unit</button></th>
                             <th>Total Price</th>
                         </tr>
-                        {this.state.sales.map(item => (
+                        {this.state.recentSales.map(item => (
                                 <tr>
                                   <td id = "item">{item.name}
                                   </td>
                                   <td id = "item">
-                                      {item.sold_units}
+                                      {item.quantity}
                                     </td>
 
-                                    <td id = "item">${item.sell_price}</td>
-                                    <td id = "item">${item.sold_units * item.sell_price}</td>
+                                    <td id = "item">${item.sell_price.toFixed(2)}</td>
+                                    <td id = "item">${(item.quantity * item.sell_price).toFixed(2)}</td>
                                 </tr>
                             ))}
                     </table>
@@ -98,11 +100,23 @@ export class Sales extends React.Component {
                 <div className = "itemsTable">
                     <table>
                         <tr>
-                            <th>Item</th>
-                            <th>Units Sold</th>
-                            <th>Cost Per Unit</th>
+                            <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'name')}>Item</button></th>
+                            <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'quantity')}>Units Sold</button></th>
+                            <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'sell_price')}>Cost Per Unit</button></th>
                             <th>Total Price</th>
                         </tr>
+                        {this.state.sales.map(item => (
+                                <tr>
+                                  <td id = "item">{item.name}
+                                  </td>
+                                  <td id = "item">
+                                      {item.quantity}
+                                    </td>
+
+                                    <td id = "item">${item.sell_price.toFixed(2)}</td>
+                                    <td id = "item">${(item.quantity * item.sell_price).toFixed(2)}</td>
+                                </tr>
+                            ))}
                     </table>
                 </div>
                     <input type = "text" placeholder="Search for a drug..." id ="range" className = "searchBar" autoCorrect={true} onChange={this.findDrug}></input>
@@ -127,9 +141,9 @@ export class Sales extends React.Component {
                                                 return (
                                                     <>
                                                     <td id = "item">{item.name}</td>
-                                                    <td id = "item">{item.sold_units}</td>
-                                                    <td id = "item">${item.sell_price}</td>
-                                                    <td id = "item">${item.sold_units * item.sell_price}</td>
+                                                    <td id = "item">{item.quantity}</td>
+                                                    <td id = "item">${item.sell_price.toFixed(2)}</td>
+                                                    <td id = "item">${(item.quantity * item.sell_price).toFixed(2)}</td>
                                                     </>
                                                 )
                                             }

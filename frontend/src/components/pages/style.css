@@ -7,6 +7,10 @@ nav {
 .img img{
     width: 30%;
 }
+
+#logo{
+    width: 100%;
+}
 .welcome {
     color: white;
     float: right;
@@ -146,6 +150,7 @@ table {
 
 
 #quantity {
+    width: 3em;
     font-size: x-large;
 }
 
@@ -234,7 +239,9 @@ table {
 }
 
 .return {
-    margin: 1em;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 3em;
     float: left;
     position: relative;
     color: white;
@@ -301,4 +308,27 @@ table {
     border-radius: .3em;
     height: 2em;
     font-size: xx-large;
+}
+
+
+#emptycart {
+    margin-top: 3em;
+    text-align: center;
+}
+
+#addItem {
+    color: white;
+    background-color: #4a64a8;
+    border-style: solid;
+    border-color: #233050;
+    border-width: .05em;
+    border-radius: .1em;
+    transition: all 250ms ease-in-out;
+    text-align: center;
+    font-size: x-large;
+    cursor: pointer;
+}
+
+#addItem:hover {
+    background-color: #233050;
 }
