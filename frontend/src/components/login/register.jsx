@@ -16,7 +16,7 @@ export class Register extends React.Component {
             password: "",
             confirmPassword: "",
             username: "",
-            loginType: "",
+            loginType: "0",
             checkPasswords: "",
         };
         this.getFirstName = this.getFirstName.bind(this);
@@ -116,7 +116,7 @@ export class Register extends React.Component {
                             </div>
                             <div className = "loginType">
                                 <select className="form-control mx-auto" id = "type" onChange={this.findLoginType}>
-                                    <option value = "default">Select an account type...</option>
+                                    <option value = "0">Select an account type...</option>
                                     <option value = "2">Pharmacy Manager</option>
                                     <option value = "4">Manufacturer</option>
                                     <option value = "1">Pharmacist</option>
@@ -127,7 +127,14 @@ export class Register extends React.Component {
                     </div>
                     <div className="footer">
                         {(() => {
-                        if (this.state.loginType === "2" && this.state.firstName && this.state.lastName && this.state.email && this.state.username && this.state.password && this.state.confirmPassword ) {
+                        if (this.state.loginType === "0") {
+                            return (
+                                <div>
+                                    <button type = "button" className="btn coloredBtn button disabled">Create Account</button>
+                                </div>
+                            )
+                        } 
+                        else if (this.state.loginType === "2" && this.state.firstName && this.state.lastName && this.state.email && this.state.username && this.state.password && this.state.confirmPassword ) {
                             return (
                                 <div>
                                     <button type = "button" className="btn coloredBtn button" onClick ={this.onRegister}>Create Account</button>

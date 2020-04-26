@@ -92,7 +92,7 @@ export class Login extends React.Component {
                             </div>
                             <div className = "loginType">
                                 <select className="form-control mx-auto" id = "type" onChange={this.findLoginType}>
-                                    <option value = "default" >Select an account type...</option>
+                                    <option value = "0" >Select an account type...</option>
                                     <option value = "2">Pharmacy Manager</option>
                                     <option value = "4">Manufacturer</option>
                                     <option value = "1">Pharmacist</option>
