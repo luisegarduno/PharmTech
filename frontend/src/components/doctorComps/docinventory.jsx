@@ -2,6 +2,7 @@ import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 import { DoctorRepository } from "../../API";
+import _ from 'lodash';
 
 export class Docinventory extends React.Component {
 
@@ -12,21 +13,33 @@ export class Docinventory extends React.Component {
     constructor(props) {
         super(props);
         this.username = localStorage['username']
-        this.state = {
-            drugs: [],
-            drugtypes: []
-        }
         this.formatQuantity = this.numberWithCommas.bind(this);
         this.formatDate = this.formatDate.bind(this);
     }
 
-    componentDidMount(){
-        this.doctorRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}));
-        this.doctorRepository.getDrugTypes().then(Type => this.setState({drugtypes : Type.data}));      
+    state = {
+        drugs: [],
+        drugtypes: [],
+        backup: [],
+        selectedOption: 'all',
     }
 
-    pickFilter(filterBy) {
-        this.currInventory.filter((filterBy,drug_type) => drug_type = filterBy);
+    componentDidMount(){
+        this.doctorRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}));
+        this.doctorRepository.getInventory().then(Drug => this.setState({backup : Drug.data}));
+        this.doctorRepository.getDrugTypes().then(Type => this.setState({drugtypes : Type.data}));
+    }
+
+    sortBy(field) {
+        if (field == "all") {
+            this.doctorRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}));
+        } else {
+            this.setState({drugs: this.state.backup})
+            this.setState({ 
+                drugs: _.filter(this.state.backup, ['drug_type', field])
+            });
+            this.setState({selectedOption: field})
+        }
     }
 
     numberWithCommas(x) {
@@ -51,15 +64,15 @@ export class Docinventory extends React.Component {
             </nav>
             <h1 className="tableHeader">Filter for Drug Type</h1>
                 <form className="sortBy">
-                    <input type="radio" id="sortNum" name="sort" value="all" onClick={e => this.pickFilter(e, 0)} checked></input>
-                    <label htmlFor="sortNum">All</label>
+                    <input type="radio" id="filterAll" name="filter" value="all" onClick={this.sortBy.bind(this, 'all')} checked={this.state.selectedOption === 'all'}></input>
+                    <label htmlFor="filterAll">All</label>
                     {this.state.drugtypes.map(item => (
-                        <><input type="radio" id="sort" name="sort" value={item.drug_type} onClick={e => this.pickFilter(e, item.drug_type)}></input>
-                        <label htmlFor="sortNum" className="capWord">{item.drug_type}</label></>
+                        <><input type="radio" id={item.drug_type} name="filter" value="1" onClick={this.sortBy.bind(this, item.drug_type)} checked={this.state.selectedOption === item.drug_type}></input>
+                        <label htmlFor={item.drug_type} className="capWord">{item.drug_type}</label></>
                     ))}
                 </form>
             <h1 className = "tableHeader">All Inventory</h1>
-                <div className = "itemsTable">
+                <div className = "itemsTable scrollTableSort">
                     <table>
                         <thead><tr className="headerFixed">
                             <th>Drug Type</th>
