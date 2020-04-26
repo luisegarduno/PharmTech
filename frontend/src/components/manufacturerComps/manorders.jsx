@@ -95,7 +95,7 @@ export class Manorders extends React.Component {
                         </tr></thead>
                         <tbody>
                         {this.state.orders.map(item => (
-                            <tr>
+                            <tr key={item.id}>
                                 <td id="item">{item.id}</td>
                                 <td id="item">{this.formatDate(item.order_date)}</td>
                                 <td id="item">{this.getStatus(item.fulfill_date)}</td>
