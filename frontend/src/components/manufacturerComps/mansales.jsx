@@ -89,10 +89,10 @@ export class Mansales extends React.Component {
                     </table>
                 </div>
                 <Link to="/manufacturer">
-                    <button className = "return">Return to Homepage</button>
+                    <button className = "btn coloredBtn ml-3">Return to Homepage</button>
                     </Link> 
                 <Link to="manfinancial">
-                    <button className = "return" id = "viewInventory">View Financial Info</button>
+                    <button className = "btn btn-secondary mr-3" id = "viewInventory">View Financial Info</button>
                     </Link> 
            </div>
         );

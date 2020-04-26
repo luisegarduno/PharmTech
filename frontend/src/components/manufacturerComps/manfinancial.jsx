@@ -115,7 +115,7 @@ export class Manfinancial extends React.Component {
                         </div>
                 </div>
                 <Link to="/manufacturer">
-                    <button className = "return">Return to Homepage</button>
+                    <button className = "btn coloredBtn ml-3">Return to Homepage</button>
                     </Link> 
            </div>
         );

@@ -234,7 +234,7 @@ app.get('/pharmacyInventory/:id', (req, res) => {
 // Returns details for all prescriptions given to patientID
 app.get('/getPrescription/:id', (req, res) => {
  
-  connection.query('SELECT p.id as prescription_id, CONCAT(u.first_name, " ", u.last_name) as patient_name, d.name, p.quantity, p.fill_date, p.create_date, CONCAT(u2.first_name, " ", u2.last_name) AS doctor_name FROM prescriptions p join user u on u.id = p.patient_id join user u2 on u2.id = p.doctor_id join drugs d on d.id = p.drug_id WHERE p.id = ?', [req.params.id], function (err, rows, fields) {
+  connection.query('SELECT p.id as prescription_id, CONCAT(u.first_name, " ", u.last_name) as patient_name, d.name, p.quantity, p.fill_date, p.create_date, CONCAT(u2.first_name, " ", u2.last_name) AS doctor_name FROM `pharmtech`.`prescriptions` p join user u on u.id = p.patient_id join user u2 on u2.id = p.doctor_id join `pharmtech`.`drugs` d on d.id = p.drug_id WHERE p.id = ?', [req.params.id], function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -383,7 +383,7 @@ app.get('/pharmacyoutgoing', (req, res) => {
 
 //pharmacist received orders
 app.get('/pharmacyreceiving', (req, res) => {
-  connection.query('SELECT p.create_date, CONCAT(u.first_name, " ", u.last_name) AS Patient, d.name, p.quantity, p.fill_date, CONCAT(u2.first_name, " ", u2.last_name) AS doctor_name FROM prescriptions p JOIN user u ON u.id = p.patient_id JOIN user u2 ON u2.id = p.doctor_id JOIN drugs d on d.id = p.drug_id ORDER BY p.create_date DESC', function (err, rows, fields) {
+  connection.query('SELECT p.create_date, CONCAT(u.first_name, " ", u.last_name) AS Patient, d.name, p.quantity, p.fill_date, CONCAT(u2.first_name, " ", u2.last_name) AS doctor_name FROM `pharmtech`.`prescriptions` p JOIN user u ON u.id = p.patient_id JOIN user u2 ON u2.id = p.doctor_id JOIN drugs d on d.id = p.drug_id ORDER BY p.create_date DESC', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -401,7 +401,7 @@ app.get('/pharmacyreceiving', (req, res) => {
 
 // Returns all prescriptions sorted out by Drug Type
 app.get('/pharmacylist', (req, res) => {
-  connection.query('SELECT dt.name AS Title, CONCAT(u.first_name, " ", u.last_name) AS Patient, d.name AS PrescriptionName, d.id AS DrugID, CONCAT(p.quantity,d.unit_measure) AS Quantity FROM prescriptions p JOIN user u ON u.id = p.patient_id JOIN drugs d ON d.id = p.drug_id LEFT JOIN drug_types dt ON d.drug_type = dt.id ORDER BY dt.name ASC', function (err, rows, fields) {
+  connection.query('SELECT dt.name AS Title, CONCAT(u.first_name, " ", u.last_name) AS Patient, p.id AS PrescriptionID, d.name AS PrescriptionName, d.id AS DrugID, CONCAT(p.quantity,d.unit_measure) AS Quantity FROM `pharmtech`.`prescriptions` p JOIN user u ON u.id = p.patient_id JOIN drugs d ON d.id = p.drug_id LEFT JOIN drug_types dt ON d.drug_type = dt.id ORDER BY dt.name ASC', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -419,7 +419,7 @@ app.get('/pharmacylist', (req, res) => {
 
 // Get list of prescriptions for specific user 
 app.get('/pharmacylist/:id', (req, res) => {
-  connection.query('SELECT u.id AS PatientID, CONCAT(u.first_name," ", u.last_name) AS Patient, d.name AS PrescriptionName, d.id AS DrugID, CONCAT(p.quantity," ",d.unit_measure) AS Quantity FROM prescriptions p JOIN user u ON u.id = p.patient_id JOIN drugs d ON d.id = p.drug_id WHERE u.id = ?', [req.params.id], function (err, rows, fields) {
+  connection.query('SELECT u.id AS PatientID, CONCAT(u.first_name," ", u.last_name) AS Patient,p.id AS PrescriptionID, d.name AS PrescriptionName, d.id AS DrugID, CONCAT(p.quantity," ",d.unit_measure) AS Quantity FROM prescriptions p JOIN user u ON u.id = p.patient_id JOIN drugs d ON d.id = p.drug_id WHERE u.id = ?', [req.params.id], function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -534,19 +534,6 @@ app.post('/addInventory', (req, res) => {
   connection.query('INSERT INTO `pharmtech`.`inventory` (drug_id, quantity, exp_date) VALUES(?, ?, ?)', [req.body.drug_id, req.body.quantity, req.body.exp_date], function (err, rows, fields) {
     if (err){
       logger.error("Problem inserting into inventory table");
-    }
-    else {
-      res.status(200).send(`added to the table!`);
-    }
-  });
-});
-
-//POST 
-app.post('/pharmacyInadd', (req, res) => {
-
-  connection.query('INSERT INTO `pharmtech`.`inventory` (drug_id, quantity, exp_date) VALUES(?, ?, ?)', [req.body.drug_id, req.body.quantity, req.body.exp_date], function (err, rows, fields) {
-    if (err){
-      logger.error("Problem inserting into pharmacy inventory table");
     }
     else {
       res.status(200).send(`added to the table!`);

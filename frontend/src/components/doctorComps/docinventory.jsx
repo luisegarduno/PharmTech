@@ -110,7 +110,7 @@ export class Docinventory extends React.Component {
                     </table>
                 </div>
                 <Link to="/doctor">
-                    <button className = "return">Return to Homepage</button>
+                    <button className = "btn coloredBtn ml-3">Return to Homepage</button>
                     </Link> 
            </div>
         );

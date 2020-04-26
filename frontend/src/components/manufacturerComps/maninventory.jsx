@@ -1,14 +1,16 @@
-import React from "react";
+import React, {Component} from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import { ManufacturerRepository } from "../../API";
 import _ from 'lodash';
+import axios from 'axios';
 
 export class Maninventory extends React.Component {
 
     manufacturerRepository = new ManufacturerRepository();
 
     username;
+    intervalID;
 
     constructor(props) {
         super(props);
@@ -19,23 +21,30 @@ export class Maninventory extends React.Component {
         }
         this.yesno = this.yesno.bind(this);
         this.opposite = this.opposite.bind(this);
-        this.toggleExpired = this.toggleExpired.bind(this);
-        this.toggleSell = this.toggleSell.bind(this);
         this.formatDate = this.formatDate.bind(this);
     }
 
-    componentDidMount() {
+    getData = () => {
         this.manufacturerRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}))
     }
 
+    componentDidMount() {
+        this.getData();
+        this.intervalID = setInterval(this.getData.bind(this), 500);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.intervalID);
+      }
+
     sortBy(field) {      
-        if (this.state.sortDirection == 'asc') {
+        if (this.state.sortDirection === 'asc') {
             this.setState({sortDirection: 'desc'})
             this.setState({ 
                 drugs: _.orderBy(this.state.drugs, field, this.state.sortDirection)
             });
         }
-        if (this.state.sortDirection == 'desc') {
+        if (this.state.sortDirection === 'desc') {
             this.setState({sortDirection: 'asc'})
             this.setState({ 
                 drugs: _.orderBy(this.state.drugs, field, this.state.sortDirection)
@@ -44,7 +53,7 @@ export class Maninventory extends React.Component {
     }
 
     yesno(value) {
-        if (value == true) {
+        if (value == 1) {
             return "Yes";
         } else {
             return "No";
@@ -52,7 +61,7 @@ export class Maninventory extends React.Component {
     }
 
     opposite(value) {
-        if (value == true) {
+        if (value == 1) {
             return "No";
         } else {
             return "Yes";
@@ -60,24 +69,19 @@ export class Maninventory extends React.Component {
     }
 
     toggleExpired(expired, batchid) {
-        var tf = false; //0 = true
+        var tf = 0; //0 = false
         if (expired == 0) {
-            tf = true;
+            tf = 1;
         }
-        // console.log(expired +" " + tf + " " + batchid);
-        this.manufacturerRepository.markExpired(tf, batchid);
-        // this.manufacturerRepository.markExpired(tf, batchid).then(this.manufacturerRepository.getInventory().then(Drug => this.setState({drugs:Drug.data})))
-        // this.manufacturerRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}));
+        axios.put('http://localhost:8000/updateExpiration', {expired: tf, batch_id: batchid})
     }
 
     toggleSell(oksell, batchid) {
-        var tf = false; //0 = true
+        var tf = 0; //0 = false
         if (oksell == 0) {
-            tf = true;
+            tf = 1;
         }
-        // console.log(oksell +" " + tf + " " + batchid);
-        this.manufacturerRepository.markBuy(false, batchid);
-        // this.manufacturerRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}));
+        axios.put('http://localhost:8000/updateOK', {expired: tf, batch_id: batchid})
     }
 
     formatDate(myDate){
@@ -112,15 +116,15 @@ export class Maninventory extends React.Component {
                                 <td id="item">{item.name}</td>
                                 <td id="item">{this.formatDate(item.exp_date)}</td>
                                 <td id="item">{item.aquired_from}</td>
-                                <td id="item">{this.yesno(item.expired)} {item.expired} {item.batch_id} <button className="btn coloredBtn" onClick={this.toggleExpired(item.expired, item.batch_id)}>Mark {this.opposite(item.expired)}</button></td>
-                                <td id="item">{this.yesno(item.ok_to_sell)} {item.expired} {item.batch_id} <button className="btn coloredBtn" onClick={this.toggleSell(item.ok_to_sell, item.batch_id)}>Mark {this.opposite(item.ok_to_sell)}</button></td>
+                                <td id="item">{this.yesno(item.expired)} <button className="btn btn-secondary" onClick={this.toggleExpired.bind(this, item.expired, item.batch_id)}>Mark {this.opposite(item.expired)}</button></td>
+                                <td id="item">{this.yesno(item.ok_to_sell)} <button className="btn btn-secondary" onClick={this.toggleSell.bind(this, item.ok_to_sell, item.batch_id)}>Mark {this.opposite(item.ok_to_sell)}</button></td>
                             </tr>
                         ))}
                         </tbody>
                     </table>
                 </div>
                 <Link to="/manufacturer">
-                    <button className = "return">Return to Homepage</button>
+                    <button className = "btn coloredBtn ml-3">Return to Homepage</button>
                     </Link> 
            </div>
         );
