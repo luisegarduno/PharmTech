@@ -77,7 +77,7 @@ export class Inventory extends React.Component {
                             Inventory                  
                     </h1>
                 </nav>
-                <div className = "itemsTable">
+                <div className = "itemsTable tableSort">
                     <table>
                         <tr>
                         <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'name')}>Item Name</button></th>
