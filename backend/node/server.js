@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
 });
 
 //get user
-app.post('/verifyUser', (req, res) => {
+app.get('/verifyUser', (req, res) => {
   connection.query('SELECT EXISTS(SELECT * FROM user WHERE username = ? AND hashpass = ? AND userType_id = ?) AS result;', [req.body.username, req.body.password, req.body.type], function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
