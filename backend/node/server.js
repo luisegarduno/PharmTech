@@ -82,7 +82,7 @@ app.post('/verifyUser', (req, res) => {
 //POST
 //add in user
 app.post('/registerUser', (req, res) => {
-  connection.query('INSERT INTO user (first_name, last_name, username, hashpass, email, userType_id) VALUES (?, ?, ?, ?, ?, ?);', [req.body.first_name, req.body.last_name, req.body.username, req.body.password, req.body.email, req.body.userType_id], function (err, rows, fields) {
+  connection.query('INSERT INTO user (first_name, last_name, username, hashpass, email, userType_id) VALUES (?, ?, ?, ?, ?, ?);', [req.body.first_name, req.body.last_name, req.body.username, req.body.hashpass, req.body.email, req.body.userType_id], function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
