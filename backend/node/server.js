@@ -61,7 +61,7 @@ app.post('/verifyUser', (req, res) => {
   });
 });
 
-app.put('/registerUser', (req, res) => {
+app.post('/registerUser', (req, res) => {
   connection.query('INSERT INTO user (first_name, last_name, username, hashpass, email, userType_id) VALUES ();', [req.body.firstname, req.body.lastname, req.body.username, req.body.password, req.body.email, req.body.type], function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
