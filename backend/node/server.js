@@ -169,6 +169,25 @@ app.get('/pharmacyInventory', (req, res) => {
   });
 });
 
+//get specific drug from inventory
+app.get('/pharmacyInventory/:id', (req, res) => {
+
+  connection.query('SELECT d.name, d.id, i.quantity, i.exp_date FROM inventory i join drugs d on d.id = i.drug_id WHERE i.drug_id = ?', [req.params.id], function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
 
 //get specific prescription from prescription list
 app.get('/getPrescription/:id', (req, res) => {
