@@ -618,6 +618,25 @@ app.put('/putQuantity', async (req, res) => {
   });
 });
 
+// PUT 
+//update inventory quantity
+app.put('/editPrescription', async (req, res) => {
+  //var id = req.params.drugID;
+  var title = req.body.title;
+  var patientID = req.body.patient_id;
+  var drugID = req.body.drug_id;
+  var quantity =  req.body.quantity;
+  var doctorID =  req.body.doctor_id;
+  var createDate = req.body.create_date;
+  var prescriptionID = req.body.prescription_id;
+
+  connection.query("UPDATE `pharmtech`.`prescriptions` SET `title` = ?, `patient_id` = ?, `drug_id` = ?, `quantity` = ?, `doctor_id` = ?, `create_date` = ?, WHERE `prescription_id` = ?", [title, patientID, drugID, quantity, doctorID, createDate, prescriptionID],function (err, result, fields) {
+  if (err) throw err;
+  //console.log(result);
+  res.end(JSON.stringify(result)); 
+  });
+});
+
 //DELETE
 //pharmacist delete inventory item
 app.delete('/delete/:drugID', async (req, res) => {
