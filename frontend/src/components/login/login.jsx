@@ -11,6 +11,7 @@ export class Login extends React.Component {
     loginRepository = new LoginRepository()
 
     constructor(props) {
+        localStorage.setItem('username', null)
         super(props);
         this.state = {
             loginType: "",

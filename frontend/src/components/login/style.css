@@ -1,7 +1,7 @@
 
 
 #register {
-    margin-top: 6em;
+    margin-top: 1em;
 }
 
 .base-container {
@@ -49,6 +49,32 @@ button{
 }
 
 input:focus {
+    outline-color: #4a64a8;
+}
+
+#password {
+    border-radius: 0.5em;
+    text-align: center;
+    font-size: large;
+    height: 3em;
+    margin: .2em;
+    width: 20em;
+}
+
+password:focus {
+    outline-color: #4a64a8;
+}
+
+#cpassword {
+    border-radius: 0.5em;
+    text-align: center;
+    font-size: large;
+    height: 3em;
+    margin: .2em;
+    width: 20em;
+}
+
+cpassword:focus {
     outline-color: #4a64a8;
 }
 
