@@ -377,7 +377,7 @@ app.get('/pharmacyreceiving', (req, res) => {
 
 // prescription list
 app.get('/pharmacylist', (req, res) => {
-  connection.query('SELECT u.id AS PatientID, CONCAT(u.first_name, " ", u.last_name) AS Patient, d.name AS PrescriptionName, p.quantity FROM prescriptions p JOIN user u ON u.id = p.patient_id JOIN drugs d ON d.id = p.drug_id ORDER BY u.id ASC', function (err, rows, fields) {
+  connection.query('SELECT u.id AS PatientID, CONCAT(u.first_name, " ", u.last_name) AS Patient, d.name AS PrescriptionName, d.id AS DrugID, CONCAT(p.quantity,d.unit_measure) AS Quantity FROM prescriptions p JOIN user u ON u.id = p.patient_id JOIN drugs d ON d.id = p.drug_id ORDER BY u.id ASC', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
