@@ -17,7 +17,6 @@ export class Maninventory extends React.Component {
             drugs:[],
             sortDirection : 'asc',
         }
-        this.truefalse = this.truefalse.bind(this);
         this.yesno = this.yesno.bind(this);
         this.opposite = this.opposite.bind(this);
         this.toggleExpired = this.toggleExpired.bind(this);
@@ -44,14 +43,6 @@ export class Maninventory extends React.Component {
         }
     }
 
-    truefalse(value) {
-        if(value == true) {
-            return "True";
-        } else {
-            return "False";
-        }
-    }
-
     yesno(value) {
         if (value == true) {
             return "Yes";
@@ -68,22 +59,24 @@ export class Maninventory extends React.Component {
         }
     }
 
-    toggleExpired(item) {
-        var tf = 0; //0 = true
-        if (item.expired == false) {
-            tf = 1;
+    toggleExpired(expired, batchid) {
+        var tf = false; //0 = true
+        if (expired == 0) {
+            tf = true;
         }
-        var batchid = item.batch_id;
+        // console.log(expired +" " + tf + " " + batchid);
         this.manufacturerRepository.markExpired(tf, batchid);
+        // this.manufacturerRepository.markExpired(tf, batchid).then(this.manufacturerRepository.getInventory().then(Drug => this.setState({drugs:Drug.data})))
         // this.manufacturerRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}));
     }
 
     toggleSell(oksell, batchid) {
         var tf = false; //0 = true
-        if (oksell == false) {
+        if (oksell == 0) {
             tf = true;
         }
-        this.manufacturerRepository.markBuy(tf, batchid);
+        // console.log(oksell +" " + tf + " " + batchid);
+        this.manufacturerRepository.markBuy(false, batchid);
         // this.manufacturerRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}));
     }
 
@@ -119,8 +112,8 @@ export class Maninventory extends React.Component {
                                 <td id="item">{item.name}</td>
                                 <td id="item">{this.formatDate(item.exp_date)}</td>
                                 <td id="item">{item.aquired_from}</td>
-                                <td id="item">{this.yesno(item.expired)} <button className="btn btn-primary">Mark {this.opposite(item.expired)}</button></td>
-                                <td id="item">{this.yesno(item.ok_to_sell)} <button className="btn btn-primary" onClick={this.toggleSell(item.ok_to_sell, item.batch_id)}>Mark {this.opposite(item.ok_to_sell)}</button></td>
+                                <td id="item">{this.yesno(item.expired)} {item.expired} {item.batch_id} <button className="btn coloredBtn" onClick={this.toggleExpired(item.expired, item.batch_id)}>Mark {this.opposite(item.expired)}</button></td>
+                                <td id="item">{this.yesno(item.ok_to_sell)} {item.expired} {item.batch_id} <button className="btn coloredBtn" onClick={this.toggleSell(item.ok_to_sell, item.batch_id)}>Mark {this.opposite(item.ok_to_sell)}</button></td>
                             </tr>
                         ))}
                         </tbody>
