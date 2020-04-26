@@ -211,7 +211,7 @@ app.get('/pharmacyInventory/:id', (req, res) => {
 
 //get specific prescription from prescription list
 app.get('/getPrescription/:id', (req, res) => {
-  //user u on u.id = p.patient_id join user u on u.id = p.doctor_id
+ 
   connection.query('SELECT p.id as prescription_id, CONCAT(u.first_name, " ", u.last_name) as patient_name, d.name, p.quantity, p.fill_date, p.create_date, CONCAT(u2.first_name, " ", u2.last_name) AS doctor_name FROM prescriptions p join user u on u.id = p.patient_id join user u2 on u2.id = p.doctor_id join drugs d on d.id = p.drug_id WHERE p.id = ?', [req.params.id], function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
@@ -377,7 +377,26 @@ app.get('/pharmacyreceiving', (req, res) => {
 
 // prescription list
 app.get('/pharmacylist', (req, res) => {
-  connection.query('SELECT u.id AS PatientID, CONCAT(u.first_name, " ", u.last_name) AS Patient, d.name AS PrescriptionName, p.quantity FROM prescriptions p JOIN user u ON u.id = p.patient_id JOIN drugs d ON d.id = p.drug_id ORDER BY u.id ASC', function (err, rows, fields) {
+  connection.query('SELECT dt.name AS Title, CONCAT(u.first_name, " ", u.last_name) AS Patient, d.name AS PrescriptionName, d.id AS DrugID, CONCAT(p.quantity,d.unit_measure) AS Quantity FROM prescriptions p JOIN user u ON u.id = p.patient_id JOIN drugs d ON d.id = p.drug_id LEFT JOIN drug_types dt ON d.drug_type = dt.id ORDER BY dt.name ASC', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
+// Get list of prescriptions for specific user 
+app.get('/pharmacylist/:id', (req, res) => {
+  //user u on u.id = p.patient_id join user u on u.id = p.doctor_id
+  connection.query('SELECT u.id AS PatientID, CONCAT(u.first_name," ", u.last_name) AS Patient, d.name AS PrescriptionName, d.id AS DrugID, CONCAT(p.quantity," ",d.unit_measure) AS Quantity FROM prescriptions p JOIN user u ON u.id = p.patient_id JOIN drugs d ON d.id = p.drug_id WHERE u.id = ?', [req.params.id], function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -546,7 +565,7 @@ app.put('/updateOK', async (req, res) => {
 //add prescription
 app.post('/addPrescription', (req, res) => {
 
-  connection.query("INSERT INTO prescription (patient_id, drug_id, quantity, create_date, doctor_id) VALUES(?, ?, ?, ?, ?)", [req.body.patient_id, req.body.drug_id, req.body.quantity, req.body.create_date, req.body.doctor_id], function (err, rows, fields) {
+  connection.query("INSERT INTO prescriptions (patient_id, drug_id, quantity, create_date, doctor_id) VALUES(?, ?, ?, ?, ?)", [req.body.patient_id, req.body.drug_id, req.body.quantity, req.body.create_date, req.body.doctor_id], function (err, rows, fields) {
     if (err){
       logger.error("Problem inserting into prescription table");
     }
