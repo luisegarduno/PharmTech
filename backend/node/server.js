@@ -56,7 +56,7 @@ app.post('/verifyUser', (req, res) => {
       })
     }
     else{
-      res.status(200).send(rows[0].result);
+      res.status(200).send(rows[0].result.toString());
     }
   });
 });
