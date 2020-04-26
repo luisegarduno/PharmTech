@@ -2,6 +2,7 @@ import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 import { DoctorRepository } from "../../API";
+import _ from 'lodash';
 
 export class Docorders extends React.Component {
 
@@ -14,6 +15,7 @@ export class Docorders extends React.Component {
         this.username = localStorage['username']
         this.state = {
             orders:[],
+            sortDirection: 'asc'
         }
         this.orderDate = this.orderDate.bind(this);
         this.getStatus = this.getStatus.bind(this);
@@ -21,7 +23,23 @@ export class Docorders extends React.Component {
     }
 
     componentDidMount(){
-        this.doctorRepository.getOrders().then(Order => this.setState({orders : Order.data}));
+        this.doctorRepository.getOrders().then(Order => this.setState({orders : Order.data})).then(Order => this.setState({ orders: _.orderBy(this.state.orders, 'order_date', 'asc')})).then(Order => this.setState({ orders: _.orderBy(this.state.orders, 'name', 'asc')}));
+    }
+
+    sortBy(field) {
+        this.setState({revenue: 0})      
+        if (this.state.sortDirection == 'asc') {
+            this.setState({sortDirection: 'desc'})
+            this.setState({ 
+                orders: _.orderBy(this.state.orders, field, this.state.sortDirection)
+            });
+        }
+        if (this.state.sortDirection == 'desc') {
+            this.setState({sortDirection: 'asc'})
+            this.setState({ 
+                orders: _.orderBy(this.state.orders, field, this.state.sortDirection)
+            });
+        }
     }
 
     orderDate(order_date){
@@ -57,10 +75,10 @@ export class Docorders extends React.Component {
                 <div className = "itemsTable tableSort">
                     <table><thead>
                         <tr class="headerFixed">
-                            <th>Name</th>
-                            <th>Ordered On</th>
-                            <th>Status</th>
-                            <th>Units</th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'name')}>Name</button></th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'order_date')}>Ordered On</button></th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'fulfill_date')}>Status</button></th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'quantity')}>Units</button></th>
                         </tr></thead>
                         <tbody>
                         {this.state.orders.map(item => (

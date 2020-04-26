@@ -21,7 +21,7 @@ export class Docinventory extends React.Component {
         drugs: [],
         drugtypes: [],
         backup: [],
-        selectedOption: 'all',
+        sortDirection: 'asc'
     }
 
     componentDidMount(){
@@ -30,7 +30,7 @@ export class Docinventory extends React.Component {
         this.doctorRepository.getDrugTypes().then(Type => this.setState({drugtypes : Type.data}));
     }
 
-    sortBy(field) {
+    filterFor(field) {
         if (field == "all") {
             this.doctorRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}));
         } else {
@@ -38,7 +38,22 @@ export class Docinventory extends React.Component {
             this.setState({ 
                 drugs: _.filter(this.state.backup, ['drug_type', field])
             });
-            this.setState({selectedOption: field})
+        }
+    }
+
+    sortBy(field) {
+        this.setState({revenue: 0})      
+        if (this.state.sortDirection == 'asc') {
+            this.setState({sortDirection: 'desc'})
+            this.setState({ 
+                drugs: _.orderBy(this.state.drugs, field, this.state.sortDirection)
+            });
+        }
+        if (this.state.sortDirection == 'desc') {
+            this.setState({sortDirection: 'asc'})
+            this.setState({ 
+                drugs: _.orderBy(this.state.drugs, field, this.state.sortDirection)
+            });
         }
     }
 
@@ -64,10 +79,10 @@ export class Docinventory extends React.Component {
             </nav>
             <h1 className="tableHeader">Filter for Drug Type</h1>
                 <form className="sortBy">
-                    <input type="radio" id="filterAll" name="filter" value="all" onClick={this.sortBy.bind(this, 'all')} checked={this.state.selectedOption === 'all'}></input>
+                    <input type="radio" id="filterAll" name="filter" value="all" onClick={this.filterFor.bind(this, 'all')} defaultChecked></input>
                     <label htmlFor="filterAll">All</label>
                     {this.state.drugtypes.map(item => (
-                        <><input type="radio" id={item.drug_type} name="filter" value="1" onClick={this.sortBy.bind(this, item.drug_type)} checked={this.state.selectedOption === item.drug_type}></input>
+                        <><input type="radio" id={item.drug_type} name="filter" value="1" onClick={this.filterFor.bind(this, item.drug_type)} ></input>
                         <label htmlFor={item.drug_type} className="capWord">{item.drug_type}</label></>
                     ))}
                 </form>
@@ -75,15 +90,15 @@ export class Docinventory extends React.Component {
                 <div className = "itemsTable scrollTableSort">
                     <table>
                         <thead><tr className="headerFixed">
-                            <th>Drug Type</th>
-                            <th>Name (Batch ID)</th>
-                            <th>Quantity</th>
-                            <th>Expiration Date</th>
-                            <th>Related Drugs</th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'drug_type')}>Drug Type</button></th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'name')}>Name (Batch ID)</button></th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'quantity')}>Quantity</button></th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'exp_date')}>Expiration Date</button></th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'related')}>Related Drugs</button></th>
                         </tr></thead>
                         <tbody>
                             {this.state.drugs.map(item => (
-                                <tr key={ item.batch_id }>
+                                <tr key={item.batch_id}>
                                     <td id="item">{item.drug_type}</td>
                                     <td id="item">{item.name} ({item.batch_id})</td>
                                     <td id="item">{this.formatQuantity(item.quantity)}</td>
