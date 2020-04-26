@@ -595,7 +595,14 @@ app.put('/updateOK', async (req, res) => {
 //add prescription
 app.post('/addPrescription', (req, res) => {
 
-  connection.query("INSERT INTO prescriptions (patient_id, drug_id, quantity, create_date, doctor_id) VALUES(?, ?, ?, ?, ?)", [req.body.patient_id, req.body.drug_id, req.body.quantity, req.body.create_date, req.body.doctor_id], function (err, rows, fields) {
+  var patientID = req.body.patient_id;
+  var drugID = req.body.drug_id;
+  var quantity =  req.body.quantity;
+  var createDate = req.body.create_date;
+  var title = req.body.title;
+  var doctorID =  req.body.doctor_id;
+
+  connection.query("INSERT INTO prescriptions (patient_id, drug_id, quantity, create_date, title, doctor_id) VALUES(?, ?, ?, ?, ?,?)", [patientID, drugID, quantity, createDate, title, doctorID], function (err, rows, fields) {
     if (err){
       logger.error("Problem inserting into prescription table");
     }
