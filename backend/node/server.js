@@ -153,7 +153,8 @@ app.get('/getInventory/:id', (req, res) => {
   });
 });
 
-//inventory for pharmacist and manager
+// GET
+// Returns everything in inventory
 app.get('/pharmacyInventory', (req, res) => {
   connection.query('SELECT d.name, d.id, i.quantity, i.exp_date FROM inventory i join drugs d on i.drug_id = d.id', function (err, rows, fields) {
     if (err) {
@@ -171,7 +172,8 @@ app.get('/pharmacyInventory', (req, res) => {
   });
 });
 
-//inventory for pharmacist and manager
+// GET
+// Scans entire inventory and returns value on whether each drug is InStock or OutOfStock
 app.get('/pharmacyNotification', (req, res) => {
   connection.query('SELECT d.name, d.id AS DrugID,CASE WHEN SUM(i.quantity) <= 0 OR SUM(i.quantity) IS NULL THEN "OutOfStock" WHEN SUM(i.quantity) > 0 THEN "InStock" ELSE "Error" END AS Available FROM inventory i JOIN drugs d ON i.drug_id = d.id GROUP BY d.id', function (err, rows, fields) {
     if (err) {
@@ -189,7 +191,27 @@ app.get('/pharmacyNotification', (req, res) => {
   });
 });
 
-//get specific drug from inventory
+// GET
+// Scans entire inventory and returns value on whether given drugID is InStock or OutOfStock
+app.get('/pharmacyNotification/:id', (req, res) => {
+  connection.query('SELECT d.name, d.id AS DrugID,CASE WHEN SUM(i.quantity) <= 0 OR SUM(i.quantity) IS NULL THEN "OutOfStock" WHEN SUM(i.quantity) > 0 THEN "InStock" ELSE "Error" END AS Available FROM inventory i JOIN drugs d ON i.drug_id = d.id WHERE d.id = ? GROUP BY d.id', [req.params.id], function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
+// GET : drug id
+// Returns infomation for specific drugID
 app.get('/pharmacyInventory/:id', (req, res) => {
 
   connection.query('SELECT d.name, d.id, i.quantity, i.exp_date FROM inventory i join drugs d on d.id = i.drug_id WHERE i.drug_id = ?', [req.params.id], function (err, rows, fields) {
@@ -208,8 +230,8 @@ app.get('/pharmacyInventory/:id', (req, res) => {
   });
 });
 
-
-//get specific prescription from prescription list
+// GET : patient id
+// Returns details for all prescriptions given to patientID
 app.get('/getPrescription/:id', (req, res) => {
  
   connection.query('SELECT p.id as prescription_id, CONCAT(u.first_name, " ", u.last_name) as patient_name, d.name, p.quantity, p.fill_date, p.create_date, CONCAT(u2.first_name, " ", u2.last_name) AS doctor_name FROM prescriptions p join user u on u.id = p.patient_id join user u2 on u2.id = p.doctor_id join drugs d on d.id = p.drug_id WHERE p.id = ?', [req.params.id], function (err, rows, fields) {
@@ -321,7 +343,8 @@ app.get('/getSales', (req, res) => {
   });
 });
 
-//pharmacist incoming orders
+// GET
+// Returns all incoming pharmacy orders sent by doctors
 app.get('/pharmacyincoming', (req, res) => {
   connection.query('SELECT * FROM `pharmtech`.`prescriptions` WHERE fill_date IS NULL', function (err, rows, fields) {
     if (err) {
@@ -339,7 +362,8 @@ app.get('/pharmacyincoming', (req, res) => {
   });
 });
 
-//pharmacist outgoing orders
+// GET
+// Returns all incoming pharmacy orders
 app.get('/pharmacyoutgoing', (req, res) => {
   connection.query('SELECT * FROM `pharmtech`.`prescriptions` WHERE fill_date IS NOT NULL', function (err, rows, fields) {
     if (err) {
@@ -375,7 +399,7 @@ app.get('/pharmacyreceiving', (req, res) => {
   });
 });
 
-// prescription list
+// Returns all prescriptions sorted out by Drug Type
 app.get('/pharmacylist', (req, res) => {
   connection.query('SELECT dt.name AS Title, CONCAT(u.first_name, " ", u.last_name) AS Patient, d.name AS PrescriptionName, d.id AS DrugID, CONCAT(p.quantity,d.unit_measure) AS Quantity FROM prescriptions p JOIN user u ON u.id = p.patient_id JOIN drugs d ON d.id = p.drug_id LEFT JOIN drug_types dt ON d.drug_type = dt.id ORDER BY dt.name ASC', function (err, rows, fields) {
     if (err) {
@@ -395,7 +419,6 @@ app.get('/pharmacylist', (req, res) => {
 
 // Get list of prescriptions for specific user 
 app.get('/pharmacylist/:id', (req, res) => {
-  //user u on u.id = p.patient_id join user u on u.id = p.doctor_id
   connection.query('SELECT u.id AS PatientID, CONCAT(u.first_name," ", u.last_name) AS Patient, d.name AS PrescriptionName, d.id AS DrugID, CONCAT(p.quantity," ",d.unit_measure) AS Quantity FROM prescriptions p JOIN user u ON u.id = p.patient_id JOIN drugs d ON d.id = p.drug_id WHERE u.id = ?', [req.params.id], function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
