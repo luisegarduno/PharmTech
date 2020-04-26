@@ -54,14 +54,15 @@ export class Docorders extends React.Component {
                 </h1>
             </nav>
             <h1 className = "tableHeader">All Incoming Orders</h1>
-                <div className = "itemsTable scrollTable">
-                    <table>
+                <div className = "itemsTable tableSort">
+                    <table><thead>
                         <tr class="headerFixed">
                             <th>Name</th>
                             <th>Ordered On</th>
                             <th>Status</th>
                             <th>Units</th>
-                        </tr>
+                        </tr></thead>
+                        <tbody>
                         {this.state.orders.map(item => (
                             <tr>
                                 <td id="item">{item.name}</td>
@@ -70,6 +71,7 @@ export class Docorders extends React.Component {
                                 <td id="item">{this.formatQuantity(item.quantity)} {item.unit_measure}</td>
                             </tr>
                         ))}
+                        </tbody>
                     </table>
                 </div>
                 <Link to="docinventory">
