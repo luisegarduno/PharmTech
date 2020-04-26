@@ -83,4 +83,6 @@
 
 .footText:hover {
   direction: none;
+  text-decoration: none;
+  color: white;
 }
