@@ -2,6 +2,8 @@ import React from "react";
 import Logo from "../../images/pharmtechblue.png";
 import Logo2 from "../../images/erpharmtechgrayer.png";
 import {Link, Redirect} from "react-router-dom";
+import { sha256 } from 'js-sha256';
+import axios from 'axios'
 
 export class Register extends React.Component {
 
@@ -68,6 +70,9 @@ export class Register extends React.Component {
         }
         else {
             this.setState({checkPasswords: true});
+            let password = this.state.password
+            password = sha256(password);
+            axios.put('http://localhost:8000/registerUser', {firstname: this.state.firstName, lastname: this.state.lastName, username: this.state.username, password: password, email: this.state.email, type: this.state.loginType})
         }
     }
 
@@ -112,17 +117,17 @@ export class Register extends React.Component {
                             <div className = "loginType">
                                 <select id = "type" onChange={this.findLoginType}>
                                     <option value = "default">Select an account type...</option>
-                                    <option value = "pharmManager">Pharmacy Manager</option>
-                                    <option value = "Manufacturer">Manufacturer</option>
-                                    <option value = "Pharmacist">Pharmacist</option>
-                                    <option value = "Doctor">Doctor</option>
+                                    <option value = "2">Pharmacy Manager</option>
+                                    <option value = "4">Manufacturer</option>
+                                    <option value = "1">Pharmacist</option>
+                                    <option value = "3">Doctor</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div className="footer">
                         {(() => {
-                        if (this.state.loginType === "pharmManager" && this.state.firstName && this.state.lastName && this.state.email && this.state.username && this.state.password && this.state.confirmPassword ) {
+                        if (this.state.loginType === "2" && this.state.firstName && this.state.lastName && this.state.email && this.state.username && this.state.password && this.state.confirmPassword ) {
                             return (
                                 <div>
                                     <button type = "button" className="button" onClick ={this.onRegister}>Create Account</button>
@@ -132,7 +137,7 @@ export class Register extends React.Component {
                                 </div>
                             )
                         } 
-                        else if (this.state.loginType === "Manufacturer" && this.state.firstName && this.state.lastName && this.state.email && this.state.username && this.state.password && this.state.confirmPassword ) {
+                        else if (this.state.loginType === "4" && this.state.firstName && this.state.lastName && this.state.email && this.state.username && this.state.password && this.state.confirmPassword ) {
                             return (
                                 <div>
                                     <button type = "button" className="button" onClick ={this.onRegister}>Create Account</button>
@@ -142,7 +147,7 @@ export class Register extends React.Component {
                                 </div>
                             )
                         }
-                        else if (this.state.loginType === "Pharmacist" && this.state.firstName && this.state.lastName && this.state.email && this.state.username && this.state.password && this.state.confirmPassword ) {
+                        else if (this.state.loginType === "1" && this.state.firstName && this.state.lastName && this.state.email && this.state.username && this.state.password && this.state.confirmPassword ) {
                             return (
                                 <div>
                                     <button type = "button" className="button" onClick ={this.onRegister}>Create Account</button>
@@ -152,7 +157,7 @@ export class Register extends React.Component {
                                 </div>
                             )
                         } 
-                        else if (this.state.loginType === "Doctor" && this.state.firstName && this.state.lastName && this.state.email && this.state.username && this.state.password && this.state.confirmPassword ) {
+                        else if (this.state.loginType === "3" && this.state.firstName && this.state.lastName && this.state.email && this.state.username && this.state.password && this.state.confirmPassword ) {
                             return (
                                 <div>
                                     <button type = "button" className="button" onClick ={this.onRegister}>Create Account</button>
