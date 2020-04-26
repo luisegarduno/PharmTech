@@ -479,6 +479,19 @@ app.post('/addInventory', (req, res) => {
   });
 });
 
+//POST 
+app.post('/pharmacyInadd', (req, res) => {
+
+  connection.query('INSERT INTO `pharmtech`.`inventory` (drug_id, quantity, exp_date) VALUES(?, ?, ?)', [req.body.drug_id, req.body.quantity, req.body.exp_date], function (err, rows, fields) {
+    if (err){
+      logger.error("Problem inserting into pharmacy inventory table");
+    }
+    else {
+      res.status(200).send(`added to the table!`);
+    }
+  });
+});
+
 //add order to manufacturer
 app.post('/placeOrder', (req, res) => {
 
@@ -510,7 +523,7 @@ app.put('/updateOK', async (req, res) => {
   });
 })
 
-//add perscription
+//add prescription
 app.post('/addPrescription', (req, res) => {
 
   connection.query("INSERT INTO prescription (patient_id, drug_id, quantity, create_date, doctor_id) VALUES(?, ?, ?, ?, ?)", [req.body.patient_id, req.body.drug_id, req.body.quantity, req.body.create_date, req.body.doctor_id], function (err, rows, fields) {
