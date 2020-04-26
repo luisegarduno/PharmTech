@@ -90,7 +90,7 @@ export class Inventory extends React.Component {
                                   <td id = "item">{item.name}
                                   </td>
                                   <td id = "item">
-                                      {item.quantity}
+                                      {item.quantity}  {item.unit_measure}
                                     </td>
 
                                     <td id = "item">${item.sell_price.toFixed(2)}</td>
