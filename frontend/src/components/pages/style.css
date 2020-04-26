@@ -130,7 +130,7 @@ nav {
 .itemsTable table, th, #item{
     border-style: solid;
     border-color: #4a64a8;
-}
+} 
 
 tr {
     border-style: solid;
@@ -279,16 +279,32 @@ table {
     margin-left: 1em;
 }
 
-.scrollTableSort {
-    display: block;
-    height: 30em;
-    max-height: fit-content;
+.tableSort {
+    height: 39em;
     overflow-y: scroll;
 }
 
-.headerFixed {
+.tableSort>table>thead>tr>th {
     position: sticky;
     top: 0px;
+    background-color: rgb(206, 207, 207);
+    border: 3px solid #4a64a8;
+}
+
+.scrollTableSort {
+    height: 33em;
+    overflow-y: scroll;
+    background-color: rgb(206, 207, 207, 0.7);
+    margin: 1em;
+    /* border: 3px solid #4a64a8; */
+    max-width: 100%;
+}
+
+.scrollTableSort>table>thead>tr>th {
+    position: sticky;
+    top: 0px;
+    background-color: rgb(206, 207, 207);
+    border: 3px solid #4a64a8;
 }
 
 #expDate {
