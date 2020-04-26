@@ -14,7 +14,7 @@ export class Login extends React.Component {
         localStorage.setItem('username', null)
         super(props);
         this.state = {
-            loginType: "",
+            loginType: "0",
             username: "",
             password: "",
             redirect: "",
@@ -85,14 +85,14 @@ export class Login extends React.Component {
                         </div>
                         <form id = "loginfo" className="form">
                             <div className = "username" onChange={this.getUsername}>
-                                <input type = "text" name="username" placeholder = "Username" id = "input"></input>
+                                <input className="form-control mx-auto" type = "text" name="username" placeholder = "Username" id = "input"></input>
                             </div>
                             <div className = "password" onChange={this.getPassword}>
-                                <input type = "password" name="password" placeholder = "Password" id = "input"></input>
+                                <input className="form-control mx-auto" type = "password" name="password" placeholder = "Password" id = "input"></input>
                             </div>
                             <div className = "loginType">
-                                <select id = "type" onChange={this.findLoginType}>
-                                    <option value = "default" >Select an account type...</option>
+                                <select className="form-control mx-auto" id = "type" onChange={this.findLoginType}>
+                                    <option value = "0" >Select an account type...</option>
                                     <option value = "2">Pharmacy Manager</option>
                                     <option value = "4">Manufacturer</option>
                                     <option value = "1">Pharmacist</option>
@@ -103,10 +103,17 @@ export class Login extends React.Component {
                     </div>
                     <div className="footer">
                         {(() => {
-                        if (this.state.loginType === "2" && this.state.username) {
+                        if (this.state.loginType === "0") {
                             return (
                                 <div>
-                                    <button type = "button" className="button" onClick ={this.onLogin}>Login</button>
+                                    <button type = "button" className="btn coloredBtn button disabled">Login</button>
+                                </div>
+                            )
+                        }
+                        else if (this.state.loginType === "2" && this.state.username) {
+                            return (
+                                <div>
+                                    <button type = "button" className="btn coloredBtn button" onClick ={this.onLogin}>Login</button>
                                     {this.state.redirect ? 
                                     <Redirect to={"/pharmManager"}/>: 
                                     <Redirect to = {"/"}/>}
@@ -116,7 +123,7 @@ export class Login extends React.Component {
                         else if (this.state.loginType === "4" && this.state.username) {
                             return (
                                 <div>
-                                    <button type = "button" className="button" onClick ={this.onLogin}>Login</button>
+                                    <button type = "button" className="btn coloredBtn button" onClick ={this.onLogin}>Login</button>
                                     {this.state.redirect ? 
                                     <Redirect to={"/Manufacturer"}/>: 
                                     <Redirect to = {"/"}/>}
@@ -126,7 +133,7 @@ export class Login extends React.Component {
                         else if (this.state.loginType === "1" && this.state.username) {
                             return (
                                 <div>
-                                    <button type = "button" className="button" onClick ={this.onLogin}>Login</button>
+                                    <button type = "button" className="btn coloredBtn button" onClick ={this.onLogin}>Login</button>
                                     {this.state.redirect ? 
                                     <Redirect to={"/Pharmacist"}/>: 
                                     <Redirect to = {"/"}/>}
@@ -136,7 +143,7 @@ export class Login extends React.Component {
                         else if (this.state.loginType === "3" && this.state.username) {
                             return (
                                 <div>
-                                <button type = "button" className="button" onClick ={this.onLogin}>Login</button>
+                                <button type = "button" className="btn coloredBtn button" onClick ={this.onLogin}>Login</button>
                                     {this.state.redirect ? 
                                     <Redirect to={"/Doctor"}/>: 
                                     <Redirect to = {"/"}/>}
@@ -146,7 +153,7 @@ export class Login extends React.Component {
                         })()}
                     </div>
                     <div className = "registerHere">
-                        <Link to="/register" ><button type = "button" className="button">Register</button></Link>
+                        <Link to="/register" ><button type = "button" className="btn btn-secondary button">Register</button></Link>
                     </div>
                 </div>
 

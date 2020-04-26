@@ -16,7 +16,7 @@ export class Register extends React.Component {
             password: "",
             confirmPassword: "",
             username: "",
-            loginType: "",
+            loginType: "0",
             checkPasswords: "",
         };
         this.getFirstName = this.getFirstName.bind(this);
@@ -97,26 +97,26 @@ export class Register extends React.Component {
                         </div>
                         <div className="form" id = "form">
                             <div className = "firstName" onChange={this.getFirstName}>
-                                <input type = "text" name="firstName" placeholder = "First Name" id = "input"></input>
+                                <input className="form-control mx-auto" type = "text" name="firstName" placeholder = "First Name" id = "input"></input>
                             </div>
                             <div className = "lastName" onChange={this.getLastName}>
-                                <input type = "text" name="lastName" placeholder = "Last Name" id = "input"></input>
+                                <input className="form-control mx-auto" type = "text" name="lastName" placeholder = "Last Name" id = "input"></input>
                             </div>
                             <div className = "email" onChange={this.getEmail}>
-                                <input type = "email" name="email" placeholder = "Email" id = "input"></input>
+                                <input className="form-control mx-auto" type = "email" name="email" placeholder = "Email" id = "input"></input>
                             </div>
                             <div className = "username" onChange={this.getUsername}>
-                                <input type = "text" name="username" placeholder = "Username" id = "input"></input>
+                                <input className="form-control mx-auto" type = "text" name="username" placeholder = "Username" id = "input"></input>
                             </div>
                             <div className = "password" onChange={this.getPassword}>
-                                <input type = "password" name="password" placeholder = "Password" id = "password"></input>
+                                <input className="form-control mx-auto" type = "password" name="password" placeholder = "Password" id = "password"></input>
                             </div>                    
                             <div className = "confirmPassword" onChange={this.getConfirmPassword}>
-                                <input type = "password" name="confirmPassword" placeholder = "Confirm Password" id = "cpassword"></input>
+                                <input className="form-control mx-auto" type = "password" name="confirmPassword" placeholder = "Confirm Password" id = "cpassword"></input>
                             </div>
                             <div className = "loginType">
-                                <select id = "type" onChange={this.findLoginType}>
-                                    <option value = "default">Select an account type...</option>
+                                <select className="form-control mx-auto" id = "type" onChange={this.findLoginType}>
+                                    <option value = "0">Select an account type...</option>
                                     <option value = "2">Pharmacy Manager</option>
                                     <option value = "4">Manufacturer</option>
                                     <option value = "1">Pharmacist</option>
@@ -127,10 +127,17 @@ export class Register extends React.Component {
                     </div>
                     <div className="footer">
                         {(() => {
-                        if (this.state.loginType === "2" && this.state.firstName && this.state.lastName && this.state.email && this.state.username && this.state.password && this.state.confirmPassword ) {
+                        if (this.state.loginType === "0") {
                             return (
                                 <div>
-                                    <button type = "button" className="button" onClick ={this.onRegister}>Create Account</button>
+                                    <button type = "button" className="btn coloredBtn button disabled">Create Account</button>
+                                </div>
+                            )
+                        } 
+                        else if (this.state.loginType === "2" && this.state.firstName && this.state.lastName && this.state.email && this.state.username && this.state.password && this.state.confirmPassword ) {
+                            return (
+                                <div>
+                                    <button type = "button" className="btn coloredBtn button" onClick ={this.onRegister}>Create Account</button>
                                     {this.state.checkPasswords ? 
                                     <Redirect to={"/pharmManager"}/>: 
                                     <Redirect to = {"/register"}/>}
@@ -140,7 +147,7 @@ export class Register extends React.Component {
                         else if (this.state.loginType === "4" && this.state.firstName && this.state.lastName && this.state.email && this.state.username && this.state.password && this.state.confirmPassword ) {
                             return (
                                 <div>
-                                    <button type = "button" className="button" onClick ={this.onRegister}>Create Account</button>
+                                    <button type = "button" className="btn coloredBtn button" onClick ={this.onRegister}>Create Account</button>
                                     {this.state.checkPasswords ? 
                                     <Redirect to={"/Manufacturer"}/>: 
                                     <Redirect to = {"/register"}/>}
@@ -150,7 +157,7 @@ export class Register extends React.Component {
                         else if (this.state.loginType === "1" && this.state.firstName && this.state.lastName && this.state.email && this.state.username && this.state.password && this.state.confirmPassword ) {
                             return (
                                 <div>
-                                    <button type = "button" className="button" onClick ={this.onRegister}>Create Account</button>
+                                    <button type = "button" className="btn coloredBtn button" onClick ={this.onRegister}>Create Account</button>
                                     {this.state.checkPasswords ? 
                                     <Redirect to={"/Pharmacist"}/>: 
                                     <Redirect to = {"/register"}/>}
@@ -160,7 +167,7 @@ export class Register extends React.Component {
                         else if (this.state.loginType === "3" && this.state.firstName && this.state.lastName && this.state.email && this.state.username && this.state.password && this.state.confirmPassword ) {
                             return (
                                 <div>
-                                    <button type = "button" className="button" onClick ={this.onRegister}>Create Account</button>
+                                    <button type = "button" className="btn coloredBtn button" onClick ={this.onRegister}>Create Account</button>
                                     {this.state.checkPasswords ? 
                                     <Redirect to={"/Doctor"}/>: 
                                     <Redirect to = {"/register"}/>}
