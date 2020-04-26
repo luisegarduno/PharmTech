@@ -72,7 +72,12 @@ export class Register extends React.Component {
             this.setState({checkPasswords: true});
             let password = this.state.password
             password = sha256(password);
-            axios.post('http://localhost:8000/registerUser', {first_name: this.state.firstName, last_name: this.state.lastName, username: this.state.username, hashpass: password, email: this.state.email, userType_id: this.state.loginType})
+            axios.post('http://localhost:8000/registerUser', {first_name: this.state.firstName, 
+            last_name: this.state.lastName, 
+            username: this.state.username, 
+            hashpass: password, 
+            email: this.state.email, 
+            userType_id: this.state.loginType})
         }
     }
 
