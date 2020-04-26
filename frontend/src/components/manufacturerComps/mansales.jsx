@@ -2,6 +2,7 @@ import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 import { ManufacturerRepository } from "../../API";
+import _ from 'lodash';
 
 export class Mansales extends React.Component {
 
@@ -14,6 +15,7 @@ export class Mansales extends React.Component {
         this.username = localStorage['username']
         this.state = {
             sales:[],
+            sortDirection : 'asc',
         }
         this.getTotal = this.getTotal.bind(this);
         this.formatQuantity = this.numberWithCommas.bind(this);
@@ -21,7 +23,22 @@ export class Mansales extends React.Component {
     }
 
     componentDidMount(){
-        this.manufacturerRepository.getSales().then(Sale => this.setState({sales : Sale.data}));
+        this.manufacturerRepository.getSales().then(Sale => this.setState({sales : Sale.data}))
+    }
+
+    sortBy(field) {      
+        if (this.state.sortDirection == 'asc') {
+            this.setState({sortDirection: 'desc'})
+            this.setState({ 
+                sales: _.orderBy(this.state.sales, field, this.state.sortDirection)
+            });
+        }
+        if (this.state.sortDirection == 'desc') {
+            this.setState({sortDirection: 'asc'})
+            this.setState({ 
+                sales: _.orderBy(this.state.sales, field, this.state.sortDirection)
+            });
+        }
     }
 
     numberWithCommas(x) {
@@ -39,10 +56,6 @@ export class Mansales extends React.Component {
         return total;
     }
 
-    // searchFor(item) {
-    //     this.manufacturerRepository.getSales(item)
-    // }
-
     render() {
         return (
            <div className = "body">
@@ -54,42 +67,25 @@ export class Mansales extends React.Component {
                         Sales
                 </h1>
                 </nav>
-                {/* <h1 className = "tableHeader">Recent Sales</h1>
-                <div className = "itemsTable">
-                    <table>
-                        <tr>
-                            <th>Item</th>
-                            <th>Units Sold</th>
-                            <th>Cost Per Unit</th>
-                            <th>Total Price</th>
-                        </tr>
-                        {this.state.sales.slice(0, 5).map(item => (
-                            <tr>
-                                <td id="item">{item.name}</td>
-                                <td id="item">{item.quantity}</td>
-                                <td id="item">${item.purchase_price}</td>
-                                <td id="item">${this.getTotal(item.quantity, item.purchase_price)}</td>
-                            </tr>
-                        ))}
-                    </table>
-                </div> */}
                 <h1 className = "tableHeader">All Sales</h1>
                 <div className = "itemsTable">
                     <table>
-                        <tr class="headerFixed">
-                            <th>Item</th>
-                            <th>Quantity</th>
-                            <th>Unit Price</th>
+                        <thead><tr className="headerFixed">
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'name')}>Item</button></th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'quantity')}>Quantity</button></th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'purchase_price')}>Unit Price</button></th>
                             <th>Total</th>
-                        </tr>
+                        </tr></thead>
+                        <tbody>
                         {this.state.sales.map(item => (
-                            <tr>
+                            <tr key={item.name}>
                                 <td id="item">{item.name}</td>
                                 <td id="item">{this.formatQuantity(item.quantity)} {item.unit_measure}</td>
                                 <td id="item">${this.formatPrice(item.purchase_price)}/{item.unit_measure}</td>
                                 <td id="item">${this.getTotal(item.quantity, item.purchase_price)}</td>
                             </tr>
                         ))}
+                        </tbody>
                     </table>
                 </div>
                 <Link to="/manufacturer">

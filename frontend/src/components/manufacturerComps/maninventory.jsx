@@ -2,6 +2,7 @@ import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 import { ManufacturerRepository } from "../../API";
+import _ from 'lodash';
 
 export class Maninventory extends React.Component {
 
@@ -14,32 +15,69 @@ export class Maninventory extends React.Component {
         this.username = localStorage['username']
         this.state = {
             drugs:[],
+            sortDirection : 'asc',
         }
+        this.yesno = this.yesno.bind(this);
+        this.opposite = this.opposite.bind(this);
+        this.toggleExpired = this.toggleExpired.bind(this);
+        this.toggleSell = this.toggleSell.bind(this);
         this.formatDate = this.formatDate.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.manufacturerRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}))
     }
 
-    toggleExpired(item) {
-        var tf = false; //0 = true
-        if (item.expired == false) {
-            tf = true;
+    sortBy(field) {      
+        if (this.state.sortDirection == 'asc') {
+            this.setState({sortDirection: 'desc'})
+            this.setState({ 
+                drugs: _.orderBy(this.state.drugs, field, this.state.sortDirection)
+            });
         }
-        var batchid = item.id;
-        this.manufacturerRepository.markExpired(tf, batchid);
-        this.manufacturerRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}));
+        if (this.state.sortDirection == 'desc') {
+            this.setState({sortDirection: 'asc'})
+            this.setState({ 
+                drugs: _.orderBy(this.state.drugs, field, this.state.sortDirection)
+            });
+        }
     }
 
-    toggleSell(item) {
+    yesno(value) {
+        if (value == true) {
+            return "Yes";
+        } else {
+            return "No";
+        }
+    }
+
+    opposite(value) {
+        if (value == true) {
+            return "No";
+        } else {
+            return "Yes";
+        }
+    }
+
+    toggleExpired(expired, batchid) {
         var tf = false; //0 = true
-        if (item.ok_to_sell == false) {
+        if (expired == 0) {
             tf = true;
         }
-        var batchid = item.id;
-        this.manufacturerRepository.markBuy(tf, batchid);
-        this.manufacturerRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}));
+        // console.log(expired +" " + tf + " " + batchid);
+        this.manufacturerRepository.markExpired(tf, batchid);
+        // this.manufacturerRepository.markExpired(tf, batchid).then(this.manufacturerRepository.getInventory().then(Drug => this.setState({drugs:Drug.data})))
+        // this.manufacturerRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}));
+    }
+
+    toggleSell(oksell, batchid) {
+        var tf = false; //0 = true
+        if (oksell == 0) {
+            tf = true;
+        }
+        // console.log(oksell +" " + tf + " " + batchid);
+        this.manufacturerRepository.markBuy(false, batchid);
+        // this.manufacturerRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}));
     }
 
     formatDate(myDate){
@@ -61,22 +99,24 @@ export class Maninventory extends React.Component {
             <h1 className = "tableHeader">All Inventory</h1>
                 <div className = "itemsTable">
                     <table>
-                        <tr class="headerFixed">
-                            <th>Name</th>
-                            <th>Made On</th>
-                            <th>Acq From</th>
-                            <th>Expired?</th>
-                            <th>OK to Sell?</th>
-                        </tr>
+                        <thead><tr className="">
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'name')}>Name</button></th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'exp_date')}>Made On</button></th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'aquired_from')}>Acquired From</button></th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'expired')}>Expired?</button></th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'ok_to_sell')}>OK to Sell?</button></th>
+                        </tr></thead>
+                        <tbody>
                         {this.state.drugs.map(item => (
-                            <tr>
+                            <tr key={item.name}>
                                 <td id="item">{item.name}</td>
-                                <td id="item">{this.formatDate(item.fulfill_date)}</td>
-                                <td id="item">{item.acquired_from}</td>
-                                <td id="item">{item.expired}<form><button onClick = {this.toggleExpired(item)}>Flip Expired</button></form></td>
-                                <td id="item">{item.ok_to_sell}<form><button onClick = {this.toggleSell(item)}>Flip Ok to Sell</button></form></td>
+                                <td id="item">{this.formatDate(item.exp_date)}</td>
+                                <td id="item">{item.aquired_from}</td>
+                                <td id="item">{this.yesno(item.expired)} {item.expired} {item.batch_id} <button className="btn coloredBtn" onClick={this.toggleExpired(item.expired, item.batch_id)}>Mark {this.opposite(item.expired)}</button></td>
+                                <td id="item">{this.yesno(item.ok_to_sell)} {item.expired} {item.batch_id} <button className="btn coloredBtn" onClick={this.toggleSell(item.ok_to_sell, item.batch_id)}>Mark {this.opposite(item.ok_to_sell)}</button></td>
                             </tr>
                         ))}
+                        </tbody>
                     </table>
                 </div>
                 <Link to="/manufacturer">

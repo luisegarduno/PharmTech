@@ -106,7 +106,7 @@ INSERT INTO inventory (drug_id, quantity, exp_date) VALUES
     (7, 6000, '2022-07-02'),
     (12, 1000, '2023-03-31'),
     (2, 500, '2019-03-31'),
-    (11, 25, '202-03-31');
+    (11, 25, '2020-03-31');
 
 DROP TABLE IF EXISTS prescriptions;
 CREATE TABLE prescriptions(
