@@ -297,6 +297,25 @@ app.get('/pharmacyoutgoing', (req, res) => {
   });
 });
 
+//pharmacist received orders
+app.get('/pharmacyreceiving', (req, res) => {
+  connection.query('SELECT p.create_date, CONCAT(u.first_name, " ", u.last_name) AS Patient, d.name, p.quantity, p.fill_date, CONCAT(u2.first_name, " ", u2.last_name) AS doctor_name FROM prescriptions p JOIN user u ON u.id = p.patient_id JOIN user u2 ON u2.id = p.doctor_id JOIN drugs d on d.id = p.drug_id ORDER BY p.create_date DESC', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
+
 //get cart
 app.get('/getCartInventory', (req, res) => {
 
