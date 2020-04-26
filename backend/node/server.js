@@ -57,7 +57,7 @@ app.post('/verifyUser', (req, res) => {
     }
     else{
       res.status(200).json({
-        "data": rows
+        "data": rows[0].result
       });
     }
   });
