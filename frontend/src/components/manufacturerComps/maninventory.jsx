@@ -116,15 +116,15 @@ export class Maninventory extends React.Component {
                                 <td id="item">{item.name}</td>
                                 <td id="item">{this.formatDate(item.exp_date)}</td>
                                 <td id="item">{item.aquired_from}</td>
-                                <td id="item">{this.yesno(item.expired)} <button className="btn coloredBtn" onClick={this.toggleExpired.bind(this, item.expired, item.batch_id)}>Mark {this.opposite(item.expired)}</button></td>
-                                <td id="item">{this.yesno(item.ok_to_sell)} <button className="btn coloredBtn" onClick={this.toggleSell.bind(this, item.ok_to_sell, item.batch_id)}>Mark {this.opposite(item.ok_to_sell)}</button></td>
+                                <td id="item">{this.yesno(item.expired)} <button className="btn btn-secondary" onClick={this.toggleExpired.bind(this, item.expired, item.batch_id)}>Mark {this.opposite(item.expired)}</button></td>
+                                <td id="item">{this.yesno(item.ok_to_sell)} <button className="btn btn-secondary" onClick={this.toggleSell.bind(this, item.ok_to_sell, item.batch_id)}>Mark {this.opposite(item.ok_to_sell)}</button></td>
                             </tr>
                         ))}
                         </tbody>
                     </table>
                 </div>
                 <Link to="/manufacturer">
-                    <button className = "return">Return to Homepage</button>
+                    <button className = "btn coloredBtn ml-3">Return to Homepage</button>
                     </Link> 
            </div>
         );

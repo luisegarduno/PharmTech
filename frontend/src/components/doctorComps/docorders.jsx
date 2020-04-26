@@ -93,10 +93,10 @@ export class Docorders extends React.Component {
                     </table>
                 </div>
                 <Link to="docinventory">
-                    <button className = "return" id = "viewInventory">View All Inventory</button>
+                    <button className = "btn btn-secondary mr-3" id = "viewInventory">View All Inventory</button>
                     </Link> 
                 <Link to="/doctor">
-                    <button className = "return">Return to Homepage</button>
+                    <button className = "btn coloredBtn ml-3">Return to Homepage</button>
                     </Link> 
            </div>
         );
