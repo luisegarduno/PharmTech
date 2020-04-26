@@ -110,6 +110,11 @@ nav {
     background-color: rgb(74,100,168, 0.8);
 }
 
+.coloredBtn {
+    background-color: #4a64a8 !important;
+    color: white !important;
+}
+
 /*formatting for the view cart page of pharmacy manager*/
 
 .yourCart {
