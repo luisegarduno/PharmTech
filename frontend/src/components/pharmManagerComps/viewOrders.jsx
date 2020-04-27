@@ -63,7 +63,7 @@ export class ViewOrders extends React.Component {
                         Pending Orders
                 </h1>
                 </nav>
-                 <div className = "itemsTable tableSort">
+                 <div className = "itemsTable">
                     <table>
                         <tr>
                         <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'name')}>Item Name</button></th>
