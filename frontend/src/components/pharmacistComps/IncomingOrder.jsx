@@ -53,9 +53,9 @@ export class IncomingOrder extends React.Component {
                                     <tr className = " bg-light" key = {item.id}>
                                         <td>{item.drug_id}</td>
                                         <td>{item.patient_id}</td>
+                                        <td>{item.doctor_id}</td>
                                         <td>{item.create_date}</td>
                                         <td>{item.quantity}</td>
-                                        <td>{item.doctor_id}</td>
                                     </tr>
                                 ))}
                             </tbody>

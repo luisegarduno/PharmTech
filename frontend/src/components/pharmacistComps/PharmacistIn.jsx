@@ -16,6 +16,7 @@ export class PharmacistIn extends React.Component {
         super(props);
         this.username = localStorage['username']
         this.state = {
+            alldrugs:[],
             drugs: [],
             newdrugid: 0,
             newdrugmount: 0,
@@ -32,16 +33,34 @@ export class PharmacistIn extends React.Component {
         this.onSearch(undefined);
     }
 
+    buildDrugs(){
+        var arr = [];
+        arr.push(<option value = "0"></option>);
+        this.state.alldrugs.forEach(element => {
+            arr.push(<option value = {element.DrugID}>{element.DrugName}</option>);
+        });
+        return arr;
+    }
+
+    _handleChange = (event) => {
+        debugger;
+        this.setState({ newdrugid: event.target.value })
+      }
+
 
     onSearch(param){
         this.pharmacistRepository.getInventory(param)
             .then(Drug => this.setState({drugs : Drug.data}));
         this.pharmacistRepository.getNotification()
             .then(Notif => this.setState({notificationlist : Notif.data}));
+        this.pharmacistRepository.getDrug()
+            .then(Alldrugs => this.setState({alldrugs : Alldrugs.data}));
+        
     }
 
     handleAdd(){
         var newitem = new InventoryItem(this.state.newdrugid, this.state.newdrugmount, this.state.newdrugdate);
+        this.setState({newdrugid : 0, newdrugmount : 0, newdrugmount: ""})
         this.pharmacistRepository.addinventory(newitem)
             .then(() =>{
                 alert("New Item Added");
@@ -200,18 +219,20 @@ export class PharmacistIn extends React.Component {
                         <div className = "card-body">
                             <form onSubmit = {this.handleSubmit}>
                                 <div className="form-group">
-                                    <label htmlFor="newdrugname">Drug_ID</label>
-                                    <input type="number" id="durgname" className = "form-control" min="0" className = "form-control" placeholder = "0" onChange={e => this.setState({ newdrugid: e.target.value })}/>
+                                    <label htmlFor="selectdrug">Drug_ID</label>
+                                    <select className = "custom-select form-control" id = "selectdrug" onChange={this._handleChange}>
+                                        {this.buildDrugs()}
+                                    </select>
                                 </div>
 
                                 <div className ="form-group">
                                     <label htmlFor="newdrugmount">Amount</label>
-                                    <input type="number" id="newdrugmount" min="0" className = "form-control" placeholder = "0"onChange={e => this.setState({ newdrugmount: e.target.value })}></input>
+                                    <input type="number" id="newdrugmount" min="0" className = "form-control" placeholder = "0 (Not required for delete)"onChange={e => this.setState({ newdrugmount: e.target.value })}></input>
                                 </div>
 
                                 <div className ="form-group">
                                     <label htmlFor="newdrugdate">Exp_date (year-month-day)</label>
-                                    <input type="text" id="newdrugdate"className = "form-control" placeholder = "2000-1-1" onChange={e => this.setState({ newdrugdate: e.target.value })}></input>
+                                    <input type="text" id="newdrugdate"className = "form-control" placeholder = "2000-1-1 (Not required for delete)" onChange={e => this.setState({ newdrugdate: e.target.value })}></input>
                                 </div>
                                 
                                 <button className = "btn btn-info form-control mt-2" onClick ={() => this.handleAdd()} >Add</button>

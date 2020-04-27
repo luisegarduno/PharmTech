@@ -15,23 +15,71 @@ export class ReceivedOrder extends React.Component {
         super(props);
         this.username = localStorage['username']
         this.state ={
+            arrdrugs : [],
+            allpatients : [],
+            alldoctors : [],
             sortDirection : 'desc',
             orders:[],
             isediting: -1,
-            newPatient: "",
-            newdockor_name : "",
-            newname : "",
+            line: 0,
+            newPatientID: 0,
+            newDoctorID : 0,
+            newDrugID : 0,
             newquantity : 0,
-            newcreate_date: "",
-            newfill_date: "",
+            newfilldate: "",
         }
     }
     
     componentDidMount(){
         this.pharmacistRepository.getReceived()
             .then(Order => this.setState({orders : Order.data}))
+        this.pharmacistRepository.getDrug()
+            .then(Alldrugs => this.setState({alldrugs : Alldrugs.data}));
+        this.pharmacistRepository.getPatient()
+            .then(Allpatients => this.setState({allpatients : Allpatients.data}));
+            this.pharmacistRepository.getDoctor()
+            .then(Alldoctors => this.setState({alldoctors : Alldoctors.data}));
     }
 
+    handleDrug = (event) =>{
+        this.setState({ newDrugID: event.target.value });
+    }
+
+    handlePatient = (event) =>{
+        this.setState({newPatientID : event.target.value});
+    }
+
+    handleDoctor = (event) =>{
+        this.setState({newDoctorID : event.target.value});
+    }
+
+
+    buildDrugs(){
+        var arr = [];
+        arr.push(<option value = "0"></option>);
+        this.state.alldrugs.forEach(element => {
+            arr.push(<option value = {element.DrugID}>{element.DrugName}</option>);
+        });
+        return arr;
+    }
+
+    buildPatients(){
+        var arr = [];
+        arr.push(<option value = "0"></option>);
+        this.state.allpatients.forEach(element => {
+            arr.push(<option value = {element.PatientID}>{element.PatientName}</option>);
+        });
+        return arr;
+    }
+
+    buildDoctors(){
+        var arr = [];
+        arr.push(<option value = "0"></option>);
+        this.state.alldoctors.forEach(element => {
+            arr.push(<option value = {element.DoctorID}>{element.DoctorName}</option>);
+        });
+        return arr;
+    }
 
     sortBy(field) {        
         if (this.state.sortDirection == 'asc') {
@@ -48,18 +96,26 @@ export class ReceivedOrder extends React.Component {
         }
     }
 
-    GoEdit(index){
-        this.setState({isediting:index});
+    GoEdit(orderID, index){
+        this.setState({isediting:orderID, line:index});
     }
 
-    GoSave(index){
-        var newReceiveorder = new ReceiveorderItem(this.state.newPatient, this.state.newdoctor_name, this.state.newname, this.state.newquantity, this.state.newcreate_date, this.state.newfill_date);
-        this.setState({newPatient : "", newdoctor_name : "", newname : "", newquantity :0, isediting: -1, newcreate_date: "", newfill_date : ""});
-    }
-
-    handleSave(type, index){
-
-        alert("change saved")
+    GoSave(){
+        debugger;
+        var date= new Date();
+        var time = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+        var neworder = this.state.orders[this.state.line];
+        neworder.DoctorID = this.state.newDoctorID;
+        neworder.PatientID = this.state.newPatientID;
+        neworder.DrugID = this.state.newDrugID;
+        neworder.quantity = this.state.newquantity;
+        neworder.create_date = time;
+        neworder.fill_date = this.state.newfilldate;
+        this.pharmacistRepository.editReceiving(neworder)
+            .then(() =>{
+                alert("Item Edited");
+            });
+        this.setState({newDoctorID : 0, newPatientID : 0, newDrugID : 0, newquantity :0, isediting: -1, line: -1, newfilldate : ""});
     }
 
     handleSubmit = (e) => {                            
@@ -85,12 +141,12 @@ export class ReceivedOrder extends React.Component {
                         <thead>
                             <tr className = "thead-dark">
                                 <th><button className = "btn text-light font-weight-bold" onClick={this.sortBy.bind(this, 'Patient')}>Patient </button> </th>
-                                <th><button className = "btn text-light font-weight-bold" onClick={this.sortBy.bind(this, 'doctor_name')}>Doctor </button></th>
-                                <th><button className = "btn text-light font-weight-bold" onClick={this.sortBy.bind(this, 'name')}>Drug </button></th>
-                                <th><button className = "btn text-light font-weight-bold" onClick={this.sortBy.bind(this, 'quantity')}>Quantity </button></th>
-                                <th><button className = "btn text-light font-weight-bold" onClick={this.sortBy.bind(this, 'create_date')}>Create Date </button></th>
-                                <th><button className = "btn text-light font-weight-bold" onClick={this.sortBy.bind(this, 'fill_date')}>Fill Date </button></th>
-                                <th><button className = "btn text-light font-weight-bold">Setting</button></th>
+                                <th><button className = "btn text-light font-weight-bold" onClick={this.sortBy.bind(this, 'doctor_name')}>Doctor</button></th>
+                                <th><button className = "btn text-light font-weight-bold" onClick={this.sortBy.bind(this, 'Drug')}>Drug</button></th>
+                                <th><button className = "btn text-light font-weight-bold" onClick={this.sortBy.bind(this, 'quantity')}>Quantity</button></th>
+                                <th><button className = "btn text-light font-weight-bold" onClick={this.sortBy.bind(this, 'create_date')}>Create Date</button></th>
+                                <th><button className = "btn text-light font-weight-bold" onClick={this.sortBy.bind(this, 'fill_date')}>Fill Date</button></th> 
+                                <th><button className = "btn text-light font-weight-bold" >Setting</button></th>                           
                             </tr>
                         </thead>
 
@@ -99,11 +155,11 @@ export class ReceivedOrder extends React.Component {
                                 <tr className = " bg-light" key = {index}>
                                     <td>{item.Patient}</td>
                                     <td>{item.doctor_name}</td>
-                                    <td>{item.name}</td>
+                                    <td>{item.Drug}</td>
                                     <td>{item.quantity}</td>
                                     <td>{item.create_date}</td>
                                     <td>{item.fill_date}</td>
-                                    <td><button className = "btn btn-warning mb-2" onClick = {() => this.GoEdit(index)}>Edit</button> <br /></td>
+                                    <td><button className = "btn btn-warning mb-2" onClick = {() => this.GoEdit(item.OrderID, index)}>Edit</button> <br /></td>
                                 </tr>
                             ))}
                         </tbody>
@@ -113,55 +169,55 @@ export class ReceivedOrder extends React.Component {
                             return(
                                 <form class="form-inline" onSubmit = {this.handleSubmit}>
                                     <div className = "card mb-3 d-inline-block  text-center bg-info text-light" style = {{marginLeft: "10em"}}>
-                                        <h4 class="card-title ml-3 mt-3">Edit changes: </h4>
+                                        <h4 className="card-title ml-3 mt-3">Edit changes: </h4>
                                         <div className = "card-body">
                                             <div className = "row">
                                                 <div className = "col">
-                                                    <label for="Patient">Patient</label>
+                                                    <label htmlFor="drugname1">Drug name</label>
                                                 </div>
                                                 <div className = "col">
-                                                    <label for="doctor_name">doctor_name</label>
+                                                    <label htmlFor="patientname1">Patient Name</label>
                                                 </div>
                                                 <div className = "col">
-                                                    <label for="name">name</label>
-                                                </div>
-                                            </div>
-                                            <div className = "row">
-                                                <div className = "col">
-                                                    <input type="text" class="form-control mb-2 mr-sm-2" id="Patient" placeholder= {this.state.orders[this.state.isediting].Patient} onChange={e => this.setState({ newPatient: e.target.value })}/>
-                                                </div>
-                                                <div className = "col">
-                                                    <input type="text" class="form-control mb-2 mr-sm-2" id="doctor_name" placeholder= {this.state.orders[this.state.isediting].doctor_name} onChange={e => this.setState({ newdoctor_name: e.target.value })}/>
-                                                </div>
-                                                <div className = "col">
-                                                    <input type="text" class="form-control mb-2 mr-sm-2" id="name" placeholder= {this.state.orders[this.state.isediting].name} onChange={e => this.setState({ newname: e.target.value })}/>
+                                                    <label htmlFor="doctorname1">Doctor Name</label>
                                                 </div>
                                             </div>
                                             <div className = "row">
                                                 <div className = "col">
-                                                    <label for="quantity">quantity</label>
+                                                    <select className = "custom-select form-control" id = "drugname1" onChange = {this.handleDrug}>
+                                                        {this.buildDrugs()}
+                                                    </select>
                                                 </div>
                                                 <div className = "col">
-                                                    <label for="create_date">create_date</label>
+                                                    <select className = "custom-select form-control" id = "patientname1" onChange = {this.handlePatient}>
+                                                        {this.buildPatients()}
+                                                    </select>
                                                 </div>
                                                 <div className = "col">
-                                                    <label for="fill_date">fill_date</label>
+                                                    <select className = "custom-select form-control" id = "doctorname1" onChange = {this.handleDoctor}>
+                                                        {this.buildDoctors()}
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div className = "row">
                                                 <div className = "col">
-                                                    <input type="text" class="form-control mb-2 mr-sm-2 " style = {{maxHeight: "1.5em", width: "5.4cm"}} id="quantity" placeholder= {this.state.orders[this.state.isediting].quantity} onChange={e => this.setState({ newquantity: e.target.value })}/>
+                                                    <label htmlFor="quantity">quantity</label>
                                                 </div>
                                                 <div className = "col">
-                                                    <input type="text" class="form-control mb-2 mr-sm-2 " id="create_date" placeholder= {this.state.orders[this.state.isediting].create_date} onChange={e => this.setState({ newcreate_date: e.target.value })}/>                                            
+                                                    <label htmlFor="fill_date">fill_date</label>
+                                                </div>
+                                            </div>
+                                            <div className = "row">
+                                                <div className = "col">
+                                                    <input type="text" class="form-control mb-2 mr-sm-2 " style = {{maxHeight: "1.5em", width: "5.4cm"}} id="quantity" placeholder= {this.state.orders[this.state.line].quantity} onChange={e => this.setState({ newquantity: e.target.value })}/>
                                                 </div>
                                                 <div className = "col">
-                                                    <input type="text" class="form-control mb-2 mr-sm-2 " id="fill_date" placeholder= {this.state.orders[this.state.isediting].fill_date} onChange={e => this.setState({ newfill_date: e.target.value })}/>                                            
+                                                    <input type="text" class="form-control mb-2 mr-sm-2 " id="fill_date" placeholder= {this.state.orders[this.state.line].fill_date} onChange={e => this.setState({ newfilldate: e.target.value })}/>                                            
                                                 </div>
                                             </div>
                                             <div className = "row">
                                                 <div className = "col-8">
-                                            <button className = "btn btn-success form-control"  style = {{marginLeft: "16em"}} onClick = {() => this.GoSave(this.state.isediting)}>Save</button>
+                                            <button className = "btn btn-success form-control"  style = {{marginLeft: "16em"}} onClick = {() => this.GoSave()}>Save</button>
                                             </div>
                                             </div>
                                     </div>

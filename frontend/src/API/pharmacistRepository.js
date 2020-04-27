@@ -2,6 +2,44 @@ import axios from 'axios'
 
 export class PharmacistRepository {
 
+    getDrug(){
+        return new Promise((resolve,reject) =>{
+            axios.get('http://localhost:8000/getDrug')
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                })
+        })
+    }
+
+    getPatient(){
+        return new Promise((resolve,reject) =>{
+            axios.get('http://localhost:8000/getPatient')
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                })
+        })
+    }
+
+    getDoctor(){
+        return new Promise((resolve,reject) =>{
+            axios.get('http://localhost:8000/getDoctor')
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                })
+        })
+    }
 
     getIncoming(){
         return new Promise((resolve,reject) =>{
@@ -113,9 +151,20 @@ export class PharmacistRepository {
     }
 
     deleteinventory(drug_id){
-        debugger;
         return new Promise((resolve, reject) => {
             axios.delete('http://localhost:8000/delete/' + drug_id)
+                .then(x => resolve(x.data))
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                })
+        })
+    }
+
+    deletePrescription(id){
+        debugger;
+        return new Promise((resolve, reject) => {
+            axios.delete('http://localhost:8000/deletePrescription/' + id)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x);
@@ -166,6 +215,20 @@ export class PharmacistRepository {
         })      
     }
 
+    getUserNotification(param){
+        return new Promise((resolve,reject) =>{
+            axios.get('http://localhost:8000/userNotifications/' + param)
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                })
+        })            
+    }
+
+
     editPrescription(Title, PatientID, DrugID,Quantity, doctor_id, create_date, prescription_id){
         debugger;
         return new Promise((resolve, reject) => {
@@ -176,7 +239,7 @@ export class PharmacistRepository {
                 Quantity: Quantity,
                 doctor_id: doctor_id,
                 create_date: create_date,
-                prescription_id: prescription_id,
+                id: prescription_id,
             })
                 .then(x => {
                     resolve(x.data);
@@ -186,6 +249,28 @@ export class PharmacistRepository {
                     reject(x);
                 })
         })       
+    }
+
+    editReceiving(param){
+        return new Promise((resolve, reject) => {
+            axios.put('http://localhost:8000/editReceiving', {
+                Title: param.DoctorID, 
+                PatientID: param.PatientID, 
+                DrugID: param.DrugID,
+                Quantity: param.quantity,
+                doctor_id: param.DoctorID,
+                create_date: param.create_date,
+                fill_date: param.fill_date,
+                id: param.OrderID,
+            })
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                })
+        })   
     }
 
 }
