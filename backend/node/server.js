@@ -214,7 +214,7 @@ app.get('/pharmacyNotification', (req, res) => {
 // GET
 // Returns all notifications for given username
 app.get('/userNotifications/:id', (req, res) => {
-  connection.query('SELECT d.id AS DrugID, d.name AS DrugName, n.drugs_status AS InventoryStatus FROM notifications n JOIN drugs d ON d.id = drug_id JOIN user u ON u.userType_id = n.pharmacist_id JOIN user_type ut ON u.userType_id = ut.id WHERE ut.type IN ("pharmacist", "pharmacy manager") AND u.username = ?', [req.params.id], function (err, rows, fields) {
+  connection.query('SELECT n.id AS NotificationID, d.id AS DrugID, d.name AS DrugName, n.drugs_status AS InventoryStatus FROM notifications n JOIN drugs d ON d.id = drug_id JOIN user u ON u.userType_id = n.pharmacist_id JOIN user_type ut ON u.userType_id = ut.id WHERE ut.type IN ("pharmacist", "pharmacy manager") AND u.username = ?', [req.params.id], function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -248,6 +248,36 @@ app.get('/pharmacyNotification/:id', (req, res) => {
     }
   });
 });
+/*
+// POST
+// Post Notification 
+app.post('/addNotification', (req, res) => {
+
+  var pharmacistID = req.body.pharmacist_id;
+  var drugID = req.body.drug_id;
+
+  connection.query("INSERT INTO notifications (pharmacist_id, drug_id, quantity, create_date, title, doctor_id) VALUES(?, ?, ?, ?, ?, ?)", [patientID, drugID, quantity, createDate, title, doctorID], function (err, rows, fields) {
+    if (err){
+      logger.error("Problem inserting into prescription table");
+    }
+    else {
+      res.status(200).send(`added to the table!`);
+    }
+  });
+});
+
+// DELETE
+// Removes notification/s with spe from notification table 
+app.delete('/deleteNotification/:id', async (req, res) => {
+  var drugID = req.body.drug_id;
+
+  connection.query("DELETE FROM `pharmtech`.`notifications` WHERE `drug_id` = ?", [req.params.id], function (err, result, fields) {
+    if (err) 
+      return console.error(error.message);
+    res.end(JSON.stringify(result)); 
+    });
+});
+*/
 
 // GET : drug id
 // Returns infomation for specific drugID
@@ -498,9 +528,9 @@ app.get('/pharmacyoutgoing', (req, res) => {
 });
 
 // GET
-//pharmacist received orders
+// pharmacist received orders
 app.get('/pharmacyreceiving', (req, res) => {
-  connection.query('SELECT p.id AS OrderID ,p.create_date, u.id AS PatientID, CONCAT(u.first_name," ", u.last_name) AS Patient, d.id AS DrugID, d.name AS Drug, p.quantity, p.fill_date, u2.id AS DoctorID, CONCAT(u2.first_name, " ", u2.last_name) AS doctor_name FROM `pharmtech`.`prescriptions` p JOIN user u ON u.id = p.patient_id JOIN user u2 ON u2.id = p.doctor_id JOIN drugs d on d.id = p.drug_id ORDER BY p.create_date DESC', function (err, rows, fields) {
+  connection.query('SELECT p.id AS OrderID, p.create_date, u.id AS PatientID, CONCAT(u.first_name," ", u.last_name) AS Patient, d.id AS DrugID, d.name AS Drug, p.quantity, p.fill_date, u2.id AS DoctorID, CONCAT(u2.first_name, " ", u2.last_name) AS doctor_name FROM `pharmtech`.`prescriptions` p JOIN user u ON u.id = p.patient_id JOIN user u2 ON u2.id = p.doctor_id JOIN drugs d on d.id = p.drug_id ORDER BY p.create_date DESC', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -679,7 +709,7 @@ app.post('/addInventory', (req, res) => {
 //add order to manufacturer
 app.post('/placeOrder', (req, res) => {
 
-  connection.query('INSERT INTO `pharmtech`.`inventory_orders` (dorug_id, order_date, quantity) VALUES(?, ?, ?)', [req.body.drug_id, req.body.order_date, req.body.quantity],function (err, rows, fields) {
+  connection.query('INSERT INTO `pharmtech`.`inventory_orders` (drug_id, order_date, quantity) VALUES(?, ?, ?)', [req.body.drug_id, req.body.order_date, req.body.quantity],function (err, rows, fields) {
     if (err){
       logger.error("Problem inserting into inventory_orders table");
     }
@@ -790,13 +820,14 @@ app.delete('/delete/:drugID', async (req, res) => {
 
 // DELETE
 // pharmacist delete prescription given certain prescriptionID
-app.delete('/deletePrescription/:id'), async (req, res) =>{
+app.delete('/deletePrescription/:id', async (req, res) =>{
   connection.query("DELETE FROM `pharmtech`.`prescriptions` WHERE `id` = ?", [req.params.id], function (err, result, fields) {
       if (err) 
         return console.error(error.message);
       res.end(JSON.stringify(result)); 
       });
-}
+});
+
 
 app.delete('/deleteOrderRequest/:id', async (req, res) => {
   
