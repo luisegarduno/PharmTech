@@ -55,7 +55,6 @@ export class ReceivedOrder extends React.Component {
     GoSave(index){
         var newReceiveorder = new ReceiveorderItem(this.state.newPatient, this.state.newdoctor_name, this.state.newname, this.state.newquantity, this.state.newcreate_date, this.state.newfill_date);
         this.setState({newPatient : "", newdoctor_name : "", newname : "", newquantity :0, isediting: -1, newcreate_date: "", newfill_date : ""});
-        debugger;
     }
 
     handleSave(type, index){
@@ -97,7 +96,7 @@ export class ReceivedOrder extends React.Component {
 
                          <tbody>
                         {this.state.orders.map((item,index) => (
-                                <tr className = " bg-light" key = {item.id}>
+                                <tr className = " bg-light" key = {index}>
                                     <td>{item.Patient}</td>
                                     <td>{item.doctor_name}</td>
                                     <td>{item.name}</td>
@@ -118,35 +117,51 @@ export class ReceivedOrder extends React.Component {
                                         <div className = "card-body">
                                             <div className = "row">
                                                 <div className = "col">
-                                                    <label class="sr-only" for="Patient">Patient</label>
+                                                    <label for="Patient">Patient</label>
+                                                </div>
+                                                <div className = "col">
+                                                    <label for="doctor_name">doctor_name</label>
+                                                </div>
+                                                <div className = "col">
+                                                    <label for="name">name</label>
+                                                </div>
+                                            </div>
+                                            <div className = "row">
+                                                <div className = "col">
                                                     <input type="text" class="form-control mb-2 mr-sm-2" id="Patient" placeholder= {this.state.orders[this.state.isediting].Patient} onChange={e => this.setState({ newPatient: e.target.value })}/>
                                                 </div>
                                                 <div className = "col">
-                                                    <label class="sr-only" for="doctor_name">doctor_name</label>
                                                     <input type="text" class="form-control mb-2 mr-sm-2" id="doctor_name" placeholder= {this.state.orders[this.state.isediting].doctor_name} onChange={e => this.setState({ newdoctor_name: e.target.value })}/>
                                                 </div>
                                                 <div className = "col">
-                                                    <label class="sr-only" for="name">name</label>
                                                     <input type="text" class="form-control mb-2 mr-sm-2" id="name" placeholder= {this.state.orders[this.state.isediting].name} onChange={e => this.setState({ newname: e.target.value })}/>
                                                 </div>
                                             </div>
                                             <div className = "row">
                                                 <div className = "col">
-                                                    <label class="sr-only" for="quantity">quantity</label>
+                                                    <label for="quantity">quantity</label>
+                                                </div>
+                                                <div className = "col">
+                                                    <label for="create_date">create_date</label>
+                                                </div>
+                                                <div className = "col">
+                                                    <label for="fill_date">fill_date</label>
+                                                </div>
+                                            </div>
+                                            <div className = "row">
+                                                <div className = "col">
                                                     <input type="text" class="form-control mb-2 mr-sm-2 " style = {{maxHeight: "1.5em", width: "5.4cm"}} id="quantity" placeholder= {this.state.orders[this.state.isediting].quantity} onChange={e => this.setState({ newquantity: e.target.value })}/>
                                                 </div>
                                                 <div className = "col">
-                                                    <label class="sr-only" for="create_date">create_date</label>
                                                     <input type="text" class="form-control mb-2 mr-sm-2 " id="create_date" placeholder= {this.state.orders[this.state.isediting].create_date} onChange={e => this.setState({ newcreate_date: e.target.value })}/>                                            
                                                 </div>
                                                 <div className = "col">
-                                                    <label class="sr-only" for="fill_date">fill_date</label>
                                                     <input type="text" class="form-control mb-2 mr-sm-2 " id="fill_date" placeholder= {this.state.orders[this.state.isediting].fill_date} onChange={e => this.setState({ newfill_date: e.target.value })}/>                                            
                                                 </div>
                                             </div>
                                             <div className = "row">
                                                 <div className = "col-8">
-                                            <button className = "btn btn-success form-control"  style = {{marginLeft: "16em"}} onClick = {() => this.GoSave(this.state.isediting)} >Save</button>
+                                            <button className = "btn btn-success form-control"  style = {{marginLeft: "16em"}} onClick = {() => this.GoSave(this.state.isediting)}>Save</button>
                                             </div>
                                             </div>
                                     </div>

@@ -7,11 +7,12 @@ class PrescriptForm extends React.Component {
 
     state = {
         title : "",
-        patient : "",
-        drug : "",
+        patient_id : "",
+        drug_id : "",
+        create_date : "",
+        doctor_id : "",
         quantity : 0,
     }
-
 
     handleSubmit = (e) => {                            
         e.preventDefault();
@@ -19,7 +20,9 @@ class PrescriptForm extends React.Component {
     }
 
     handleClick = () =>{
-        this.props.Onchange(new PrescriptionItem(this.state.title, this.state.patient, this.state.drug, this.state.quantity));
+        var date= new Date();
+        var time = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+        this.props.Onchange(new PrescriptionItem(this.state.title, this.state.patient_id, this.state.drug_id, this.state.quantity, time, this.state.doctor_id));
     }
 
     render(){
@@ -35,7 +38,7 @@ class PrescriptForm extends React.Component {
                             <div className = "form-group">
                                 <div className = "row">
                                     <div className = "col-6">
-                                        <label htmlFor = "newpatient">Patient</label>
+                                        <label htmlFor = "newpatient">Patient ID</label>
                                     </div>
                                     <div className = "col-6">
                                         <label htmlFor = "newtitle">Title</label>
@@ -43,16 +46,13 @@ class PrescriptForm extends React.Component {
                                 </div>
                                 <div className = "row">
                                     <div className = "col-6">
-                                        <input type="text" className = "form-control" id="newpatient" onChange={e=> this.setState({patient: e.target.value})}/>
+                                        <input type="text" className = "form-control" id="newpatient" onChange={e=> this.setState({patient_id: e.target.value})}/>
                                     </div>
                                     <div className = "col-6">
                                         <input type="text" className = "form-control" id="newtitle" onChange={e=> this.setState({title: e.target.value})}/>
                                     </div>
                                 </div>                      
                             </div>
-
-
-
 
                             <div className = "form-group">
                                 <div className = "row">
@@ -66,17 +66,18 @@ class PrescriptForm extends React.Component {
                                         <label htmlFor = "newdoctor">Doctor ID</label>
                                     </div>
                                 </div>
+                                
                                 <div className = "row">
                                     <div className = "col-4">
                                         <div className="input-group">
-                                            <input type="text" className = "form-control" onChange={e=> this.setState({drug: e.target.value})}/>
+                                            <input type="text" className = "form-control" onChange={e=> this.setState({drug_id: e.target.value})}/>
                                         </div>
                                     </div>
                                     <div className = "col-4">
-                                        <input type="number" className = "form-control" onChange={e=> this.setState({quantity: e.target.value})}/>
+                                        <input type="text" className = "form-control" onChange={e=> this.setState({quantity: e.target.value})}/>
                                     </div>
                                     <div className = "col">
-                                        <input type="number" className = "form-control"/>
+                                        <input type="text" className = "form-control"onChange={e=> this.setState({doctor_id: e.target.value})}/>
                                     </div>
                                 </div>
                             </div>

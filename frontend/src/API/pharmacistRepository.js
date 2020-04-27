@@ -125,7 +125,31 @@ export class PharmacistRepository {
     }
 
     addPrescription(param){
+        debugger;
+        return new Promise((resolve, reject) => {
+            axios.post('http://localhost:8000/addPrescription', param)
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                })
+        })
+    }
 
+
+    addRequest(param){
+        return new Promise((resolve, reject) => {
+            axios.post('http://localhost:8000/makeRequest', param)
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                })
+        })        
     }
 
 
@@ -142,5 +166,26 @@ export class PharmacistRepository {
         })      
     }
 
+    editPrescription(Title, PatientID, DrugID,Quantity, doctor_id, create_date, prescription_id){
+        debugger;
+        return new Promise((resolve, reject) => {
+            axios.put('http://localhost:8000/editPrescription', {
+                Title: Title, 
+                PatientID: PatientID, 
+                DrugID: DrugID,
+                Quantity: Quantity,
+                doctor_id: doctor_id,
+                create_date: create_date,
+                prescription_id: prescription_id,
+            })
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                })
+        })       
+    }
 
 }

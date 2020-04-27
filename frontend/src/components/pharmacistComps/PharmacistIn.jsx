@@ -1,5 +1,6 @@
 import React from "react";
 import {InventoryItem} from "./jsitem/inventoryItem";
+import {RequestItem} from './jsitem/requestitem'
 import Logo from "../../images/erpharmtechgrayer.png";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { PharmacistRepository } from '../../API/pharmacistRepository'
@@ -28,7 +29,7 @@ export class PharmacistIn extends React.Component {
 
 
     componentDidMount(){
-        this.onSearch()
+        this.onSearch(undefined);
     }
 
 
@@ -44,9 +45,17 @@ export class PharmacistIn extends React.Component {
         this.pharmacistRepository.addinventory(newitem)
             .then(() =>{
                 alert("New Item Added");
-                this.setState({newdrugid:0, newdrugmount: 0, newdrugdate: ""});
-                this.onSearch(undefined);
-            })
+                this.onSearch("");
+            });
+    }
+
+    handleRequest(){
+        var newrequest = new RequestItem(this.state.newdrugid, this.state.newdrugmount, this.state.newdrugdate);
+        this.pharmacistRepository.addRequest(newrequest)
+            .then(() =>{
+                alert("New Request Added");
+                this.onSearch("");
+            });   
     }
 
     handleDelete(){
@@ -54,15 +63,10 @@ export class PharmacistIn extends React.Component {
         if(window.confirm("Are you sure you want to delete this drug?")){
             this.pharmacistRepository.deleteinventory(ondeleteid)
                 .then(() => {
-                    this.setState({newdrugid:0, newdrugmount: 0, newdrugdate: "", drugs: this.state.drugs.filter(x => x.drug_id != ondeleteid)});
                     alert("Drug Deleted");
-                    this.onSearch(undefined);
+                    this.onSearch("");
                 })
         }
-    }
-
-    handleRequest(){
-        alert("New Item Requested");
     }
 
     handleSubmit = (e) => {                            
@@ -72,7 +76,6 @@ export class PharmacistIn extends React.Component {
 
     handlecheck(item){
         var exist = false;
-        debugger;
         if(this.state.notificationlist.length != 0){
             this.state.marked.forEach(element => {
                 if(element.DrugID == item){
@@ -82,7 +85,15 @@ export class PharmacistIn extends React.Component {
         }
         if(exist == false){
             var newmarked = this.state.marked;
-            newmarked.push(this.state.notificationlist[item-1]);
+            this.state.notificationlist.forEach((element,index) => {
+                if(element.DrugID == item){
+                    var temp = this.state.notificationlist[index];
+                    newmarked.push(temp);
+                }
+            })
+            if(newmarked.length > 3){
+                newmarked.splice(0,1);
+            }
             this.setState({marked: newmarked});
         }
     }
@@ -111,29 +122,9 @@ export class PharmacistIn extends React.Component {
     }
 
     render(){
-
-        function LimitList(input) {  // Set the number of notifications that needs to be displayed. EX: If the bound is 3, it will only show three newest notifications. 
-            var ret = new Array();
-            if(input.length <= 3){
-                ret = input;
-            }
-            else{
-                for(var i = 0; i < input.length; i++) {
-                    if(input.length - i <= 3){
-                        ret.push(input[i]);
-                    }
-                }
-            }
-            return ret;
-        }
-
-         var show = LimitList(this.state.marked);
-
-         const listItems = show.map((item, i) =>
-                    <li key = {i}>{item.name + " is " + item.Available}</li>
+        const listItems = this.state.marked.map((item, i) =>
+            <li key = {i}>{item.name + " is " + item.Available}</li>
         );
-
-
 
         return (
             <div className = "body mb-4">
@@ -144,10 +135,12 @@ export class PharmacistIn extends React.Component {
                         </div>
                     </nav>
                 </div>
-                 <div className = "notification">
+
+                <div className = "notification">
                         <p>Your notification</p>
                         <ul>{listItems}</ul>
                 </div>
+
                 <div className = "bg-secondary pb-2 mb-4 pt-1 mt-2">
                     <h2  className = "ml-3 mt-1">Inventory</h2>
                 </div>
@@ -157,6 +150,7 @@ export class PharmacistIn extends React.Component {
                         <Route path="/pharmacist/PharmacistIn" exact render= {() => <Link className = "btn btn-info form-control mb-2" to="/pharmacist/PharmacistIn/search">Click to Search</Link>}></Route>
                         <Route path="/pharmacist/PharmacistIn/search" render={param => <PinventSearch onSearch={param => this.onSearch(param)} {...param}/>}  />
                     </Router>
+
                     <table  className = "table  table-bordered">
                         <thead className = "thead-dark">
                             <tr className = "bg-secondary">
@@ -170,7 +164,7 @@ export class PharmacistIn extends React.Component {
                         </thead>
 
                         <tbody>
-                        {this.state.drugs.map((item,index) => (
+                            {this.state.drugs.map((item,index) => (
                                 <tr className = " bg-light" key = {index}>
                                     <td>{item.name}</td>
                                     <td>{item.id}</td>
@@ -190,8 +184,8 @@ export class PharmacistIn extends React.Component {
                                     })()}
                                     <td>
                                         <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id= {"customCheck"+ index}  onChange = {() => this.handlecheck(item.id)}/>
-                                        <label class="custom-control-label" for={"customCheck"+ index}></label>
+                                        <input type="checkbox" className ="custom-control-input" id= {"customCheck"+ index}  onChange = {() => this.handlecheck(item.id)}/>
+                                        <label className="custom-control-label" htmlFor={"customCheck"+ index}></label>
                                         </div>                            
                                     </td>
                                 </tr>
@@ -219,8 +213,7 @@ export class PharmacistIn extends React.Component {
                                     <label htmlFor="newdrugdate">Exp_date (year-month-day)</label>
                                     <input type="text" id="newdrugdate"className = "form-control" placeholder = "2000-1-1" onChange={e => this.setState({ newdrugdate: e.target.value })}></input>
                                 </div>
-
-
+                                
                                 <button className = "btn btn-info form-control mt-2" onClick ={() => this.handleAdd()} >Add</button>
                                 <button className = "btn btn-danger form-control mt-2" onClick ={() => this.handleDelete()} >Delete</button>
                                 <button className = "btn btn-warning form-control  mt-2" onClick ={() => this.handleRequest()} >Request</button>

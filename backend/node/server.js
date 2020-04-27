@@ -440,7 +440,7 @@ app.get('/pharmacyreceiving', (req, res) => {
 
 // Returns all prescriptions sorted out by Drug Type
 app.get('/pharmacylist', (req, res) => {
-  connection.query('SELECT p.title AS Title, CONCAT(u.first_name, " ", u.last_name) AS Patient, u.id AS PatientID, p.id AS PrescriptionID, d.name AS DrugName, d.id AS DrugID, CONCAT(p.quantity,d.unit_measure) AS Quantity, p.doctor_id FROM `pharmtech`.`prescriptions` p JOIN user u ON u.id = p.patient_id JOIN drugs d ON d.id = p.drug_id LEFT JOIN drug_types dt ON d.drug_type = dt.id ORDER BY dt.name ASC', function (err, rows, fields) {
+  connection.query('SELECT p.title AS Title, CONCAT(u.first_name, " ", u.last_name) AS Patient, u.id AS PatientID, p.id AS PrescriptionID, d.name AS DrugName, d.id AS DrugID, p.quantity AS Quantity, d.unit_measure AS Unit, p.doctor_id FROM `pharmtech`.`prescriptions` p JOIN user u ON u.id = p.patient_id JOIN drugs d ON d.id = p.drug_id LEFT JOIN drug_types dt ON d.drug_type = dt.id ORDER BY dt.name ASC', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -458,7 +458,7 @@ app.get('/pharmacylist', (req, res) => {
 
 // Get list of prescriptions for specific user 
 app.get('/pharmacylist/:id', (req, res) => {
-  connection.query('SELECT p.title AS Title, CONCAT(u.first_name, " ", u.last_name) AS Patient, u.id AS PatientID, p.id AS PrescriptionID, d.name AS DrugName, d.id AS DrugID, CONCAT(p.quantity,d.unit_measure) AS Quantity, p.doctor_id FROM prescriptions p JOIN user u ON u.id = p.patient_id JOIN drugs d ON d.id = p.drug_id WHERE u.id = ?', [req.params.id], function (err, rows, fields) {
+  connection.query('SELECT p.title AS Title, CONCAT(u.first_name, " ", u.last_name) AS Patient, u.id AS PatientID, p.id AS PrescriptionID, d.name AS DrugName, d.id AS DrugID, p.quantity AS Quantity, d.unit_measure AS Unit, p.doctor_id FROM prescriptions p JOIN user u ON u.id = p.patient_id JOIN drugs d ON d.id = p.drug_id WHERE u.id = ?', [req.params.id], function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -662,16 +662,15 @@ app.put('/putQuantity', async (req, res) => {
 // PUT 
 //update inventory quantity
 app.put('/editPrescription', async (req, res) => {
-  //var id = req.params.drugID;
-  var title = req.body.title;
-  var patientID = req.body.patient_id;
-  var drugID = req.body.drug_id;
-  var quantity =  req.body.quantity;
+  var title = req.body.Title;
+  var patientID = req.body.PatientID;
+  var drugID = req.body.DrugID;
+  var quantity =  req.body.Quantity;
   var doctorID =  req.body.doctor_id;
   var createDate = req.body.create_date;
   var prescriptionID = req.body.prescription_id;
 
-  connection.query("UPDATE `pharmtech`.`prescriptions` SET `title` = ?, `patient_id` = ?, `drug_id` = ?, `quantity` = ?, `doctor_id` = ?, `create_date` = ?, WHERE `prescription_id` = ?", [title, patientID, drugID, quantity, doctorID, createDate, prescriptionID],function (err, result, fields) {
+  connection.query("UPDATE `pharmtech`.`prescriptions` SET `title` = ?, `patient_id` = ?, `drug_id` = ?, `quantity` = ?, `doctor_id` = ?, `create_date` = ? WHERE `prescription_id` = ?", [title, patientID, drugID, quantity, doctorID, createDate, prescriptionID],function (err, result, fields) {
   if (err) throw err;
   //console.log(result);
   res.end(JSON.stringify(result)); 

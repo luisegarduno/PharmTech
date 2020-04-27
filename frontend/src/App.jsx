@@ -13,7 +13,6 @@ import { Manufacturer } from './components/pages/manufacturer';
 import { Pharmacist } from './components/pages/pharmacist';
 import { IncomingOrder, OutgoingOrder, ReceivedOrder, Prescription } from './components/pharmacistComps';
 import { PharmacistIn } from './components/pharmacistComps';
-import { PCart } from './components/pharmacistComps'
 import { Doctor } from './components/pages/doctor';
 import { ViewCart } from './components/pharmManagerComps/viewCart';
 import { YourPharmacy, Inventory, Sales, CartInventory, cartFix, ViewOrders } from './components/pharmManagerComps';
@@ -60,7 +59,6 @@ class App extends React.Component {
                 <Route exact path="/pharmacist/ReceivedOrder" ><Footer/><ReceivedOrder /></Route>
                 <Route exact path="/pharmacist/Prescription" ><Footer/><Prescription /></Route>
                 <Route exact path="/pharmacist/PharmacistIn" ><Footer/><PharmacistIn /></Route>
-                <Route exact path="/pharmacist/PCart"><Footer/><PCart /></Route>
             <Route exact path="/Doctor" ><Footer/><Doctor /></Route>
                 <Route exact path="/doctor/docorders" ><Footer/><Docorders /></Route>
                 <Route exact path="/doctor/docinventory" ><Footer/><Docinventory /></Route>
