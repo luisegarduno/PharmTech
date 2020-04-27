@@ -272,8 +272,8 @@ app.get('/getPrescription/:id', (req, res) => {
 
 //pharmacy revenues
 app.get('/getPhamRequest', (req, res) => {
-  // join `pharmtech`.`drugs` d on d.id = or.drug_id
-  connection.query('SELECT d.name, o.quantity, o.date_requested FROM `pharmtech`.`order_requests` o join drugs d on d.id = o.drug_id', function (err, rows, fields) {
+
+  connection.query('SELECT o.id, o.drug_id, d.name, o.quantity, o.date_requested FROM `pharmtech`.`order_requests` o join drugs d on d.id = o.drug_id', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -693,7 +693,7 @@ app.delete('/delete/:drugID', async (req, res) => {
 
 app.delete('/deleteOrderRequest', async (req, res) => {
   
-  connection.query("DELETE FROM `pharmtech`.`order_requests` WHERE `drug_id` = ? AND `quantity` = ? AND `date_requested` = ?", [req.body.drug_id, req.body.quantity, req.body.date_requested], function (err, result, fields) {
+  connection.query("DELETE FROM `pharmtech`.`order_requests` WHERE `id` = ?", [req.body.id], function (err, result, fields) {
 		if (err) 
 			return console.error(error.message);
 		res.end(JSON.stringify(result)); 
