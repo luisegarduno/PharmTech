@@ -668,9 +668,9 @@ app.put('/editPrescription', async (req, res) => {
   var quantity =  req.body.Quantity;
   var doctorID =  req.body.doctor_id;
   var createDate = req.body.create_date;
-  var prescriptionID = req.body.prescription_id;
+  var prescriptionID = req.body.id;
 
-  connection.query("UPDATE `pharmtech`.`prescriptions` SET `title` = ?, `patient_id` = ?, `drug_id` = ?, `quantity` = ?, `doctor_id` = ?, `create_date` = ? WHERE `prescription_id` = ?", [title, patientID, drugID, quantity, doctorID, createDate, prescriptionID],function (err, result, fields) {
+  connection.query("UPDATE `pharmtech`.`prescriptions` SET `title` = ?, `patient_id` = ?, `drug_id` = ?, `quantity` = ?, `doctor_id` = ?, `create_date` = ? WHERE `id` = ?", [title, patientID, drugID, quantity, doctorID, createDate, prescriptionID],function (err, result, fields) {
   if (err) throw err;
   //console.log(result);
   res.end(JSON.stringify(result)); 
