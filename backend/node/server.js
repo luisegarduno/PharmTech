@@ -439,8 +439,8 @@ app.get('/pharmacyreceiving', (req, res) => {
   });
 });
 
-// PUT
-// Edit received order
+
+/*
 // PUT 
 //update inventory quantity
 app.put('/editReceiving', async (req, res) => {
@@ -458,6 +458,7 @@ app.put('/editReceiving', async (req, res) => {
   res.end(JSON.stringify(result)); 
   });
 });
+*/
 
 
 
@@ -713,6 +714,16 @@ app.delete('/delete/:drugID', async (req, res) => {
 	  });
 });
 
+// DELETE
+// pharmacist delete prescription given certain prescriptionID
+app.delete('/deletePrescription/:id'), async (req, res) =>{
+  connection.query("DELETE FROM `pharmtech`.`prescriptions` WHERE `id` = ?", [req.params.id], function (err, result, fields) {
+      if (err) 
+        return console.error(error.message);
+      res.end(JSON.stringify(result)); 
+      });
+}
+
 app.delete('/deleteOrderRequest/:id', async (req, res) => {
   
   connection.query("DELETE FROM `pharmtech`.`order_requests` WHERE `id` = ?", [req.params.id], function (err, result, fields) {
@@ -721,6 +732,8 @@ app.delete('/deleteOrderRequest/:id', async (req, res) => {
 		res.end(JSON.stringify(result)); 
 	  });
 });
+
+
 
 /*app.delete('/deleteOrderRequest', async (req, res) => {
   
