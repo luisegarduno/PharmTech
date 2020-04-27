@@ -130,6 +130,25 @@ CREATE TABLE prescriptions(
         ON UPDATE CASCADE
 );
 
+DROP TABLE IF EXISTS notifications;
+CREATE TABLE notifications(
+    id INT AUTO_INCREMENT,
+    pharmacist_id INT NOT NULL,
+    drug_id INT NOT NULL,
+    drugs_status VARCHAR(20) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY(pharmacist_id)
+        REFERENCES user(id)
+        ON UPDATE CASCADE,
+    FOREIGN KEY(drug_id)
+        REFERENCES drugs(id)
+        ON UPDATE CASCADE
+);
+
+INSERT INTO notifications (pharmacist_id, drug_id, drugs_status) VALUES
+    (2, 1, "In Stock"),
+    (2, 3, "In Stock");
+
 DROP TABLE IF EXISTS order_requests;
 CREATE TABLE order_requests(
     id INT AUTO_INCREMENT,
