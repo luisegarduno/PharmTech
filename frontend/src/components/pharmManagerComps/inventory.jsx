@@ -3,9 +3,12 @@ import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 import { PharmManagerRepository } from "../../API";
 import _ from 'lodash';
+import CartService from "./cartService";
+import CartItem from "./cartItem";
 
 export class Inventory extends React.Component {
 
+    cartService = new CartService();
     pharmManagerRepository = new PharmManagerRepository();
 
     username; 
@@ -84,6 +87,7 @@ export class Inventory extends React.Component {
                             <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'quantity')}>Units</button></th>
                             <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'sell_price')}>Cost per Unit</button></th>
                             <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'exp_date')}>Expiration Date</button></th>
+                            <th>Recommended Purchase Amount</th>
                         </tr>
                             {this.state.drugs.map(item => (
                                 <tr>
@@ -95,6 +99,9 @@ export class Inventory extends React.Component {
 
                                     <td id = "item">${item.sell_price.toFixed(2)}</td>
                                     <td id = "item">{this.formatDate(item.exp_date)}</td>
+                                    <td id = "item">
+                                      {item.rec_stock_amount}  {item.unit_measure}
+                                    </td>
                                 </tr>
                             ))}
                     </table>
