@@ -270,6 +270,24 @@ app.get('/getPrescription/:id', (req, res) => {
   });
 });
 
+//pharmacy revenues
+app.get('/getPhamRequest', (req, res) => {
+  connection.query('SELECT or.drug_id, d.name, or.quantity, or.date_requested FROM `pharmtech`.`order_requests` or join `pharmtech`.`drugs` d on d.id = or.drug_id', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
 
 //pharmacy revenues
 app.get('/getRevenues', (req, res) => {
@@ -455,8 +473,6 @@ app.get('/pharmacylist/:id', (req, res) => {
   });
 });
 
-
-
 //get cart
 app.get('/getCartInventory', (req, res) => {
 
@@ -564,7 +580,7 @@ app.post('/addInventory', (req, res) => {
 //add order to manufacturer
 app.post('/placeOrder', (req, res) => {
 
-  connection.query('INSERT INTO `pharmtech`.`inventory_orders` (drug_id, order_date, quantity) VALUES(?, ?, ?)', [req.body.drug_id, req.body.order_date, req.body.quantity],function (err, rows, fields) {
+  connection.query('INSERT INTO `pharmtech`.`inventory_orders` (dorug_id, order_date, quantity) VALUES(?, ?, ?)', [req.body.drug_id, req.body.order_date, req.body.quantity],function (err, rows, fields) {
     if (err){
       logger.error("Problem inserting into inventory_orders table");
     }
