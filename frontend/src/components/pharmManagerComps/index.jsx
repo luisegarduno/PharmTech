@@ -1,4 +1,5 @@
 export { ViewCart } from "./viewCart"
+export {ViewOrders} from "./viewOrders"
 export {YourPharmacy} from "./yourPharmacy"
 export {Inventory} from "./inventory"
 export {Sales} from "./sales"

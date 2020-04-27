@@ -16,7 +16,7 @@ import { PharmacistIn } from './components/pharmacistComps';
 import { PCart } from './components/pharmacistComps'
 import { Doctor } from './components/pages/doctor';
 import { ViewCart } from './components/pharmManagerComps/viewCart';
-import { YourPharmacy, Inventory, Sales, CartInventory, cartFix } from './components/pharmManagerComps';
+import { YourPharmacy, Inventory, Sales, CartInventory, cartFix, ViewOrders } from './components/pharmManagerComps';
 import { Mansales, Maninventory, Manorders, Manfinancial } from './components/manufacturerComps';
 import { Docorders, Docinventory } from './components/doctorComps';
 import { Footer } from './Footer';
@@ -47,6 +47,7 @@ class App extends React.Component {
                   <Route exact path="/pharmManager/cart/inventory" ><Footer/><CartInventory /></Route>
                 <Route exact path="/pharmManager/yourPharmacy" ><Footer/><YourPharmacy /></Route>
                 <Route exact path="/pharmManager/inventory" ><Footer/><Inventory /></Route>
+                <Route exact path="/pharmManager/orders" ><Footer/><ViewOrders /></Route>
                 <Route exact path="/pharmManager/sales" ><Footer/><Sales /></Route>
             <Route exact path="/Manufacturer" ><Footer/><Manufacturer /></Route>
                 <Route exact path="/Manufacturer/mansales" ><Footer/><Mansales /></Route>
