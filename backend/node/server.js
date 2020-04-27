@@ -176,7 +176,7 @@ app.get('/getInventory/:id', (req, res) => {
 // GET
 // Returns everything in inventory
 app.get('/pharmacyInventory', (req, res) => {
-  connection.query('SELECT d.name, d.id, i.quantity, i.exp_date FROM inventory i join drugs d on i.drug_id = d.id', function (err, rows, fields) {
+  connection.query('SELECT d.name, d.id, d.unit_measure AS DrugUnit, i.quantity, i.exp_date FROM inventory i join drugs d on i.drug_id = d.id', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -286,7 +286,7 @@ app.delete('/deleteNotification/:id', async (req, res) => {
 // Returns infomation for specific drugID
 app.get('/pharmacyInventory/:id', (req, res) => {
 
-  connection.query('SELECT d.name, d.id, i.quantity, i.exp_date FROM inventory i join drugs d on d.id = i.drug_id WHERE i.drug_id = ?', [req.params.id], function (err, rows, fields) {
+  connection.query('SELECT d.name, d.id, d.unit_measure AS DrugUnit, i.quantity, i.exp_date FROM inventory i join drugs d on d.id = i.drug_id WHERE i.drug_id = ?', [req.params.id], function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -456,7 +456,7 @@ app.get('/getPatient', (req, res) => {
 // GET
 // Returns drugID and drug name
 app.get('/getDrug', (req, res) => {
-  connection.query('SELECT id AS DrugID, name AS DrugName FROM drugs', function (err, rows, fields) {
+  connection.query('SELECT d.id AS DrugID, d.name AS DrugName, SUM(i.quantity) FROM drugs d JOIN inventory i ON d.id = i.drug_id GROUP BY d.id', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -495,7 +495,7 @@ app.get('/getDoctor', (req, res) => {
 // GET
 // Returns all incoming pharmacy orders sent by doctors
 app.get('/pharmacyincoming', (req, res) => {
-  connection.query('SELECT * FROM `pharmtech`.`prescriptions` WHERE fill_date IS NULL', function (err, rows, fields) {
+  connection.query('SELECT p.id AS OrderID, p.create_date, u.id AS PatientID, CONCAT(u.first_name," ", u.last_name) AS Patient, d.id AS DrugID, d.name AS Drug, p.quantity, p.fill_date, u2.id AS DoctorID, CONCAT(u2.first_name, " ", u2.last_name) AS doctor_name FROM `pharmtech`.`prescriptions` p JOIN user u ON u.id = p.patient_id JOIN user u2 ON u2.id = p.doctor_id JOIN drugs d on d.id = p.drug_id WHERE fill_date IS NULL ORDER BY p.create_date DESC', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -514,7 +514,7 @@ app.get('/pharmacyincoming', (req, res) => {
 // GET
 // Returns all incoming pharmacy orders
 app.get('/pharmacyoutgoing', (req, res) => {
-  connection.query('SELECT * FROM `pharmtech`.`prescriptions` WHERE fill_date IS NOT NULL', function (err, rows, fields) {
+  connection.query('SELECT p.id AS OrderID, p.create_date, u.id AS PatientID, CONCAT(u.first_name," ", u.last_name) AS Patient, d.id AS DrugID, d.name AS Drug, p.quantity, p.fill_date, u2.id AS DoctorID, CONCAT(u2.first_name, " ", u2.last_name) AS doctor_name FROM `pharmtech`.`prescriptions` p JOIN user u ON u.id = p.patient_id JOIN user u2 ON u2.id = p.doctor_id JOIN drugs d on d.id = p.drug_id WHERE fill_date IS NOT NULL ORDER BY p.create_date DESC', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
