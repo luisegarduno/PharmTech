@@ -383,6 +383,64 @@ app.get('/getSales', (req, res) => {
 });
 
 // GET
+// Returns patient and patientID
+app.get('/getPatient', (req, res) => {
+  connection.query('SELECT u.id AS PatientID, CONCAT(u.first_name, " ", u.last_name) AS PatientName FROM user u JOIN user_type ut ON u.userType_id = ut.id WHERE ut.type = "patient"', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
+// GET
+// Returns drugID and drug name
+app.get('/getDrug', (req, res) => {
+  connection.query('SELECT id AS DrugID, name AS DrugName FROM drugs', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
+// GET
+// Returns DoctorID and Doctor ID
+app.get('/getDoctor', (req, res) => {
+  connection.query('SELECT u.id AS DoctorID, CONCAT(u.first_name, " ", u.last_name) AS DoctorName FROM user u JOIN user_type ut ON u.userType_id = ut.id WHERE ut.type = "doctor"', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
+
+// GET
 // Returns all incoming pharmacy orders sent by doctors
 app.get('/pharmacyincoming', (req, res) => {
   connection.query('SELECT * FROM `pharmtech`.`prescriptions` WHERE fill_date IS NULL', function (err, rows, fields) {
