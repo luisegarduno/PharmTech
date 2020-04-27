@@ -30,10 +30,24 @@ export class PharmacistRepository {
     }
 
 
-    getInventory(param){
+    getReceived(){
+        return new Promise((resolve,reject) =>{
+            axios.get('http://localhost:8000/pharmacyreceiving')
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                })
+        })        
+    }
+
+
+    getPrescription(param){
         if(param == undefined){
             return new Promise((resolve,reject) =>{
-                axios.get('http://localhost:8000/getInventory/')
+                axios.get('http://localhost:8000/pharmacylist')
                     .then(x => {
                         resolve(x.data);
                     })
@@ -45,7 +59,35 @@ export class PharmacistRepository {
         }
         else{
             return new Promise((resolve,reject) =>{
-                axios.get('http://localhost:8000/getInventory/' + param)
+                debugger;
+                axios.get('http://localhost:8000/pharmacylist/' + param)
+                    .then(x => {
+                        resolve(x.data);
+                    })
+                    .catch(x => {
+                        alert(x);
+                        reject(x);
+                    })
+            })
+        }       
+    }
+
+    getInventory(param){
+        if(param == undefined){
+            return new Promise((resolve,reject) =>{
+                axios.get('http://localhost:8000/pharmacyInventory/')
+                    .then(x => {
+                        resolve(x.data);
+                    })
+                    .catch(x => {
+                        alert(x);
+                        reject(x);
+                    })
+            })
+        }
+        else{
+            return new Promise((resolve,reject) =>{
+                axios.get('http://localhost:8000/pharmacyInventory/' + param)
                     .then(x => {
                         resolve(x.data);
                     })
@@ -81,5 +123,24 @@ export class PharmacistRepository {
                 })
         })
     }
+
+    addPrescription(param){
+
+    }
+
+
+    getNotification(){
+        return new Promise((resolve,reject) =>{
+            axios.get('http://localhost:8000/pharmacyNotification')
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                })
+        })      
+    }
+
 
 }

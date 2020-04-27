@@ -17,26 +17,7 @@ export class Pharmacist extends React.Component {
     }
 
     render(){
-        function LimitList(input) {  // Set the number of notifications that needs to be displayed. EX: If the bound is 3, it will only show three newest notifications. 
-            var ret = new Array();
-            if(input.length <= 3){
-                ret = input;
-            }
-            else{
-                for(var i = 0; i < input.length; i++) {
-                    if(input.length - i <= 3){
-                        ret.push(input[i]);
-                    }
-                }
-            }
-            return ret;
-        }
 
-        var show = LimitList(this.state.notificationlist);
-
-        const listItems = show.map((item, i) =>
-            <li key = {i}>{item}</li>
-        );
 
         return(
             <div className = "body">
@@ -49,10 +30,7 @@ export class Pharmacist extends React.Component {
                             Welcome back {this.username}!
                         </h1>
                     </nav>
-                    <div className = "notification">
-                        <p>Your notification</p>
-                        <ul>{listItems}</ul>
-                    </div>
+ 
                 </div>
                 <div className = "menu">
                 <Link to ="/pharmacist/PharmacistIn"><button type = "button" id = "menuButton"><br />Inventory</button></Link>
