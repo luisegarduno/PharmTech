@@ -2,6 +2,8 @@ import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 import { PharmManagerRepository } from "../../API";
+import _ from 'lodash';
+import axios from 'axios'
 
 export class ViewOrders extends React.Component {
 
@@ -12,20 +14,20 @@ export class ViewOrders extends React.Component {
         super(props);
         this.username = localStorage['username']
         this.state = {
-            orders: [
-                {
-                    name: "drug",
-                    quantity: 10,
-                    date_requested: "10/20/2020"         
-                }
-                
-            ],
+            sortDirection : 'desc',
+            orders: []
         }
         this.onFulfill = this.onFulfill.bind(this);
+        this.formatDate = this.formatDate.bind(this);
     }
 
     componentDidMount(){
         this.pharmManagerRepository.getPharmRequest().then(order => this.setState({orders : order.data}))
+    }
+
+    formatDate(myDate){
+        var d = myDate.substring(5,7) + "-" + myDate.substring(8,10) + "-" + myDate.substring(0,4);
+        return d;
     }
 
     onFulfill(index) {
@@ -33,6 +35,22 @@ export class ViewOrders extends React.Component {
         var newOrders = this.state.orders
         newOrders.splice(index, 1)
         this.setState({orders: newOrders} )
+        axios.post('http://localhost:8000/deleteOrderRequest', {username: this.state.username, password: password, type: this.state.loginType})
+    }
+
+    sortBy(field) {        
+        if (this.state.sortDirection == 'asc') {
+            this.setState({sortDirection: 'desc'})
+            this.setState({ 
+                orders: _.orderBy(this.state.orders, field, this.state.sortDirection) 
+            });
+        }
+        if (this.state.sortDirection == 'desc') {
+            this.setState({sortDirection: 'asc'})
+            this.setState({ 
+                orders: _.orderBy(this.state.orders, field, this.state.sortDirection) 
+            });
+        }
     }
 
     render() {
@@ -49,9 +67,9 @@ export class ViewOrders extends React.Component {
                  <div className = "itemsTable tableSort">
                     <table>
                         <tr>
-                        <th><button type = "button" id = "expDate">Item Name</button></th>
-                            <th><button type = "button" id = "expDate">Amount Requested</button></th>
-                            <th><button type = "button" id = "expDate">Date of Request</button></th>
+                        <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'name')}>Item Name</button></th>
+                            <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'quantity')}>Amount Requested</button></th>
+                            <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'date_requested')}>Date of Request</button></th>
                         </tr>
                             {this.state.orders.map((order, index) => (
                                 <tr>
@@ -60,7 +78,7 @@ export class ViewOrders extends React.Component {
                                   <td id = "item">
                                       {order.quantity}
                                     </td>
-                                    <td id = "item">{order.date_requested}<button type = "button" id = "swap" onClick = {e => this.onFulfill(index)}>Fulfill Order</button></td>
+                                    <td id = "item">{this.formatDate(order.date_requested)}<button type = "button" id = "swap" onClick = {e => this.onFulfill(index)}>Fulfill Order</button></td>
                                 </tr>
                             ))}
                     </table>
