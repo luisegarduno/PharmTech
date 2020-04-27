@@ -248,15 +248,16 @@ app.get('/pharmacyNotification/:id', (req, res) => {
     }
   });
 });
+
 /*
 // POST
 // Post Notification 
-app.post('/addNotification', (req, res) => {
+app.post('/addNotification/:id', (req, res) => {
 
-  var pharmacistID = req.body.pharmacist_id;
+  
   var drugID = req.body.drug_id;
 
-  connection.query("INSERT INTO notifications (pharmacist_id, drug_id, quantity, create_date, title, doctor_id) VALUES(?, ?, ?, ?, ?, ?)", [patientID, drugID, quantity, createDate, title, doctorID], function (err, rows, fields) {
+  connection.query("INSERT INTO notifications (pharmacist_id, drug_id, quantity, create_date, title, doctor_id) VALUES(?, ?, ?, ?, ?, ?)", [req.params.id, drugID, quantity, createDate, title, doctorID], function (err, rows, fields) {
     if (err){
       logger.error("Problem inserting into prescription table");
     }
@@ -265,19 +266,20 @@ app.post('/addNotification', (req, res) => {
     }
   });
 });
+*/
 
 // DELETE
 // Removes notification/s with spe from notification table 
 app.delete('/deleteNotification/:id', async (req, res) => {
   var drugID = req.body.drug_id;
 
-  connection.query("DELETE FROM `pharmtech`.`notifications` WHERE `drug_id` = ?", [req.params.id], function (err, result, fields) {
+  connection.query("DELETE n FROM `pharmtech`.`notifications` AS n INNER JOIN user u ON u.id = n.pharmacist_id INNER JOIN user_type ut ON u.userType_id = ut.id WHERE n.`drug_id` = ? AND ut.type IN ('pharmacist', 'pharmacy manager') AND u.username = ?", [drugID, req.params.id], function (err, result, fields) {
     if (err) 
       return console.error(error.message);
     res.end(JSON.stringify(result)); 
     });
 });
-*/
+
 
 // GET : drug id
 // Returns infomation for specific drugID
