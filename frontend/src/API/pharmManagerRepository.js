@@ -56,7 +56,7 @@ export class PharmManagerRepository {
 
         getPharmRequest(){
             return new Promise((resolve,reject) =>{
-                axios.get('http://localhost:8000/getPharmRequest')
+                axios.get('http://localhost:8000/getPhamRequest')
                     .then(x => {
                         resolve(x.data);
                     })
