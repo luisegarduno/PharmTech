@@ -420,9 +420,10 @@ app.get('/pharmacyoutgoing', (req, res) => {
   });
 });
 
+// GET
 //pharmacist received orders
 app.get('/pharmacyreceiving', (req, res) => {
-  connection.query('SELECT p.create_date, CONCAT(u.first_name, " ", u.last_name) AS Patient, d.name, p.quantity, p.fill_date, CONCAT(u2.first_name, " ", u2.last_name) AS doctor_name FROM `pharmtech`.`prescriptions` p JOIN user u ON u.id = p.patient_id JOIN user u2 ON u2.id = p.doctor_id JOIN drugs d on d.id = p.drug_id ORDER BY p.create_date DESC', function (err, rows, fields) {
+  connection.query('SELECT p.create_date, u.id AS PatientID, CONCAT(u.first_name," ", u.last_name) AS Patient, d.id AS DrugID, d.name AS Drug, p.quantity, p.fill_date, u2.id AS DoctorID, CONCAT(u2.first_name, " ", u2.last_name) AS doctor_name FROM `pharmtech`.`prescriptions` p JOIN user u ON u.id = p.patient_id JOIN user u2 ON u2.id = p.doctor_id JOIN drugs d on d.id = p.drug_id ORDER BY p.create_date DESC', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -437,6 +438,28 @@ app.get('/pharmacyreceiving', (req, res) => {
     }
   });
 });
+
+// PUT
+// Edit received order
+// PUT 
+//update inventory quantity
+app.put('/editReceiving', async (req, res) => {
+  var patientID = req.body.PatientID;
+  var doctorID =  req.body.doctor_id;
+  var drugID = req.body.DrugID;
+  var quantity =  req.body.Quantity;
+  var createDate = req.body.create_date;
+  var fillDate = req.body.fill_date;
+  var OrderID = req.body.id;
+
+  connection.query("UPDATE `pharmtech`.`prescriptions` SET `patient_id` = ?, `drug_id` = ?, `quantity` = ?, `doctor_id` = ?, `create_date` = ? WHERE `id` = ?", [patientID, drugID, quantity, doctorID, createDate, prescriptionID],function (err, result, fields) {
+  if (err) throw err;
+  //console.log(result);
+  res.end(JSON.stringify(result)); 
+  });
+});
+
+
 
 // Returns all prescriptions sorted out by Drug Type
 app.get('/pharmacylist', (req, res) => {
