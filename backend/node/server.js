@@ -590,7 +590,24 @@ app.put('/updateOK', async (req, res) => {
   if (err) throw err;
   res.end(JSON.stringify(result)); 
   });
-})
+});
+
+//add prescription
+app.post('/makeRequest', (req, res) => {
+
+  var drugID = req.body.drug_id;
+  var quantity =  req.body.quantity;
+  var dateRequested = req.body.date_requested;
+
+  connection.query("INSERT INTO `pharmtech`.`order_requests` (drug_id, quantity, date_requested) VALUES(?, ?, ?)", [drugID, quantity, dateRequested], function (err, rows, fields) {
+    if (err){
+      logger.error("Problem inserting into prescription table");
+    }
+    else {
+      res.status(200).send(`added to the table!`);
+    }
+  });
+});
 
 //add prescription
 app.post('/addPrescription', (req, res) => {
@@ -602,7 +619,7 @@ app.post('/addPrescription', (req, res) => {
   var title = req.body.title;
   var doctorID =  req.body.doctor_id;
 
-  connection.query("INSERT INTO prescriptions (patient_id, drug_id, quantity, create_date, title, doctor_id) VALUES(?, ?, ?, ?, ?,?)", [patientID, drugID, quantity, createDate, title, doctorID], function (err, rows, fields) {
+  connection.query("INSERT INTO prescriptions (patient_id, drug_id, quantity, create_date, title, doctor_id) VALUES(?, ?, ?, ?, ?, ?)", [patientID, drugID, quantity, createDate, title, doctorID], function (err, rows, fields) {
     if (err){
       logger.error("Problem inserting into prescription table");
     }
@@ -643,6 +660,8 @@ app.put('/editPrescription', async (req, res) => {
   res.end(JSON.stringify(result)); 
   });
 });
+
+
 
 //DELETE
 //pharmacist delete inventory item

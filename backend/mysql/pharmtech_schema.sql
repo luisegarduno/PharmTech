@@ -130,6 +130,23 @@ CREATE TABLE prescriptions(
         ON UPDATE CASCADE
 );
 
+DROP TABLE IF EXISTS order_requests;
+CREATE TABLE order_requests(
+    id INT AUTO_INCREMENT,
+    drug_id INT NOT NULL,
+    quantity INT NOT NULL,
+    date_requested DATE,
+    PRIMARY KEY(id),
+    FOREIGN KEY(drug_id)
+        REFERENCES drugs(id)
+        ON UPDATE CASCADE
+);
+
+INSERT INTO order_requests(drug_id, quantity, date_requested) VALUES
+    (4, 1000, '2019-09-20'),
+    (1, 200, '2020-01-13'),
+    (12, 350, '2020-04-26');
+
 INSERT INTO prescriptions (patient_id, drug_id, quantity, fill_date, create_date, title, doctor_id) VALUES
 	(6, 3, 100, '2019-01-20', '2018-10-23', 'For Infection', 3),
     (7, 10, 120, null, '2020-03-31', 'To reduce inflammation', 4),
