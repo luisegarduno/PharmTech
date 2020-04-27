@@ -257,7 +257,7 @@ app.post('/addNotification/:id', (req, res) => {
   
   var drugID = req.body.drug_id;
 
-  connection.query("INSERT INTO `pharmtech`.`notifications`(pharmacist_id, drug_id, drugs_status)(SELECT u.id, ?, (SELECT CASE WHEN SUM(i.quantity) <= 0 OR SUM(i.quantity) IS NULL THEN 'Out Of Stock' WHEN SUM(i.quantity) > 0 THEN 'In Stock' ELSE 'Error' END AS drugs_status FROM inventory i WHERE i.drug_id = n.drug_id GROUP BY i.drug_id) FROM `pharmtech`.`notifications` AS n INNER JOIN user u ON u.id = n.pharmacist_id INNER JOIN user_type ut ON u.userType_id = ut.id WHERE ut.type IN ('pharmacist', 'pharmacy manager') LIMIT 1)", [drugID], function (err, rows, fields) {
+  connection.query("INSERT INTO `pharmtech`.`notifications`(pharmacist_id, drug_id, drugs_status)(SELECT u.id, ?, (SELECT CASE WHEN SUM(i.quantity) <= 0 OR SUM(i.quantity) IS NULL THEN 'Out Of Stock' WHEN SUM(i.quantity) > 0 THEN 'In Stock' ELSE 'Error' END AS drugs_status FROM inventory i WHERE i.drug_id = n.drug_id GROUP BY i.drug_id) FROM `pharmtech`.`notifications` AS n INNER JOIN user u ON u.username = ? INNER JOIN user_type ut ON u.userType_id = ut.id WHERE ut.type IN ('pharmacist', 'pharmacy manager') LIMIT 1)", [drugID, req,params.id], function (err, rows, fields) {
     if (err){
       logger.error("Problem inserting into prescription table");
     }
