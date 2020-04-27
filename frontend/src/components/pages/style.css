@@ -7,6 +7,10 @@ nav {
 .img img{
     width: 30%;
 }
+
+#logo{
+    width: 100%;
+}
 .welcome {
     color: white;
     float: right;
@@ -106,6 +110,11 @@ nav {
     background-color: rgb(74,100,168, 0.8);
 }
 
+.coloredBtn {
+    background-color: #4a64a8 !important;
+    color: white !important;
+}
+
 /*formatting for the view cart page of pharmacy manager*/
 
 .yourCart {
@@ -126,7 +135,7 @@ nav {
 .itemsTable table, th, #item{
     border-style: solid;
     border-color: #4a64a8;
-}
+} 
 
 tr {
     border-style: solid;
@@ -146,6 +155,7 @@ table {
 
 
 #quantity {
+    width: 3em;
     font-size: x-large;
 }
 
@@ -229,12 +239,14 @@ table {
 
 .notification {
     float: right;
-    margin-top: 1em;
-    margin-right: 1em;
+    margin-top: 6em;
+    margin-right: 6em;
 }
 
 .return {
-    margin: 1em;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 3em;
     float: left;
     position: relative;
     color: white;
@@ -272,16 +284,32 @@ table {
     margin-left: 1em;
 }
 
-.scrollTableSort {
-    display: block;
-    height: 30em;
-    max-height: fit-content;
+.tableSort {
+    height: 39em;
     overflow-y: scroll;
 }
 
-.headerFixed {
+.tableSort>table>thead>tr>th {
     position: sticky;
     top: 0px;
+    background-color: rgb(206, 207, 207);
+    border: 3px solid #4a64a8;
+}
+
+.scrollTableSort {
+    height: 33em;
+    overflow-y: scroll;
+    background-color: rgb(206, 207, 207, 0.7);
+    margin: 1em;
+    /* border: 3px solid #4a64a8; */
+    max-width: 100%;
+}
+
+.scrollTableSort>table>thead>tr>th {
+    position: sticky;
+    top: 0px;
+    background-color: rgb(206, 207, 207);
+    border: 3px solid #4a64a8;
 }
 
 #expDate {
@@ -301,4 +329,27 @@ table {
     border-radius: .3em;
     height: 2em;
     font-size: xx-large;
+}
+
+
+#emptycart {
+    margin-top: 3em;
+    text-align: center;
+}
+
+#addItem {
+    color: white;
+    background-color: #4a64a8;
+    border-style: solid;
+    border-color: #233050;
+    border-width: .05em;
+    border-radius: .1em;
+    transition: all 250ms ease-in-out;
+    text-align: center;
+    font-size: x-large;
+    cursor: pointer;
+}
+
+#addItem:hover {
+    background-color: #233050;
 }

@@ -23,11 +23,11 @@ export class Prescription extends React.Component {
     Prescriptionlist : [],
     CurrentOnchange: 'null',
     isediting: -1,
-    newpatientid: "",
-    newpatient: "",
-    newPrescriptionName : "",
-    newDoctorID: "",
-    newquantity : 0,
+    newTitle: "",
+    newPatientID: 0,
+    newDrugID : 0,
+    newdoctor_id: 0,
+    newQuantity : 0,
 }
 
     componentDidMount(){
@@ -41,15 +41,22 @@ export class Prescription extends React.Component {
     }
 
     GoAdd(newPrescription){
-
+        this.pharmacistRepository.addPrescription(newPrescription)
+            .then(() =>{
+                alert("New Item Added");
+                this.onSearch("");
+            });
     }
 
     GoDuplicate(item){
-        let temparray = this.state.Prescriptionlist;
-        item.name = "null";
-        item.title = "null";
-        temparray.push(item);
-        this.setState({Prescriptionlist: temparray})
+        var date= new Date();
+        var time = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+        var newprescription = new PrescriptionItem(item.Title, item.PatientID, item.DrugID, item.Quantity, time, item.doctor_id);
+        this.pharmacistRepository.addPrescription(newprescription)
+        .then(() =>{
+            alert("New Item Added");
+            this.onSearch("");
+        });
     }
 
     GoDelete(index){
@@ -80,26 +87,26 @@ export class Prescription extends React.Component {
     }
 
     GoSave(index){
-        var newPrescription = new PrescriptionItem(this.state.newpatientid, this.state.newpatient, this.state.newPrescriptionName, this.state.newquantity);
-        this.setState({newpatientid : "", newpatient : "", newPrescriptionName : "", newquantity :0, isediting: -1});
+
+        var date= new Date();
+        var time = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+        var newPrescription = this.state.Prescriptionlist[index];
+        newPrescription.Title = this.state.newTitle;
+        newPrescription.PatientID = this.state.newPatientID;
+        newPrescription.DrugID = this.state.newDrugID;
+        newPrescription.doctor_id = this.state.newdoctor_id;
+        newPrescription.Quantity = this.state.newQuantity;
+        newPrescription.create_date = time;
         debugger;
+        this.pharmacistRepository.editPrescription(newPrescription.Title, newPrescription.PatientID, newPrescription.DrugID, newPrescription.Quantity, newPrescription.doctor_id, newPrescription.create_date, newPrescription.PrescriptionID)
+            .then(() =>{
+                alert("Item Edited");
+                this.onSearch("");
+            });
+        this.setState({newpatientid : "", newpatient : "", newPrescriptionName : "", newquantity :0, isediting: -1});
     }
 
     handleSave(type, index){
-        // let temparray = this.state.Prescriptionlist;
-        // if(type == "title"){
-        //     temparray[index].title = this.state.CurrentOnchange;
-        // }
-        // else if(type == "name"){
-        //     temparray[index].name = this.state.CurrentOnchange;
-        // }
-        // else if(type == "drugitem"){
-        //     temparray[index].druglist[i] = this.state.CurrentOnchange;
-        // }
-        // else if(type == "unititem"){
-        //     temparray[index].unitlist[i] = this.state.CurrentOnchange;
-        // }
-        // this.setState({Prescriptionlist:temparray})
         alert("change saved")
     }
 
@@ -130,22 +137,22 @@ export class Prescription extends React.Component {
                                 <th>Patient ID</th>
                                 <th>Patient Name</th>
                                 <th>Drug Id</th>
-                                <th >Drug Name</th>
-                                <th >Quantity</th>
+                                <th>Drug Name</th>
+                                <th>Quantity</th>
                                 <th>Doctor ID</th>
-                                <th >Setting</th>
+                                <th>Setting</th>
                             </tr>
                         </thead>
                         <tbody>
                             {this.state.Prescriptionlist.map((item,index) => (
-                                <tr>
+                                <tr key = {index}>
                                     <td>{item.Title}</td>
                                     <td>{item.PatientID}</td>
                                     <td>{item.Patient}</td>
                                     <td>{item.DrugID}</td>
-                                    <td>{item.PrescriptionName}</td>
+                                    <td>{item.DrugName}</td>
                                     <td>{item.Quantity}</td>
-                                    <td>{item.DrugID}</td>
+                                    <td>{item.doctor_id}</td>
                                 <td>
                                     <div>
                                         <form onSubmit = {this.handleSubmit}>
@@ -165,15 +172,15 @@ export class Prescription extends React.Component {
                                 <form class="form-inline mb-2">
                                     <h4>Edit changes: </h4>
                                     <label class="sr-only" for="newTitle">Title</label>
-                                    <input type="text" class="form-control mb-2 mr-sm-2" id="newTitle" placeholder= {"Title: " + this.state.Prescriptionlist[this.state.isediting].Title} onChange={e => this.setState({ newpatientid: e.target.value })}/>
+                                    <input type="text" class="form-control mb-2 mr-sm-2" id="newTitle" placeholder= {"Title: " + this.state.Prescriptionlist[this.state.isediting].Title} onChange={e => this.setState({ newTitle: e.target.value })}/>
                                     <label class="sr-only" for="inlineFormInputName2">Patient</label>
-                                    <input type="text" class="form-control mb-2 mr-sm-2" id="Patient" style = {{maxWidth: "4cm"}} placeholder= {"Patient ID: " + this.state.Prescriptionlist[this.state.isediting].PatientID} onChange={e => this.setState({ newpatient: e.target.value })}/>
-                                    <label class="sr-only" for="PrescriptionName">PrescriptionName</label>
-                                    <input type="text" class="form-control mb-2 mr-sm-2" id="PrescriptionName" style = {{maxWidth: "3cm"}} placeholder= {"Drug ID: " + this.state.Prescriptionlist[this.state.isediting].DrugID} onChange={e => this.setState({ newPrescriptionName: e.target.value })}/>
+                                    <input type="number" class="form-control mb-2 mr-sm-2" id="Patient" style = {{maxWidth: "4cm"}} placeholder= {"Patient ID: " + this.state.Prescriptionlist[this.state.isediting].PatientID} onChange={e => this.setState({ newPatientID: e.target.value })}/>
+                                    <label class="sr-only" for="DrugID">DrugID</label>
+                                    <input type="number" class="form-control mb-2 mr-sm-2" id="DrugID" style = {{maxWidth: "3.5cm"}} placeholder= {"Drug ID: " + this.state.Prescriptionlist[this.state.isediting].DrugID} onChange={e => this.setState({ newDrugID: e.target.value })}/>
                                     <label class="sr-only" for="quantity">quantity</label>
-                                    <input type="text" class="form-control mb-2 mr-sm-2 " style = {{maxHeight: "1.5em"}} id="quantity" placeholder= {this.state.Prescriptionlist[this.state.isediting].quantity} onChange={e => this.setState({ newquantity: e.target.value })}/>
+                                    <input type="number" class="form-control mb-2 mr-sm-2 " style = {{maxHeight: "1.5em", width: "6cm"}} id="quantity" placeholder= {"Quantity: " +this.state.Prescriptionlist[this.state.isediting].Quantity} onChange={e => this.setState({ newQuantity: e.target.value })}/>
                                     <label class="sr-only" for="DoctorID">DoctorID</label>
-                                    <input type="text" class="form-control mb-2 mr-sm-2 " style = {{maxHeight: "1.5em",maxWidth: "3cm"}} id="DoctorID" placeholder= {"Doctor ID" + this.state.Prescriptionlist[this.state.isediting].DoctorID} onChange={e => this.setState({ newDoctorID: e.target.value })}/>
+                                    <input type="number" class="form-control mb-2 mr-sm-2 " style = {{Height: "1.5em",maxWidth: "3.5cm"}} id="DoctorID" placeholder= {"Doctor ID: " + this.state.Prescriptionlist[this.state.isediting].doctor_id} onChange={e => this.setState({ newdoctor_id: e.target.value })}/>
                                     <button className = "btn btn-warning" onClick = {() => this.GoSave(this.state.isediting)} >Save</button>
                                 </form>
 
@@ -183,7 +190,7 @@ export class Prescription extends React.Component {
                 </div>
             
                 <div>
-                    <PrescriptForm onChange = {newPrescription => this.GoAdd*newPrescription}/>
+                    <PrescriptForm Onchange = {newPrescription => this.GoAdd(newPrescription)}/>
                     <Link to="/Pharmacist">
                         <button className = "btn btn-info mb-5 ml-5">Return to Homepage</button>
                     </Link> 

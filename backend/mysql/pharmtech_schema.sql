@@ -106,7 +106,7 @@ INSERT INTO inventory (drug_id, quantity, exp_date) VALUES
     (7, 6000, '2022-07-02'),
     (12, 1000, '2023-03-31'),
     (2, 500, '2019-03-31'),
-    (11, 25, '202-03-31');
+    (11, 25, '2020-03-31');
 
 DROP TABLE IF EXISTS prescriptions;
 CREATE TABLE prescriptions(
@@ -116,6 +116,7 @@ CREATE TABLE prescriptions(
     quantity INT NOT NULL,
     fill_date DATE,
     create_date DATE,
+    title VARCHAR(300),
     doctor_id INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY(patient_id)
@@ -129,12 +130,51 @@ CREATE TABLE prescriptions(
         ON UPDATE CASCADE
 );
 
-INSERT INTO prescriptions (patient_id, drug_id, quantity, fill_date, create_date, doctor_id) VALUES
-	(6, 3, 100, '2019-01-20', '2018-10-23', 3),
-    (7, 10, 120, null, '2020-03-31', 4),
-    (8, 6, 50, '2020-03-21', '2020-03-20', 3),
-    (6, 4, 150, null, '2020-04-10', 4),
-    (7, 1, 60, '2020-02-15', '2020-01-31', 4);
+DROP TABLE IF EXISTS notifications;
+CREATE TABLE notifications(
+    id INT AUTO_INCREMENT,
+    pharmacist_id INT NOT NULL,
+    drug_id INT NOT NULL,
+    drugs_status VARCHAR(20) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY(pharmacist_id)
+        REFERENCES user(id)
+        ON UPDATE CASCADE,
+    FOREIGN KEY(drug_id)
+        REFERENCES drugs(id)
+        ON UPDATE CASCADE
+);
+
+INSERT INTO notifications (pharmacist_id, drug_id, drugs_status) VALUES
+    (2, 1, "In Stock"),
+    (2, 3, "In Stock");
+
+DROP TABLE IF EXISTS order_requests;
+CREATE TABLE order_requests(
+    id INT AUTO_INCREMENT,
+    drug_id INT NOT NULL,
+    quantity INT NOT NULL,
+    date_requested DATE,
+    PRIMARY KEY(id),
+    FOREIGN KEY(drug_id)
+        REFERENCES drugs(id)
+        ON UPDATE CASCADE
+);
+
+INSERT INTO order_requests(drug_id, quantity, date_requested) VALUES
+    (4, 1000, '2019-09-20'),
+    (1, 200, '2020-01-13'),
+    (12, 350, '2020-04-26');
+
+INSERT INTO prescriptions (patient_id, drug_id, quantity, fill_date, create_date, title, doctor_id) VALUES
+	(6, 3, 100, '2019-01-20', '2018-10-23', 'For Infection', 3),
+    (7, 10, 120, null, '2020-03-31', 'To reduce inflammation', 4),
+    (8, 6, 50, '2020-03-21', '2020-03-20', 'Used to treat seizers', 3),
+    (6, 4, 150, null, '2020-04-10', 'Anxienty',  4),
+    (7, 5, 90, '2020-04-10', '2020-01-31', 'Treat muscle spasms', 4),
+    (8, 8, 120, '2020-04-21', '2020-01-31', 'For headaches', 4),
+    (6, 12, 50, '2020-03-25', '2020-01-31', 'To reduce inflammation', 3),
+    (8, 9, 160, '2020-02-26', '2020-01-31', 'Needed to reduce back pain', 3);
 
 DROP TABLE IF EXISTS inventory_orders;
 CREATE TABLE inventory_orders(

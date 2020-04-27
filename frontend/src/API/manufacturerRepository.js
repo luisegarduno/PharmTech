@@ -23,7 +23,7 @@ export class ManufacturerRepository {
 
     markExpired(tf, batchid) {
         return new Promise((resolve, reject) => {
-            axios.put(`${this.url}/updateexpiration`, tf, batchid, this.config)
+            axios.put(`${this.url}/updateExpiration`, tf, batchid)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error
@@ -34,7 +34,7 @@ export class ManufacturerRepository {
 
     markBuy(tf, batchid) {
         return new Promise((resolve, reject) => {
-            axios.put(`${this.url}/updateOK`, tf, batchid, this.config)
+            axios.put(`${this.url}/updateOK`, tf, batchid)
                 .then(x => resolve(x.data))
                 .catch(x => {
                     alert(x); // handle error

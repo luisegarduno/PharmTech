@@ -2,6 +2,7 @@ import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 import { ManufacturerRepository } from "../../API";
+import _ from 'lodash';
 
 export class Manorders extends React.Component {
 
@@ -14,6 +15,7 @@ export class Manorders extends React.Component {
         this.username = localStorage['username']
         this.state = {
             orders:[],
+            sortDirection : 'asc',
         }
         this.formatDate = this.formatDate.bind(this);
         this.formatQuantity = this.numberWithCommas.bind(this);
@@ -25,8 +27,19 @@ export class Manorders extends React.Component {
         this.manufacturerRepository.getOrders().then(Order => this.setState({orders : Order.data}))
     }
 
-    sortMe(event, sortKey){
-        //sort the data
+    sortBy(field) {      
+        if (this.state.sortDirection == 'asc') {
+            this.setState({sortDirection: 'desc'})
+            this.setState({ 
+                orders: _.orderBy(this.state.orders, field, this.state.sortDirection)
+            });
+        }
+        if (this.state.sortDirection == 'desc') {
+            this.setState({sortDirection: 'asc'})
+            this.setState({ 
+                orders: _.orderBy(this.state.orders, field, this.state.sortDirection)
+            });
+        }
     }
 
     formatDate(myDate){
@@ -59,7 +72,7 @@ export class Manorders extends React.Component {
 
     render() {
         return (
-           <div className = "body">
+           <div className = "body backgroundextend">
             <nav>
                 <div className = "img" id = "logo">
                         <img src={Logo} alt="Logo" />
@@ -68,54 +81,21 @@ export class Manorders extends React.Component {
                         Orders
                 </h1>
             </nav>
-                <h1 class="tableHeader">Sort By</h1>
-                <form class="sortBy">
-                    <input type="radio" id="sortNum" name="sort" value="num" onClick={e => this.sortMe(e, "num")}></input>
-                    <label for="sortNum">Order #</label>
-                    <input type="radio" id="sortDate" name="sort" value="date" onClick={e => this.sortMe(e, "date")}></input>
-                    <label for="sortDate">Date</label>
-                    <input type="radio" id="sortStatus" name="sort" value="status" onClick={e => this.sortMe(e, "status")}></input>
-                    <label for="sortStatus">Status</label>
-                </form>
-            {/* <h1 className = "tableHeader">Recent Outgoing Orders</h1>
-                <div className = "itemsTable">
-                    <table>
-                        <tr>
-                            <th>Order #</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Item</th>
-                            <th>Units Sold</th>
-                            <th>Price Per Unit</th>
-                            <th>Total Price</th>
-                        </tr>
-                        {this.state.orders.slice(0, 1).map(item => (
-                            <tr>
-                                <td id="item">{item.num}</td>
-                                <td id="item">{item.date}</td>
-                                <td id="item">{item.status}</td>
-                                <td id="item">{item.item}</td>
-                                <td id="item">{item.units}</td>
-                                <td id="item">${item.priceUnit}</td>
-                                <td id="item">${item.price}</td>
-                            </tr>
-                        ))}
-                    </table>
-                </div> */}
                 <h1 className = "tableHeader">All Outgoing Orders</h1>
-                <div className = "itemsTable scrollTableSort">
+                <div className = "itemsTable tableSort">
                     <table>
-                        <tr class="headerFixed">
-                            <th>Order #</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Item</th>
-                            <th>Quantity</th>
-                            <th>Unit Price</th>
+                        <thead><tr>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'id')}>Order #</button></th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'order_date')}>Date</button></th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'fulfill_date')}>Status</button></th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'name')}>Item</button></th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'quantity')}>Quantity</button></th>
+                            <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'sell_price')}>Unit Price</button></th>
                             <th>Total</th>
-                        </tr>
+                        </tr></thead>
+                        <tbody>
                         {this.state.orders.map(item => (
-                            <tr>
+                            <tr key={item.id}>
                                 <td id="item">{item.id}</td>
                                 <td id="item">{this.formatDate(item.order_date)}</td>
                                 <td id="item">{this.getStatus(item.fulfill_date)}</td>
@@ -125,13 +105,14 @@ export class Manorders extends React.Component {
                                 <td id="item">${this.getTotal(item.quantity, item.sell_price)}</td>
                             </tr>
                         ))}
+                        </tbody>
                     </table>
                 </div>
                 <Link to="maninventory">
-                    <button className = "return" id = "viewInventory">View All Inventory</button>
+                    <button className = "btn btn-secondary mr-3" id = "viewInventory">View All Inventory</button>
                     </Link> 
                 <Link to="/manufacturer">
-                    <button className = "return">Return to Homepage</button>
+                    <button className = "btn coloredBtn ml-3">Return to Homepage</button>
                     </Link> 
            </div>
         );

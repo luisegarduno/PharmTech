@@ -3,9 +3,12 @@ import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 import { PharmManagerRepository } from "../../API";
 import _ from 'lodash';
+import CartService from "./cartService";
+import CartItem from "./cartItem";
 
 export class Inventory extends React.Component {
 
+    cartService = new CartService();
     pharmManagerRepository = new PharmManagerRepository();
 
     username; 
@@ -13,6 +16,7 @@ export class Inventory extends React.Component {
         super(props);
         this.username = localStorage['username']
         this.state = {
+            inventory: [],
             sortDirection : 'desc',
             drugs : [{
                 "id" : 1,
@@ -37,6 +41,16 @@ export class Inventory extends React.Component {
             },
             ]
         }
+        this.formatDate = this.formatDate.bind(this);
+    }
+
+    componentDidMount(){
+        this.pharmManagerRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}))
+    }
+
+    formatDate(myDate){
+        var d = myDate.substring(5,7) + "-" + myDate.substring(8,10) + "-" + myDate.substring(0,4);
+        return d;
     }
 
 
@@ -66,24 +80,28 @@ export class Inventory extends React.Component {
                             Inventory                  
                     </h1>
                 </nav>
-                <div className = "itemsTable">
+                <div className = "itemsTable tableSort">
                     <table>
                         <tr>
                         <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'name')}>Item Name</button></th>
                             <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'quantity')}>Units</button></th>
                             <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'sell_price')}>Cost per Unit</button></th>
                             <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'exp_date')}>Expiration Date</button></th>
+                            <th>Recommended Purchase Amount</th>
                         </tr>
                             {this.state.drugs.map(item => (
                                 <tr>
                                   <td id = "item">{item.name}
                                   </td>
                                   <td id = "item">
-                                      {item.quantity}
+                                      {item.quantity}  {item.unit_measure}
                                     </td>
 
-                                    <td id = "item">${item.sell_price}</td>
-                                    <td id = "item">{item.exp_date}</td>
+                                    <td id = "item">${item.sell_price.toFixed(2)}</td>
+                                    <td id = "item">{this.formatDate(item.exp_date)}</td>
+                                    <td id = "item">
+                                      {item.rec_stock_amount}  {item.unit_measure}
+                                    </td>
                                 </tr>
                             ))}
                     </table>
@@ -93,10 +111,5 @@ export class Inventory extends React.Component {
                     </Link> 
            </div>         
         );
-    }
-
-    componentDidMount() {
-        this.pharmManagerRepository.getInventory()
-            .then(drugs => this.setState({ drugs }));
     }
 }
