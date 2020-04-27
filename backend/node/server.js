@@ -270,6 +270,25 @@ app.get('/getPrescription/:id', (req, res) => {
   });
 });
 
+//pharmacy revenues
+app.get('/getPhamRequest', (req, res) => {
+  // join `pharmtech`.`drugs` d on d.id = or.drug_id
+  connection.query('SELECT d.name, o.quantity, o.date_requested FROM `pharmtech`.`order_requests` o join drugs d on d.id = o.drug_id', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+  });
+});
+
 
 //pharmacy revenues
 app.get('/getRevenues', (req, res) => {
@@ -455,8 +474,6 @@ app.get('/pharmacylist/:id', (req, res) => {
   });
 });
 
-
-
 //get cart
 app.get('/getCartInventory', (req, res) => {
 
@@ -564,7 +581,7 @@ app.post('/addInventory', (req, res) => {
 //add order to manufacturer
 app.post('/placeOrder', (req, res) => {
 
-  connection.query('INSERT INTO `pharmtech`.`inventory_orders` (drug_id, order_date, quantity) VALUES(?, ?, ?)', [req.body.drug_id, req.body.order_date, req.body.quantity],function (err, rows, fields) {
+  connection.query('INSERT INTO `pharmtech`.`inventory_orders` (dorug_id, order_date, quantity) VALUES(?, ?, ?)', [req.body.drug_id, req.body.order_date, req.body.quantity],function (err, rows, fields) {
     if (err){
       logger.error("Problem inserting into inventory_orders table");
     }
@@ -668,6 +685,15 @@ app.put('/editPrescription', async (req, res) => {
 app.delete('/delete/:drugID', async (req, res) => {
   
   connection.query("DELETE FROM `pharmtech`.`inventory` WHERE `drug_id` = ?", [req.params.drugID], function (err, result, fields) {
+		if (err) 
+			return console.error(error.message);
+		res.end(JSON.stringify(result)); 
+	  });
+});
+
+app.delete('/deleteOrderRequest', async (req, res) => {
+  
+  connection.query("DELETE FROM `pharmtech`.`order_requests` WHERE `drug_id` = ? AND `quantity` = ? AND `date_requested` = ?", [req.body.drug_id, req.body.quantity, req.body.date_requested], function (err, result, fields) {
 		if (err) 
 			return console.error(error.message);
 		res.end(JSON.stringify(result)); 
