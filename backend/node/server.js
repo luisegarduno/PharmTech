@@ -690,6 +690,15 @@ app.delete('/delete/:drugID', async (req, res) => {
 	  });
 });
 
+app.delete('/deleteOrderRequest', async (req, res) => {
+  
+  connection.query("DELETE FROM `pharmtech`.`order_requests` WHERE `drug_id` = ? AND `quantity` = ? AND `date_requested` = ?", [req.body.drug_id, req.body.quantity, req.body.date_requested], function (err, result, fields) {
+		if (err) 
+			return console.error(error.message);
+		res.end(JSON.stringify(result)); 
+	  });
+});
+
 //connecting the express object to listen on a particular port as defined in the config object.
 app.listen(config.port, config.host, (e) => {
   if (e) {
