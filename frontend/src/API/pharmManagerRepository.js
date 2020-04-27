@@ -66,4 +66,12 @@ export class PharmManagerRepository {
                     })
             })
         }
+
+        deleteOrder(id) {
+            return new Promise((resolve, reject) => {
+                axios.delete(`http://localhost:8000/deleteOrderRequest/${id}`, this.config)
+                    .then(x => resolve(x.data))
+                        alert("Order fulfilled")
+            });
+        }
 }

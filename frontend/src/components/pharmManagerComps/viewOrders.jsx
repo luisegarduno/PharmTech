@@ -30,12 +30,11 @@ export class ViewOrders extends React.Component {
         return d;
     }
 
-    onFulfill(index) {
-        alert("Order fulfilled")
+    onFulfill(id, i) {
+        this.pharmManagerRepository.deleteOrder(id);
         var newOrders = this.state.orders
-        newOrders.splice(index, 1)
-        this.setState({orders: newOrders} )
-        axios.post('http://localhost:8000/deleteOrderRequest', {username: this.state.username, password: password, type: this.state.loginType})
+        newOrders.splice(i, 1)
+        this.setState({orders: newOrders})
     }
 
     sortBy(field) {        
@@ -76,9 +75,9 @@ export class ViewOrders extends React.Component {
                                   <td id = "item">{order.name}
                                   </td>
                                   <td id = "item">
-                                      {order.quantity}
+                                      {order.quantity} {order.unit_measure}
                                     </td>
-                                    <td id = "item">{this.formatDate(order.date_requested)}<button type = "button" id = "swap" onClick = {e => this.onFulfill(index)}>Fulfill Order</button></td>
+                                    <td id = "item">{this.formatDate(order.date_requested)}<button type = "button" id = "swap" onClick = {e => this.onFulfill(order.id, index)}>Fulfill Order</button></td>
                                 </tr>
                             ))}
                     </table>
