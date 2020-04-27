@@ -53,4 +53,17 @@ export class PharmManagerRepository {
                     })
             })
         }
+
+        getPharmRequest(){
+            return new Promise((resolve,reject) =>{
+                axios.get('http://localhost:8000/getPharmRequest')
+                    .then(x => {
+                        resolve(x.data);
+                    })
+                    .catch(x => {
+                        alert(x);
+                        reject(x);
+                    })
+            })
+        }
 }

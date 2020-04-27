@@ -1,19 +1,22 @@
 import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
+import { PharmManagerRepository } from "../../API";
 
 export class ViewOrders extends React.Component {
 
     username;
+    pharmManagerRepository = new PharmManagerRepository();
     
     constructor(props) {
         super(props);
         this.username = localStorage['username']
         this.state = {
             orders: [
-                {name: "drug",
+                {
+                    name: "drug",
                     quantity: 10,
-                    date: "10/20/2020"         
+                    date_requested: "10/20/2020"         
                 }
                 
             ],
@@ -21,11 +24,15 @@ export class ViewOrders extends React.Component {
         this.onFulfill = this.onFulfill.bind(this);
     }
 
+    componentDidMount(){
+        this.pharmManagerRepository.getPharmRequest().then(order => this.setState({orders : order.data}))
+    }
+
     onFulfill(index) {
         alert("Order fulfilled")
         var newOrders = this.state.orders
         newOrders.splice(index, 1)
-        this.setState({orders: newOrders})
+        this.setState({orders: newOrders} )
     }
 
     render() {
@@ -53,7 +60,7 @@ export class ViewOrders extends React.Component {
                                   <td id = "item">
                                       {order.quantity}
                                     </td>
-                                    <td id = "item">{order.date}<button type = "button" id = "swap" onClick = {e => this.onFulfill(index)}>Fulfill Order</button></td>
+                                    <td id = "item">{order.date_requested}<button type = "button" id = "swap" onClick = {e => this.onFulfill(index)}>Fulfill Order</button></td>
                                 </tr>
                             ))}
                     </table>
