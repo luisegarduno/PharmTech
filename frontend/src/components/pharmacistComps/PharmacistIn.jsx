@@ -20,6 +20,8 @@ export class PharmacistIn extends React.Component {
             newdrugmount: 0,
             newdrugdate: "",
             date: new Date(),
+            marked: [],
+            notificationlist: [],
         }
         this.state.date.toISOString();
     }
@@ -33,15 +35,17 @@ export class PharmacistIn extends React.Component {
     onSearch(param){
         this.pharmacistRepository.getInventory(param)
             .then(Drug => this.setState({drugs : Drug.data}));
+        this.pharmacistRepository.getNotification()
+            .then(Notif => this.setState({notificationlist : Notif.data}));
     }
 
     handleAdd(){
-        var newitem = new InventoryItem(this.state.newdrugid, this.state.newdrugmount, this.state.newdrugdate)
+        var newitem = new InventoryItem(this.state.newdrugid, this.state.newdrugmount, this.state.newdrugdate);
         this.pharmacistRepository.addinventory(newitem)
             .then(() =>{
                 alert("New Item Added");
                 this.setState({newdrugid:0, newdrugmount: 0, newdrugdate: ""});
-                this.onSearch("");
+                this.onSearch(undefined);
             })
     }
 
@@ -52,7 +56,7 @@ export class PharmacistIn extends React.Component {
                 .then(() => {
                     this.setState({newdrugid:0, newdrugmount: 0, newdrugdate: "", drugs: this.state.drugs.filter(x => x.drug_id != ondeleteid)});
                     alert("Drug Deleted");
-                    this.onSearch("");
+                    this.onSearch(undefined);
                 })
         }
     }
@@ -66,30 +70,71 @@ export class PharmacistIn extends React.Component {
         e.target.reset();
     }
 
+    handlecheck(item){
+        var exist = false;
+        debugger;
+        if(this.state.notificationlist.length != 0){
+            this.state.marked.forEach(element => {
+                if(element.DrugID == item){
+                    exist = true;
+                }
+            });
+        }
+        if(exist == false){
+            var newmarked = this.state.marked;
+            newmarked.push(this.state.notificationlist[item-1]);
+            this.setState({marked: newmarked});
+        }
+    }
+
     colorforunit(quantity){
         var color = '';
         if(quantity == 0){
             color = 'red'
         }
         else if(quantity > 0 && quantity <= 500){
-            color = '#85C1E9'
+            color = 'orange'
         }
         else if(quantity > 500 && quantity <= 1000){
             color = 'yellow'
         }
-        else if (quantity > 1000 && quantity <= 5000){
-            color = 'green'
+        else if (quantity > 1000 && quantity <= 2000){
+            color = '#D2B4DE'
         }
-        else if (quantity > 5000 && quantity <= 8000){
-            color = 'orange'
+        else if (quantity > 2000 && quantity <= 5000){
+            color = '#85C1E9'
         }
         else {
-            color = 'purple'
+            color = '#2ECC71'
         }
         return color
     }
 
     render(){
+
+        function LimitList(input) {  // Set the number of notifications that needs to be displayed. EX: If the bound is 3, it will only show three newest notifications. 
+            var ret = new Array();
+            if(input.length <= 3){
+                ret = input;
+            }
+            else{
+                for(var i = 0; i < input.length; i++) {
+                    if(input.length - i <= 3){
+                        ret.push(input[i]);
+                    }
+                }
+            }
+            return ret;
+        }
+
+         var show = LimitList(this.state.marked);
+
+         const listItems = show.map((item, i) =>
+                    <li key = {i}>{item.name + " is " + item.Available}</li>
+        );
+
+
+
         return (
             <div className = "body mb-4">
                 <div className = "navBar">
@@ -99,7 +144,10 @@ export class PharmacistIn extends React.Component {
                         </div>
                     </nav>
                 </div>
-
+                 <div className = "notification">
+                        <p>Your notification</p>
+                        <ul>{listItems}</ul>
+                </div>
                 <div className = "bg-secondary pb-2 mb-4 pt-1 mt-2">
                     <h2  className = "ml-3 mt-1">Inventory</h2>
                 </div>
@@ -110,13 +158,14 @@ export class PharmacistIn extends React.Component {
                         <Route path="/pharmacist/PharmacistIn/search" render={param => <PinventSearch onSearch={param => this.onSearch(param)} {...param}/>}  />
                     </Router>
                     <table  className = "table  table-bordered">
-                        <thead>
+                        <thead className = "thead-dark">
                             <tr className = "bg-secondary">
                                 <th>Drug Name</th>
                                 <th>Drug Id</th>
-                                <th>Expire_Date</th>
                                 <th>Quantity</th>
+                                <th>Expire Date</th>
                                 <th>Is expired</th>
+                                <th>Marked</th>
                             </tr>
                         </thead>
 
@@ -138,7 +187,13 @@ export class PharmacistIn extends React.Component {
                                                 <td className = "bg-danger">Is expired</td>
                                             )
                                         }
-                                        })()}
+                                    })()}
+                                    <td>
+                                        <div className="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id= {"customCheck"+ index}  onChange = {() => this.handlecheck(item.id)}/>
+                                        <label class="custom-control-label" for={"customCheck"+ index}></label>
+                                        </div>                            
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

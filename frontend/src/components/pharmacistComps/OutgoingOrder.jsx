@@ -37,7 +37,7 @@ export class OutgoingOrder extends React.Component {
 
             <div className = "container">
                     <table  className = "table">
-                        <thead>
+                        <thead className = "thead-dark">
                             <tr className = "bg-secondary">
                                 <th>Drug_id</th>
                                 <th>Docter_id</th>
