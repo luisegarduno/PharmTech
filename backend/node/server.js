@@ -456,7 +456,7 @@ app.get('/getPatient', (req, res) => {
 // GET
 // Returns drugID and drug name
 app.get('/getDrug', (req, res) => {
-  connection.query('SELECT d.id AS DrugID, d.name AS DrugName, SUM(i.quantity) FROM drugs d JOIN inventory i ON d.id = i.drug_id GROUP BY d.id', function (err, rows, fields) {
+  connection.query('SELECT d.id AS DrugID, d.name AS DrugName, SUM(i.quantity) AS Total FROM drugs d JOIN inventory i ON d.id = i.drug_id GROUP BY d.id', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
