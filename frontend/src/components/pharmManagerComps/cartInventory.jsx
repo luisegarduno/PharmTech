@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import { PharmManagerRepository } from "../../API";
 import CartService from "./cartService";
 import Autocomplete from './Autocomplete';
+import _ from 'lodash';
 
 export class CartInventory extends React.Component {
 
@@ -17,6 +18,7 @@ export class CartInventory extends React.Component {
         this.username = localStorage['username']
     }
     state = {
+        sortDirection : 'desc',
         drugs :[{
             "id" : 1,
             "name": "Symbyzide Parodafinil",
@@ -32,6 +34,21 @@ export class CartInventory extends React.Component {
             "expire" : "2/5/20"
         },
         ]
+    }
+
+    sortBy(field) {        
+        if (this.state.sortDirection == 'asc') {
+            this.setState({sortDirection: 'desc'})
+            this.setState({ 
+                drugs: _.orderBy(this.state.drugs, field, this.state.sortDirection) 
+            });
+        }
+        if (this.state.sortDirection == 'desc') {
+            this.setState({sortDirection: 'asc'})
+            this.setState({ 
+                drugs: _.orderBy(this.state.drugs, field, this.state.sortDirection) 
+            });
+        }
     }
 
     onSubmit(itemName) {
@@ -60,8 +77,8 @@ export class CartInventory extends React.Component {
                 <div className = "itemsTable">
                     <table>
                         <tr>
-                            <th>Item</th>
-                            <th>Cost Per Unit</th>
+                        <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'name')}>Item Name</button></th>
+                            <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'purchase_price')}>Cost per Unit</button></th>
                         </tr>
                             {this.state.drugs.map(item => (
                                 <tr key = {item.id}>
