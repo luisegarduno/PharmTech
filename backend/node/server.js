@@ -214,7 +214,7 @@ app.get('/pharmacyNotification', async (req, res) => {
 // GET
 // Returns all notifications for given username
 app.get('/userNotifications/:id', async (req, res) => {
-  connection.query('SELECT n.id AS NotificationID, d.id AS DrugID, d.name AS DrugName, n.drugs_status AS InventoryStatus FROM notifications n JOIN drugs d ON d.id = drug_id JOIN user u ON u.id = n.pharmacist_id JOIN user_type ut ON u.userType_id = ut.id WHERE ut.type IN ("pharmacist", "pharmacy manager") AND u.username = ?;', [req.params.id], function (err, rows, fields) {
+  connection.query('SELECT n.id AS NotificationID, d.id AS DrugID, d.name AS DrugName, n.drugs_status AS InventoryStatus FROM notifications n JOIN drugs d ON d.id = drug_id JOIN user u ON u.id = n.pharmacist_id JOIN user_type ut ON u.userType_id = ut.id WHERE ut.type IN ("pharmacist", "pharmacy manager") AND u.first_name = ?;', [req.params.id], function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -256,7 +256,7 @@ app.post('/addNotification/:id', async (req, res) => {
 
   var drugID = req.body.drug_id;
 
-  connection.query("INSERT INTO `pharmtech`.`notifications`(pharmacist_id, drug_id, drugs_status)(SELECT u.id, ?, (SELECT CASE WHEN SUM(i.quantity) <= 0 OR SUM(i.quantity) IS NULL THEN 'Out Of Stock' WHEN SUM(i.quantity) > 0 THEN 'In Stock' ELSE 'Error' END AS drugs_status FROM inventory i WHERE i.drug_id = n.drug_id GROUP BY i.drug_id) FROM `pharmtech`.`notifications` AS n INNER JOIN user u ON u.username = ? INNER JOIN user_type ut ON u.userType_id = ut.id WHERE ut.type IN ('pharmacist', 'pharmacy manager') LIMIT 1)", [drugID, req.params.id], function (err, rows, fields) {
+  connection.query("INSERT INTO `pharmtech`.`notifications`(pharmacist_id, drug_id, drugs_status)(SELECT u.id, ?, (SELECT CASE WHEN SUM(i.quantity) <= 0 OR SUM(i.quantity) IS NULL THEN 'Out Of Stock' WHEN SUM(i.quantity) > 0 THEN 'In Stock' ELSE 'Error' END AS drugs_status FROM inventory i WHERE i.drug_id = n.drug_id GROUP BY i.drug_id) FROM `pharmtech`.`notifications` AS n INNER JOIN user u ON u.first_name = ? INNER JOIN user_type ut ON u.userType_id = ut.id WHERE ut.type IN ('pharmacist', 'pharmacy manager') LIMIT 1)", [drugID, req.params.id], function (err, rows, fields) {
     if (err){
       logger.error("Problem inserting into prescription table");
     }
@@ -273,7 +273,7 @@ app.post('/addNotification/:id', async (req, res) => {
 app.delete('/deleteNotification/:id', async (req, res) => {
   var drugID = req.body.drug_id;
 
-  connection.query("DELETE n FROM `pharmtech`.`notifications` AS n INNER JOIN user u ON u.id = n.pharmacist_id INNER JOIN user_type ut ON u.userType_id = ut.id WHERE n.`drug_id` = ? AND ut.type IN ('pharmacist', 'pharmacy manager') AND u.username = ?", [drugID, req.params.id], function (err, result, fields) {
+  connection.query("DELETE n FROM `pharmtech`.`notifications` AS n INNER JOIN user u ON u.id = n.pharmacist_id INNER JOIN user_type ut ON u.userType_id = ut.id WHERE n.`drug_id` = ? AND ut.type IN ('pharmacist', 'pharmacy manager') AND u.first_name = ?", [drugID, req.params.id], function (err, result, fields) {
     if (err) 
       return console.error(error.message);
     res.end(JSON.stringify(result)); 
