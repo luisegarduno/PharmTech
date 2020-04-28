@@ -16,6 +16,7 @@ export class PharmacistIn extends React.Component {
         super(props);
         this.username = localStorage['username']
         this.state = {
+            alldrugs:[],
             drugs: [],
             newdrugid: 0,
             newdrugmount: 0,
@@ -23,6 +24,7 @@ export class PharmacistIn extends React.Component {
             date: new Date(),
             marked: [],
             notificationlist: [],
+            userNotification: [],
         }
         this.state.date.toISOString();
     }
@@ -32,16 +34,31 @@ export class PharmacistIn extends React.Component {
         this.onSearch(undefined);
     }
 
+    buildDrugs(){
+        var arr = [];
+        arr.push(<option value = "0"></option>);
+        this.state.alldrugs.forEach(element => {
+            arr.push(<option value = {element.DrugID}>{element.DrugName + " with total quantity " + element.Total}</option>);
+        });
+        return arr;
+    }
+
+    _handleChange = (event) => {
+        this.setState({ newdrugid: event.target.value })
+    }
 
     onSearch(param){
         this.pharmacistRepository.getInventory(param)
             .then(Drug => this.setState({drugs : Drug.data}));
         this.pharmacistRepository.getNotification()
             .then(Notif => this.setState({notificationlist : Notif.data}));
+        this.pharmacistRepository.getDrug()
+            .then(Alldrugs => this.setState({alldrugs : Alldrugs.data})); 
     }
 
     handleAdd(){
         var newitem = new InventoryItem(this.state.newdrugid, this.state.newdrugmount, this.state.newdrugdate);
+        this.setState({newdrugid : 0, newdrugmount : 0, newdrugmount: ""})
         this.pharmacistRepository.addinventory(newitem)
             .then(() =>{
                 alert("New Item Added");
@@ -91,7 +108,7 @@ export class PharmacistIn extends React.Component {
                     newmarked.push(temp);
                 }
             })
-            if(newmarked.length > 3){
+            if(newmarked.length > 5){
                 newmarked.splice(0,1);
             }
             this.setState({marked: newmarked});
@@ -157,6 +174,7 @@ export class PharmacistIn extends React.Component {
                                 <th>Drug Name</th>
                                 <th>Drug Id</th>
                                 <th>Quantity</th>
+                                <th>Unit</th>
                                 <th>Expire Date</th>
                                 <th>Is expired</th>
                                 <th>Marked</th>
@@ -169,6 +187,7 @@ export class PharmacistIn extends React.Component {
                                     <td>{item.name}</td>
                                     <td>{item.id}</td>
                                     <td bgcolor = {this.colorforunit(item.quantity)} >{item.quantity}</td>
+                                    <td>{item.DrugUnit}</td>
                                     <td>{item.exp_date}</td>
                                     {(() => {
                                         if(this.state.date.toISOString() <= item.exp_date){
@@ -200,18 +219,20 @@ export class PharmacistIn extends React.Component {
                         <div className = "card-body">
                             <form onSubmit = {this.handleSubmit}>
                                 <div className="form-group">
-                                    <label htmlFor="newdrugname">Drug_ID</label>
-                                    <input type="number" id="durgname" className = "form-control" min="0" className = "form-control" placeholder = "0" onChange={e => this.setState({ newdrugid: e.target.value })}/>
+                                    <label htmlFor="selectdrug">Drug_ID</label>
+                                    <select className = "custom-select form-control" id = "selectdrug" onChange={this._handleChange}>
+                                        {this.buildDrugs()}
+                                    </select>
                                 </div>
 
                                 <div className ="form-group">
                                     <label htmlFor="newdrugmount">Amount</label>
-                                    <input type="number" id="newdrugmount" min="0" className = "form-control" placeholder = "0"onChange={e => this.setState({ newdrugmount: e.target.value })}></input>
+                                    <input type="number" id="newdrugmount" min="0" className = "form-control" placeholder = "0 (Not required for delete)"onChange={e => this.setState({ newdrugmount: e.target.value })}></input>
                                 </div>
 
                                 <div className ="form-group">
                                     <label htmlFor="newdrugdate">Exp_date (year-month-day)</label>
-                                    <input type="text" id="newdrugdate"className = "form-control" placeholder = "2000-1-1" onChange={e => this.setState({ newdrugdate: e.target.value })}></input>
+                                    <input type="text" id="newdrugdate"className = "form-control" placeholder = "2000-1-1 (Not required for delete)" onChange={e => this.setState({ newdrugdate: e.target.value })}></input>
                                 </div>
                                 
                                 <button className = "btn btn-info form-control mt-2" onClick ={() => this.handleAdd()} >Add</button>

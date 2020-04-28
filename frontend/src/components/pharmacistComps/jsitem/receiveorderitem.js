@@ -1,11 +1,11 @@
 export class ReceiveorderItem{
     
-    Patient = "";
-    doctor_name = "";
-    name = "";
+    patientID = 0;
+    doctorID = 0;
+    drugID = 0;
     quantity = 0;
-    create_date = "";
-    fill_date = "";
+    createDate = "";
+    fillDate = "";
 
     constructor(Patient, doctor_name, name, quantity, create_date, fill_date){
         this.Patient = Patient; 
