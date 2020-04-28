@@ -54,6 +54,11 @@ export class PharmacistIn extends React.Component {
             .then(Notif => this.setState({notificationlist : Notif.data}));
         this.pharmacistRepository.getDrug()
             .then(Alldrugs => this.setState({alldrugs : Alldrugs.data})); 
+        this.pharmacistRepository.getUserNotification(this.username)
+            .then(Allnotif => {
+                this.setState({userNotification: Allnotif.data});
+                this.updatemarked();
+            });
     }
 
     handleAdd(){
@@ -91,27 +96,51 @@ export class PharmacistIn extends React.Component {
         e.target.reset();
     }
 
-    handlecheck(item){
-        var exist = false;
-        if(this.state.notificationlist.length != 0){
-            this.state.marked.forEach(element => {
-                if(element.DrugID == item){
-                    exist = true;
-                }
-            });
+    handlechecked(id){
+        if(this.state.marked[id-1] == true){
+            return true;
         }
-        if(exist == false){
-            var newmarked = this.state.marked;
-            this.state.notificationlist.forEach((element,index) => {
-                if(element.DrugID == item){
-                    var temp = this.state.notificationlist[index];
-                    newmarked.push(temp);
+        else{
+            return false;
+        }
+    }
+
+    updatemarked(){
+        var newmarked = [];
+        this.state.alldrugs.forEach(element => {
+            newmarked.push(false);
+        });
+        if(this.state.userNotification.length != 0){
+            for (let i = 0; i < this.state.userNotification.length; i++) {
+                for (let j = 0; j < this.state.alldrugs.length; j++) {
+                    if(this.state.userNotification[i].DrugID == this.state.alldrugs[j].DrugID){
+                        newmarked[j] = true;
+                    }
                 }
-            })
-            if(newmarked.length > 5){
-                newmarked.splice(0,1);
             }
-            this.setState({marked: newmarked});
+        }
+        this.setState({marked: newmarked});
+    }
+
+    handlecheck(item){
+        var newmarked = this.state.marked;
+        if(this.state.marked[item-1] == false || this.state.userNotification.length == 0){
+            this.pharmacistRepository.addUserNotification(this.username, item)
+                .then(() => {
+                    alert("Notification Added");
+                    this.state.marked[item-1] = true;
+                    this.setState({marked:newmarked});
+                    this.onSearch("");
+                })
+        }
+        else{
+            this.pharmacistRepository.deleteUserNotification(this.username, item)
+                .then(() => {
+                    alert("Notification Canceled");
+                    this.state.marked[item-1] = true;
+                    this.setState({marked:newmarked});
+                    this.onSearch("");
+                })
         }
     }
 
@@ -139,8 +168,8 @@ export class PharmacistIn extends React.Component {
     }
 
     render(){
-        const listItems = this.state.marked.map((item, i) =>
-            <li key = {i}>{item.name + " is " + item.Available}</li>
+        const listItems = this.state.userNotification.map((item, i) =>
+            <li key = {i}>{item.DrugName + " is " + item.InventoryStatus}</li>
         );
 
         return (
@@ -177,7 +206,7 @@ export class PharmacistIn extends React.Component {
                                 <th>Unit</th>
                                 <th>Expire Date</th>
                                 <th>Is expired</th>
-                                <th>Marked</th>
+                                <th>Mark Drug</th>
                             </tr>
                         </thead>
 
@@ -202,10 +231,7 @@ export class PharmacistIn extends React.Component {
                                         }
                                     })()}
                                     <td>
-                                        <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" className ="custom-control-input" id= {"customCheck"+ index}  onChange = {() => this.handlecheck(item.id)}/>
-                                        <label className="custom-control-label" htmlFor={"customCheck"+ index}></label>
-                                        </div>                            
+                                        <button className = "btn btn-info" onClick ={() => this.handlecheck(item.id)}>Mark/UnMark</button>                         
                                     </td>
                                 </tr>
                             ))}

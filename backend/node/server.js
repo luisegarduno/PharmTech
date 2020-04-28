@@ -271,7 +271,7 @@ app.post('/addNotification/:id', async (req, res) => {
 // DELETE
 // Removes notification/s with drug_id for username "/:id" from notification table 
 app.delete('/deleteNotification/:id', async (req, res) => {
-  var drugID = req.body.drug_id;
+  var drugID = req.query.drug_id;
 
   connection.query("DELETE n FROM `pharmtech`.`notifications` AS n INNER JOIN user u ON u.id = n.pharmacist_id INNER JOIN user_type ut ON u.userType_id = ut.id WHERE n.`drug_id` = ? AND ut.type IN ('pharmacist', 'pharmacy manager') AND u.first_name = ?", [drugID, req.params.id], function (err, result, fields) {
     if (err) 
