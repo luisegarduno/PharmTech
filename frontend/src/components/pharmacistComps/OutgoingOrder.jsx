@@ -33,27 +33,29 @@ export class OutgoingOrder extends React.Component {
                     </nav>
 
                     <div className = "bg-secondary pb-2 mb-4 pt-1 mt-2">
-                        <h2  className = "ml-3 mt-1">Incoming Order List</h2>
+                        <h2  className = "ml-3 mt-1">OutGoing Order List</h2>
                     </div>
 
                     <div className = "container">
                         <table  className = "table">
                             <thead className = "thead-dark">
-                                <tr className = "bg-secondary">
-                                    <th>Drug_id</th>
-                                    <th>Docter_id</th>
-                                    <th>Create_Date</th>
+                            <tr className = "bg-secondary">
+                                    <th>Drug</th>
+                                    <th>Patient</th>
+                                    <th>Docter</th>
                                     <th>Quantity</th>
+                                    <th>Create Date</th>
                                 </tr>
                             </thead>
 
                             <tbody>
                                 {this.state.orders.map(item => (
                                     <tr className = " bg-light" key = {item.id}>
-                                        <td>{item.drug_id}</td>
-                                        <td>{item.doctor_id}</td>
-                                        <td>{item.create_date}</td>
+                                        <td>{item.Drug}</td>
+                                        <td>{item.Patient}</td>
+                                        <td>{item.doctor_name}</td>
                                         <td>{item.quantity}</td>
+                                        <td>{item.create_date}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -62,11 +64,11 @@ export class OutgoingOrder extends React.Component {
                 </div>
                 
                 <div>
-                <Link to="/Pharmacist">
-                    <button className = "btn btn-info mb-5 ml-5">Return to Homepage</button>
-                </Link> 
-            </div> 
-        </div>        
+                    <Link to="/Pharmacist">
+                        <button className = "btn btn-info mb-5 ml-5">Return to Homepage</button>
+                    </Link> 
+                </div> 
+            </div>        
         );
     }
 }

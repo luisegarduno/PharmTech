@@ -111,7 +111,6 @@ export class Prescription extends React.Component {
     }
 
     GoDelete(id){
-        debugger;
         if(window.confirm("Are you sure you want to delete this prescription")){
             this.pharmacistRepository.deletePrescription(id)
                 .then(() => {
@@ -122,7 +121,6 @@ export class Prescription extends React.Component {
     }
 
     GoEdit(ID, index){
-        debugger;
         this.setState({isediting:ID, line:index});
     }
 
@@ -144,7 +142,6 @@ export class Prescription extends React.Component {
     }
 
     GoSave(){
-
         var date= new Date();
         var time = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
         var newPrescription = this.state.Prescriptionlist[this.state.line];
@@ -154,7 +151,6 @@ export class Prescription extends React.Component {
         newPrescription.doctor_id = this.state.newdoctor_id;
         newPrescription.Quantity = this.state.newQuantity;
         newPrescription.create_date = time;
-        debugger;
         this.pharmacistRepository.editPrescription(newPrescription.Title, newPrescription.PatientID, newPrescription.DrugID, newPrescription.Quantity, newPrescription.doctor_id, newPrescription.create_date, newPrescription.PrescriptionID)
             .then(() =>{
                 alert("Item Edited");
@@ -178,11 +174,12 @@ export class Prescription extends React.Component {
                     <h2 className = "ml-3 mt-1">Prescription List</h2>
                 </div>
 
-                <div className = "container">
+                <div className = "container mb-4">
                     <Router>
                         <Route path="/pharmacist/Prescription" exact render= {() => <Link className = "btn btn-info form-control mb-2" to="/pharmacist/Prescription/search">Click to Search</Link>}></Route>
                         <Route path="/pharmacist/Prescription/search" render={param => <PrescriptSearch onSearch={param => this.onSearch(param)} {...param}/>}  />
                     </Router>
+
                     <table  className ="table  bg-light  table-striped table-bordered">
                         <thead className = "thead-dark">
                             <tr>
@@ -196,6 +193,7 @@ export class Prescription extends React.Component {
                                 <th>Setting</th>
                             </tr>
                         </thead>
+
                         <tbody>
                             {this.state.Prescriptionlist.map((item,index) => (
                                 <tr key = {index}>
@@ -206,45 +204,80 @@ export class Prescription extends React.Component {
                                     <td>{item.DrugName}</td>
                                     <td>{item.Quantity}</td>
                                     <td>{item.Unit}</td>
-                                <td>
-                                    <div>
-                                        <form onSubmit = {this.handleSubmit}>
-                                            <button className = "btn btn-info mb-2" onClick = {() => this.GoDuplicate(item) }>Duplicate</button> <br />
-                                            <button className = "btn btn-warning mb-2" onClick = {() => this.GoEdit(item.PrescriptionID, index)}>Edit</button> <br />
-                                            <button className = "btn btn-danger" onClick = {() => this.GoDelete(item.PrescriptionID)}>Delete</button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
+                                    <td>
+                                        <div>
+                                            <form onSubmit = {this.handleSubmit}>
+                                                <button className = "btn btn-info mb-2" onClick = {() => this.GoDuplicate(item) }>Duplicate</button> <br />
+                                                <button className = "btn btn-warning mb-2" onClick = {() => this.GoEdit(item.PrescriptionID, index)}>Edit</button> <br />
+                                                <button className = "btn btn-danger" onClick = {() => this.GoDelete(item.PrescriptionID)}>Delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
+
                     {(() => {
                         if(this.state.isediting != -1){
                             return(
-                                <form className="form-inline mb-2">
-                                    <h4>Edit changes: </h4>
-                                    <label className="sr-only" htmlFor="newTitle">Title</label>
-                                    <input type="text" className="form-control mb-2 mr-sm-2" id="newTitle" placeholder= {"Title: " + this.state.Prescriptionlist[this.state.line].Title} onChange={e => this.setState({ newTitle: e.target.value })}/>
-                                    <label className="sr-only" htmlFor="patientname2">Patient</label>
-                                    <select className = "custom-select form-control" id = "patientname2" onChange = {this.handlePatient}>
-                                        {this.buildPatients()}
-                                    </select>
-                                    <label className="sr-only" htmlFor="drugname2">DrugID</label>
-                                    <select className = "custom-select form-control" id = "drugname2" onChange = {this.handleDrug}>
-                                        {this.buildDrugs()}
-                                    </select>
-                                    <label className="sr-only" htmlFor="quantity">quantity</label>
-                                    <input type="number" className="form-control mb-2 mr-sm-2 " style = {{maxHeight: "1.5em", width: "6cm"}} id="quantity" placeholder= {"Quantity: " +this.state.Prescriptionlist[this.state.line].Quantity} onChange={e => this.setState({ newQuantity: e.target.value })}/>
-                                    <label className="sr-only" htmlFor="doctorname2">DoctorID</label>
-                                    <select className = "custom-select form-control" id = "doctorname2" onChange = {this.handleDoctor}>
-                                        {this.buildDoctors()}
-                                    </select>
-                                    <button className = "btn btn-warning" onClick = {() => this.GoSave()} >Save</button>
+                                <form onSubmit={this.handleSubmit.bind(this)}>
+                                    <div className = "card  text-center bg-light">
+                                        <h4 className="card-title ml-3 mt-3">Edit changes: </h4>
+                                        <div className = "card-body">
+                                            <div className = "row">
+                                                <div className = "col">
+                                                    <label htmlFor="newTitle">Title</label>
+                                                </div>
+                                                <div className = "col">
+                                                    <label  htmlFor="patientname2">Patient</label>
+                                                </div>
+                                                <div className = "col">
+                                                    <label  htmlFor="drugname2">DrugID</label>
+                                                </div>
+                                                <div className = "col">
+                                                    <label htmlFor="quantity">quantity</label>
+                                                </div>
+                                                <div className = "col">
+                                                    <label htmlFor="doctorname2">DoctorID</label>
+                                                </div>
+                                            </div>
+
+                                            <div className = "row">
+                                                <div className = "col">
+                                                    <input type="text" className="form-control mb-2 mr-sm-2" id="newTitle" placeholder= {"Title: " + this.state.Prescriptionlist[this.state.line].Title} onChange={e => this.setState({ newTitle: e.target.value })}/>
+                                                </div>
+                                                <div className = "col">
+                                                    <select className = "custom-select form-control" id = "patientname2" onChange = {this.handlePatient}>
+                                                        {this.buildPatients()}
+                                                    </select>
+                                                </div>
+                                                <div className = "col">
+                                                    <select className = "custom-select form-control" id = "drugname2" onChange = {this.handleDrug}>
+                                                        {this.buildDrugs()}
+                                                    </select>
+                                                </div>
+                                                <div className = "col">
+                                                    <input type="number" className="form-control mb-2 mr-sm-2 " style = {{maxHeight: "1.5em", width: "6cm"}} id="quantity" placeholder= {"Quantity: " +this.state.Prescriptionlist[this.state.line].Quantity} onChange={e => this.setState({ newQuantity: e.target.value })}/>
+                                                </div>
+                                                <div className = "col">
+                                                    <select className = "custom-select form-control" id = "doctorname2" onChange = {this.handleDoctor}>
+                                                        {this.buildDoctors()}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div className = "row">
+                                                <button className = "btn btn-info form-control  mt-2 ml-2 mr-2" onClick = {() => this.GoSave()} >Save</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </form>
                                 )
-                                }
-                        })()}
+                            }
+                        }
+                    )()}
                 </div>
             
                 <div>
@@ -254,6 +287,6 @@ export class Prescription extends React.Component {
                     </Link> 
                 </div> 
             </div>
-            );
-        }
+        );
     }
+}

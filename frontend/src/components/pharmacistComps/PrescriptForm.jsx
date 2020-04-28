@@ -38,7 +38,7 @@ class PrescriptForm extends React.Component {
         var arr = [];
         arr.push(<option value = "0"></option>);
         this.state.alldrugs.forEach(element => {
-            arr.push(<option value = {element.DrugID}>{element.DrugName}</option>);
+            arr.push(<option value = {element.DrugID}>{element.DrugName + " with total quantity " + element.Total}</option>);
         });
         return arr;
     }
@@ -67,7 +67,6 @@ class PrescriptForm extends React.Component {
     }
 
     handleClick = () =>{
-        debugger;
         var date= new Date();
         var time = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
         this.props.Onchange(new PrescriptionItem(this.state.title, this.state.patient_id, this.state.drug_id, this.state.quantity, time, this.state.doctor_id));
@@ -76,7 +75,6 @@ class PrescriptForm extends React.Component {
 
     handleload(){
         this.setState({alldrugs : this.props.alldrugs, allpatients: this.props.allpatients, alldoctors: this.props.alldoctors, isediting: 1});
-        debugger;
     }
     render(){
         return(
@@ -88,64 +86,64 @@ class PrescriptForm extends React.Component {
                     {(() => {
                         if(this.state.isediting != -1){
                             return(
-                    <div className = "card-body mt-1">
-                        <form  onSubmit={this.handleSubmit.bind(this)}>
-                            <div className = "form-group">
-                                <div className = "row">
-                                    <div className = "col-6">
-                                        <label htmlFor = "patientname3">Patient Name</label>
-                                    </div>
-                                    <div className = "col-6">
-                                        <label htmlFor = "newtitle">Title</label>
-                                    </div>
-                                </div>
-                                <div className = "row">
-                                    <div className = "col-6">
-                                        <select className = "custom-select form-control" id = "patientname3" onChange = {this.handlePatient}>
-                                            {this.buildPatients()}
-                                        </select>
-                                    </div>
-                                    <div className = "col-6">
-                                        <input type="text" className = "form-control" id="newtitle" onChange={e=> this.setState({title: e.target.value})}/>
-                                    </div>
-                                </div>                      
-                            </div>
-
-                            <div className = "form-group">
-                                <div className = "row">
-                                    <div className = "col-4">
-                                        <label htmlFor = "drugname2">Drug Name</label>
-                                    </div>
-                                    <div className = "col-4">
-                                        <label htmlFor = "newunits">Quantity</label>
-                                    </div>
-                                    <div className = "col">
-                                        <label htmlFor = "doctorname2">Doctor Name</label>
-                                    </div>
-                                </div>
-                                
-                                <div className = "row">
-                                    <div className = "col-4">
-                                        <div className="input-group">
-                                            <select className = "custom-select form-control" id = "drugname2" onChange = {this.handleDrug}>
-                                                {this.buildDrugs()}
-                                            </select>
+                                <div className = "card-body mt-1">
+                                    <form  onSubmit={this.handleSubmit.bind(this)}>
+                                        <div className = "form-group">
+                                            <div className = "row">
+                                                <div className = "col-6">
+                                                    <label htmlFor = "patientname3">Patient Name</label>
+                                                </div>
+                                                <div className = "col-6">
+                                                    <label htmlFor = "newtitle">Title</label>
+                                                </div>
+                                            </div>
+                                            <div className = "row">
+                                                <div className = "col-6">
+                                                    <select className = "custom-select form-control" id = "patientname3" onChange = {this.handlePatient}>
+                                                        {this.buildPatients()}
+                                                    </select>
+                                                </div>
+                                                <div className = "col-6">
+                                                    <input type="text" className = "form-control" id="newtitle" onChange={e=> this.setState({title: e.target.value})}/>
+                                                </div>
+                                            </div>                      
                                         </div>
-                                    </div>
-                                    <div className = "col-4">
-                                        <input type="text" className = "form-control" onChange={e=> this.setState({quantity: e.target.value})}/>
-                                    </div>
-                                    <div className = "col">
-                                        <select className = "custom-select form-control" id = "doctorname2" onChange = {this.handleDoctor}>
-                                            {this.buildDoctors()}
-                                        </select>
-                                    </div>
+
+                                        <div className = "form-group">
+                                            <div className = "row">
+                                                <div className = "col-4">
+                                                    <label htmlFor = "drugname2">Drug Name</label>
+                                                </div>
+                                                <div className = "col-4">
+                                                    <label htmlFor = "newunits">Quantity</label>
+                                                </div>
+                                                <div className = "col">
+                                                    <label htmlFor = "doctorname2">Doctor Name</label>
+                                                </div>
+                                            </div>
+                                
+                                            <div className = "row">
+                                                <div className = "col-4">
+                                                    <div className="input-group">
+                                                        <select className = "custom-select form-control" id = "drugname2" onChange = {this.handleDrug}>
+                                                            {this.buildDrugs()}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div className = "col-4">
+                                                    <input type="text" className = "form-control" onChange={e=> this.setState({quantity: e.target.value})}/>
+                                                </div>
+                                                <div className = "col">
+                                                    <select className = "custom-select form-control" id = "doctorname2" onChange = {this.handleDoctor}>
+                                                        {this.buildDoctors()}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button className = "btn btn-warning btn-block mt-3 mb-3" onClick= {this.handleClick.bind(this)}>Submit</button>
+                                    </form>
                                 </div>
-                            </div>
-                            <button className = "btn btn-warning btn-block mt-3 mb-3" onClick= {this.handleClick.bind(this)}>Submit</button>
-                        </form>
-                    </div>
-                    )}})()}
+                            )}})()}
                 </div>
             </div>
         )

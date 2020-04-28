@@ -24,6 +24,7 @@ export class PharmacistIn extends React.Component {
             date: new Date(),
             marked: [],
             notificationlist: [],
+            userNotification: [],
         }
         this.state.date.toISOString();
     }
@@ -37,16 +38,14 @@ export class PharmacistIn extends React.Component {
         var arr = [];
         arr.push(<option value = "0"></option>);
         this.state.alldrugs.forEach(element => {
-            arr.push(<option value = {element.DrugID}>{element.DrugName}</option>);
+            arr.push(<option value = {element.DrugID}>{element.DrugName + " with total quantity " + element.Total}</option>);
         });
         return arr;
     }
 
     _handleChange = (event) => {
-        debugger;
         this.setState({ newdrugid: event.target.value })
-      }
-
+    }
 
     onSearch(param){
         this.pharmacistRepository.getInventory(param)
@@ -54,8 +53,7 @@ export class PharmacistIn extends React.Component {
         this.pharmacistRepository.getNotification()
             .then(Notif => this.setState({notificationlist : Notif.data}));
         this.pharmacistRepository.getDrug()
-            .then(Alldrugs => this.setState({alldrugs : Alldrugs.data}));
-        
+            .then(Alldrugs => this.setState({alldrugs : Alldrugs.data})); 
     }
 
     handleAdd(){
@@ -110,7 +108,7 @@ export class PharmacistIn extends React.Component {
                     newmarked.push(temp);
                 }
             })
-            if(newmarked.length > 3){
+            if(newmarked.length > 5){
                 newmarked.splice(0,1);
             }
             this.setState({marked: newmarked});
@@ -176,6 +174,7 @@ export class PharmacistIn extends React.Component {
                                 <th>Drug Name</th>
                                 <th>Drug Id</th>
                                 <th>Quantity</th>
+                                <th>Unit</th>
                                 <th>Expire Date</th>
                                 <th>Is expired</th>
                                 <th>Marked</th>
@@ -188,6 +187,7 @@ export class PharmacistIn extends React.Component {
                                     <td>{item.name}</td>
                                     <td>{item.id}</td>
                                     <td bgcolor = {this.colorforunit(item.quantity)} >{item.quantity}</td>
+                                    <td>{item.DrugUnit}</td>
                                     <td>{item.exp_date}</td>
                                     {(() => {
                                         if(this.state.date.toISOString() <= item.exp_date){

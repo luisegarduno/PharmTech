@@ -40,22 +40,22 @@ export class IncomingOrder extends React.Component {
                         <table  className = "table">
                             <thead className = "thead-dark">
                                 <tr className = "bg-secondary">
-                                    <th>Drug Id</th>
-                                    <th>Patient Id</th>
-                                    <th>Docter Id</th>
-                                    <th>Create Date</th>
+                                    <th>Drug</th>
+                                    <th>Patient</th>
+                                    <th>Docter</th>
                                     <th>Quantity</th>
+                                    <th>Create Date</th>
                                 </tr>
                             </thead>
 
                             <tbody>
                                 {this.state.orders.map(item => (
                                     <tr className = " bg-light" key = {item.id}>
-                                        <td>{item.drug_id}</td>
-                                        <td>{item.patient_id}</td>
-                                        <td>{item.doctor_id}</td>
-                                        <td>{item.create_date}</td>
+                                        <td>{item.Drug}</td>
+                                        <td>{item.Patient}</td>
+                                        <td>{item.doctor_name}</td>
                                         <td>{item.quantity}</td>
+                                        <td>{item.create_date}</td>
                                     </tr>
                                 ))}
                             </tbody>

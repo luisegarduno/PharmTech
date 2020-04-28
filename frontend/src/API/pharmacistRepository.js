@@ -162,7 +162,6 @@ export class PharmacistRepository {
     }
 
     deletePrescription(id){
-        debugger;
         return new Promise((resolve, reject) => {
             axios.delete('http://localhost:8000/deletePrescription/' + id)
                 .then(x => resolve(x.data))
@@ -174,7 +173,6 @@ export class PharmacistRepository {
     }
 
     addPrescription(param){
-        debugger;
         return new Promise((resolve, reject) => {
             axios.post('http://localhost:8000/addPrescription', param)
                 .then(x => {
@@ -228,6 +226,30 @@ export class PharmacistRepository {
         })            
     }
 
+    addUserNotification(username, drug_id){
+        debugger;
+        return new Promise((resolve, reject) => {
+            axios.post('http://localhost:8000/addNotification/'+ username, drug_id)
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                })
+        })     
+    }
+
+    deleteUserNotification(username, drug_id){
+        return new Promise((resolve, reject) => {
+            axios.delete('http://localhost:8000/deleteNotification/' + username, {drug_id : drug_id})
+                .then(x => resolve(x.data))
+                .catch(x => {
+                    alert(x);
+                    reject(x);
+                })
+        })
+    }
 
     editPrescription(Title, PatientID, DrugID,Quantity, doctor_id, create_date, prescription_id){
         debugger;
