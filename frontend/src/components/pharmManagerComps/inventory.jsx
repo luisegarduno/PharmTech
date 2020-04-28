@@ -81,14 +81,17 @@ export class Inventory extends React.Component {
                     </h1>
                 </nav>
                 <div className = "itemsTable tableSort">
-                    <table>
-                        <tr>
+                    <table className = "table table-bordered table-hover">
+                        <thead className = "thead-secondary">
+                            <tr className = "bg-secondary">
                         <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'name')}>Item Name</button></th>
                             <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'quantity')}>Units</button></th>
                             <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'sell_price')}>Cost per Unit</button></th>
                             <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'exp_date')}>Expiration Date</button></th>
                             <th>Recommended Purchase Amount</th>
-                        </tr>
+                            </tr>
+                        </thead>
+                        <tbody>
                             {this.state.drugs.map(item => (
                                 <tr>
                                   <td id = "item">{item.name}
@@ -104,6 +107,7 @@ export class Inventory extends React.Component {
                                     </td>
                                 </tr>
                             ))}
+                            </tbody>
                     </table>
                 </div>
                 <Link to="/pharmManager">

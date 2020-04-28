@@ -270,6 +270,7 @@ table {
 #range {
     font-size: large;
     margin: 1em;
+    margin-bottom: 3em;
 }
 
 #viewInventory {
@@ -352,4 +353,14 @@ table {
 
 #addItem:hover {
     background-color: #233050;
+}
+
+#searchTable {
+    background: none;
+    margin-top: -1em;
+    padding-bottom: 1em;
+}
+
+#salesButtons {
+    padding-bottom: 5em;
 }

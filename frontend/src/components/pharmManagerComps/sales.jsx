@@ -75,13 +75,16 @@ export class Sales extends React.Component {
                 </nav>
                 <h1 className = "tableHeader">Recent Sales</h1>
                 <div className = "itemsTable">
-                    <table>
-                        <tr>
+                    <table className = "table table-hover">
+                        <thead>
+                        <tr className>
                             <th><button type = "button" id = "expDate" onClick={this.recentsortBy.bind(this, 'name')}>Item</button></th>
                             <th><button type = "button" id = "expDate" onClick={this.recentsortBy.bind(this, 'quantity')}>Units Sold</button></th>
                             <th><button type = "button" id = "expDate" onClick={this.recentsortBy.bind(this, 'sell_price')}>Cost Per Unit</button></th>
                             <th>Total Price</th>
                         </tr>
+                        </thead>
+                        <tbody>
                         {this.state.recentSales.map(item => (
                                 <tr>
                                   <td id = "item">{item.name}
@@ -94,17 +97,21 @@ export class Sales extends React.Component {
                                     <td id = "item">${(item.quantity * item.sell_price).toFixed(2)}</td>
                                 </tr>
                             ))}
+                            </tbody>
                     </table>
                 </div>
                 <h1 className = "tableHeader">All Sales</h1>
                 <div className = "itemsTable">
-                    <table>
+                    <table className = "table table-hover">
+                    <thead>
                         <tr>
                             <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'name')}>Item</button></th>
                             <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'quantity')}>Units Sold</button></th>
                             <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'sell_price')}>Cost Per Unit</button></th>
                             <th>Total Price</th>
                         </tr>
+                        </thead>
+                        <tbody>
                         {this.state.sales.map(item => (
                                 <tr>
                                   <td id = "item">{item.name}
@@ -117,11 +124,13 @@ export class Sales extends React.Component {
                                     <td id = "item">${(item.quantity * item.sell_price).toFixed(2)}</td>
                                 </tr>
                             ))}
+                            </tbody>
                     </table>
                 </div>
                     <input type = "text" placeholder="Search for a drug..." id ="range" className = "searchBar" autoCorrect={true} onChange={this.findDrug}></input>
-                    <div className = "itemsTable">
+                    <div className = "itemsTable" id = "searchTable">
                         <table>
+                        <thead>
                         {(() => {
                             if (this.state.selectedDrug != "none" && this.state.selectedDrug != "Specify drug..." && this.state.selectedDrug != 0) {
                                     return (
@@ -134,6 +143,8 @@ export class Sales extends React.Component {
                                     )
                                 }
                         })()}
+                        </thead>
+                        <tbody>
                         {this.state.sales.map(item => (
                             <tr>
                                         {(() => {
@@ -150,14 +161,19 @@ export class Sales extends React.Component {
                                         })()}
                             </tr>
                          ))}
+                         </tbody>
                         </table>
                     </div>
+                    <div>
+                        <div id = "salesButtons">
                 <Link to="inventory">
                     <button className = "return" id = "viewInventory">View All Inventory</button>
                     </Link> 
                 <Link to="/pharmManager">
-                    <button className = "return">Return to Homepage</button>
+                    <button className = "return" id>Return to Homepage</button>
                     </Link> 
+                    </div>
+                    </div>
            </div>
         );
     }
