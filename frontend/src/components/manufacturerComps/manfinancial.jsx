@@ -31,13 +31,13 @@ export class Manfinancial extends React.Component {
 
     sortBy(field) {
         this.setState({revenue: 0})      
-        if (this.state.sortDirection == 'asc') {
+        if (this.state.sortDirection === 'asc') {
             this.setState({sortDirection: 'desc'})
             this.setState({ 
                 drugs: _.orderBy(this.state.drugs, field, this.state.sortDirection)
             });
         }
-        if (this.state.sortDirection == 'desc') {
+        if (this.state.sortDirection === 'desc') {
             this.setState({sortDirection: 'asc'})
             this.setState({ 
                 drugs: _.orderBy(this.state.drugs, field, this.state.sortDirection)
@@ -63,7 +63,7 @@ export class Manfinancial extends React.Component {
     getTotal(amount, sellPrice, purchasePrice){
         var difference = sellPrice - purchasePrice;
         var rev = amount * difference;
-        this.state.revenue = this.state.revenue + rev;
+        this.setState(this.state.revenue + rev);
         rev = rev.toFixed(2);
         rev = rev.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         return rev;

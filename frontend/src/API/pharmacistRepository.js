@@ -82,7 +82,7 @@ export class PharmacistRepository {
 
 
     getPrescription(param){
-        if(param == undefined){
+        if(param === undefined){
             return new Promise((resolve,reject) =>{
                 axios.get('http://localhost:8000/pharmacylist')
                     .then(x => {
@@ -110,7 +110,7 @@ export class PharmacistRepository {
     }
 
     getInventory(param){
-        if(param == undefined){
+        if(param === undefined){
             return new Promise((resolve,reject) =>{
                 axios.get('http://localhost:8000/pharmacyInventory/')
                     .then(x => {

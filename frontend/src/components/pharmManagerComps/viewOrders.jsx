@@ -37,13 +37,13 @@ export class ViewOrders extends React.Component {
     }
 
     sortBy(field) {        
-        if (this.state.sortDirection == 'asc') {
+        if (this.state.sortDirection === 'asc') {
             this.setState({sortDirection: 'desc'})
             this.setState({ 
                 orders: _.orderBy(this.state.orders, field, this.state.sortDirection) 
             });
         }
-        if (this.state.sortDirection == 'desc') {
+        if (this.state.sortDirection === 'desc') {
             this.setState({sortDirection: 'asc'})
             this.setState({ 
                 orders: _.orderBy(this.state.orders, field, this.state.sortDirection) 

@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router,Route,Switch } from "react-router-dom";
-import {Link} from "react-router-dom";
 import { Login } from "./components/login"
 import { Register } from "./components/login"
 import { PharmManager } from "./components/pages"

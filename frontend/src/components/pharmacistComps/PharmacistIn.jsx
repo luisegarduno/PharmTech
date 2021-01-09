@@ -97,7 +97,7 @@ export class PharmacistIn extends React.Component {
     }
 
     handlechecked(id){
-        if(this.state.marked[id-1] == true){
+        if(this.state.marked[id-1] === true){
             return true;
         }
         else{
@@ -110,10 +110,10 @@ export class PharmacistIn extends React.Component {
         this.state.alldrugs.forEach(element => {
             newmarked.push(false);
         });
-        if(this.state.userNotification.length != 0){
+        if(this.state.userNotification.length !== 0){
             for (let i = 0; i < this.state.userNotification.length; i++) {
                 for (let j = 0; j < this.state.alldrugs.length; j++) {
-                    if(this.state.userNotification[i].DrugID == this.state.alldrugs[j].DrugID){
+                    if(this.state.userNotification[i].DrugID === this.state.alldrugs[j].DrugID){
                         newmarked[j] = true;
                     }
                 }
@@ -124,12 +124,12 @@ export class PharmacistIn extends React.Component {
 
     handlecheck(item){
         var newmarked = this.state.marked;
-        if(this.state.marked[item-1] == false || this.state.userNotification.length == 0){
+        if(this.state.marked[item-1] === false || this.state.userNotification.length === 0){
             this.pharmacistRepository.addUserNotification(this.username, item)
                 .then(() => {
                     alert("Notification Added");
-                    this.state.marked[item-1] = true;
-                    this.setState({marked:newmarked});
+                    this.setState(this.marked[item-1] = true);
+                    //this.setState({marked:newmarked});
                     this.onSearch("");
                 })
         }
@@ -137,7 +137,8 @@ export class PharmacistIn extends React.Component {
             this.pharmacistRepository.deleteUserNotification(this.username, item)
                 .then(() => {
                     alert("Notification Canceled");
-                    this.state.marked[item-1] = true;
+                    this.setState(this.marked[item-1] = true);
+                    //this.state.marked[item-1] = true;
                     this.setState({marked:newmarked});
                     this.onSearch("");
                 })
@@ -146,7 +147,7 @@ export class PharmacistIn extends React.Component {
 
     colorforunit(quantity){
         var color = '';
-        if(quantity == 0){
+        if(quantity === 0){
             color = 'red'
         }
         else if(quantity > 0 && quantity <= 500){
@@ -177,7 +178,7 @@ export class PharmacistIn extends React.Component {
                 <div className = "navBar">
                     <nav>
                         <div className = "img">
-                            <img src={Logo} />
+                            <img src={Logo} alt=""/>
                         </div>
                     </nav>
                 </div>

@@ -3,7 +3,6 @@ import Logo from "../../images/erpharmtechgrayer.png";
 import { Link } from "react-router-dom";
 import { PharmManagerRepository } from "../../API";
 import CartService from "./cartService";
-import _ from 'lodash';
 
 export class ViewCart extends React.Component {
 
@@ -111,7 +110,7 @@ export class ViewCart extends React.Component {
                             <tr>
                                 <td colSpan = "3">
                                     <div className = "extraButtons">
-                                        <button type = "button" className = "placeOrder" onClick={ () => this.submitOrder()} disabled={this.state.cart.items.size == 0}>Place Order</button>
+                                        <button type = "button" className = "placeOrder" onClick={ () => this.submitOrder()} disabled={this.state.cart.items.size === 0}>Place Order</button>
                                     </div>
                                 </td>
                             </tr>

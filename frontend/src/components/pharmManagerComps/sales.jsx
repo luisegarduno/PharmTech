@@ -33,13 +33,13 @@ export class Sales extends React.Component {
     }
 
     sortBy(field) {        
-        if (this.state.sortDirection == 'asc') {
+        if (this.state.sortDirection === 'asc') {
             this.setState({sortDirection: 'desc'})
             this.setState({ 
                 sales: _.orderBy(this.state.sales, field, this.state.sortDirection) 
             });
         }
-        if (this.state.sortDirection == 'desc') {
+        if (this.state.sortDirection === 'desc') {
             this.setState({sortDirection: 'asc'})
             this.setState({ 
                 sales: _.orderBy(this.state.sales, field, this.state.sortDirection) 
@@ -48,13 +48,13 @@ export class Sales extends React.Component {
     }
 
     recentsortBy(field) {        
-        if (this.state.sortDirection == 'asc') {
+        if (this.state.sortDirection === 'asc') {
             this.setState({sortDirection: 'desc'})
             this.setState({ 
                 recentSales: _.orderBy(this.state.recentSales, field, this.state.sortDirection) 
             });
         }
-        if (this.state.sortDirection == 'desc') {
+        if (this.state.sortDirection === 'desc') {
             this.setState({sortDirection: 'asc'})
             this.setState({ 
                 recentSales: _.orderBy(this.state.recentSales, field, this.state.sortDirection) 
@@ -127,7 +127,7 @@ export class Sales extends React.Component {
                     <table>
                         <thead>
                             {(() => {
-                                if (this.state.selectedDrug != "none" && this.state.selectedDrug != "Specify drug..." && this.state.selectedDrug != 0) {
+                                if (this.state.selectedDrug !== "none" && this.state.selectedDrug !== "Specify drug..." && this.state.selectedDrug !== 0) {
                                     return (
                                         <tr>
                                             <th>Item</th>

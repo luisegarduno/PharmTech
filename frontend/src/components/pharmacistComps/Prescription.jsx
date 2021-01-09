@@ -160,7 +160,7 @@ export class Prescription extends React.Component {
                 <div className = "body">
                     <nav>
                         <div className = "img" id = "logo">
-                            <img src={Logo} />
+                            <img src={Logo} alt=""/>
                         </div>
                     </nav>
                 </div>
@@ -214,7 +214,7 @@ export class Prescription extends React.Component {
                     </table>
 
                     {(() => {
-                        if(this.state.isediting != -1){
+                        if(this.state.isediting !== -1){
                             return(
                                 <form onSubmit={this.handleSubmit.bind(this)}>
                                     <div className = "card  text-center bg-light">

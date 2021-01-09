@@ -79,13 +79,13 @@ export class ReceivedOrder extends React.Component {
     }
 
     sortBy(field) {        
-        if (this.state.sortDirection == 'asc') {
+        if (this.state.sortDirection === 'asc') {
             this.setState({sortDirection: 'desc'})
             this.setState({ 
                 orders: _.orderBy(this.state.orders, field, this.state.sortDirection) 
             });
         }
-        if (this.state.sortDirection == 'desc') {
+        if (this.state.sortDirection === 'desc') {
             this.setState({sortDirection: 'asc'})
             this.setState({ 
                 orders: _.orderBy(this.state.orders, field, this.state.sortDirection) 
@@ -125,7 +125,7 @@ export class ReceivedOrder extends React.Component {
                 <div className = "body">
                     <nav>
                         <div className = "img" id = "logo">
-                            <img src={Logo} />
+                            <img src={Logo} alt=""/>
                         </div>
                     </nav>
                     <div className = "bg-secondary pb-2 mb-4 pt-1 mt-2">
@@ -162,7 +162,7 @@ export class ReceivedOrder extends React.Component {
                         </table>
 
                         {(() => {
-                            if(this.state.isediting != -1){
+                            if(this.state.isediting !== -1){
                                 return(
                                     <form onSubmit = {this.handleSubmit}>
                                         <div className = "card  text-center bg-light">

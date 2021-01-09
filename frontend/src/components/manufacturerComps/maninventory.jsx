@@ -53,7 +53,7 @@ export class Maninventory extends React.Component {
     }
 
     yesno(value) {
-        if (value == 1) {
+        if (value === 1) {
             return "Yes";
         } else {
             return "No";
@@ -61,7 +61,7 @@ export class Maninventory extends React.Component {
     }
 
     opposite(value) {
-        if (value == 1) {
+        if (value === 1) {
             return "No";
         } else {
             return "Yes";
@@ -70,7 +70,7 @@ export class Maninventory extends React.Component {
 
     toggleExpired(expired, batchid) {
         var tf = 0; //0 = false
-        if (expired == 0) {
+        if (expired === 0) {
             tf = 1;
         }
         axios.put('http://localhost:8000/updateExpiration', {expired: tf, batch_id: batchid})
@@ -78,7 +78,7 @@ export class Maninventory extends React.Component {
 
     toggleSell(oksell, batchid) {
         var tf = 0; //0 = false
-        if (oksell == 0) {
+        if (oksell === 0) {
             tf = 1;
         }
         axios.put('http://localhost:8000/updateOK', {expired: tf, batch_id: batchid})
