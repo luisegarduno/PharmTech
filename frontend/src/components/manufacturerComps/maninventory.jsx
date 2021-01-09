@@ -1,6 +1,6 @@
-import React, {Component} from "react";
+import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
-import {Link, Redirect} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ManufacturerRepository } from "../../API";
 import _ from 'lodash';
 import axios from 'axios';
@@ -91,16 +91,17 @@ export class Maninventory extends React.Component {
 
     render() {
         return (
-           <div className = "body">
-            <nav>
-                <div className = "img" id = "logo">
+            <div className = "body">
+                <nav>
+                    <div className = "img" id = "logo">
                         <img src={Logo} alt="Logo" />
-                </div>
-                <h1 className = "yourCart">
+                    </div>
+                    <h1 className = "yourCart">
                         Inventory
-                </h1>
-            </nav>
-            <h1 className = "tableHeader">All Inventory</h1>
+                    </h1>
+                </nav>
+
+                <h1 className = "tableHeader">All Inventory</h1>
                 <div className = "itemsTable">
                     <table>
                         <thead><tr className="">
@@ -123,9 +124,10 @@ export class Maninventory extends React.Component {
                         </tbody>
                     </table>
                 </div>
+
                 <Link to="/manufacturer">
                     <button className = "btn coloredBtn ml-3">Return to Homepage</button>
-                    </Link> 
+                </Link> 
            </div>
         );
     }

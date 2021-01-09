@@ -4,7 +4,7 @@ import {RequestItem} from './jsitem/requestitem'
 import Logo from "../../images/erpharmtechgrayer.png";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { PharmacistRepository } from '../../API/pharmacistRepository'
-import {PinventSearch} from './PinventSearch'
+import { PinventSearch } from './PinventSearch'
 
 
 export class PharmacistIn extends React.Component {

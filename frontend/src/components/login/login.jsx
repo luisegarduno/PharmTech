@@ -44,15 +44,15 @@ export class Login extends React.Component {
         password = sha256(password);
         console.log(this.loginRepository.verifyUser(this.state.username, password, this.state.loginType))
         axios.post('http://localhost:8000/verifyUser', {username: this.state.username, password: password, type: this.state.loginType})
-                    .then(response => {
-                        if (response.data === 0) {
-                            this.badLogin()
-                        }
-                        else {
-                            console.log(response.data)
-                            this.goodLogin(response.data)
-                        }
-        })
+            .then(response => {
+                if (response.data === 0) {
+                    this.badLogin()
+                }
+                else {
+                    console.log(response.data)
+                    this.goodLogin(response.data)
+                }
+            })
     }
 
     badLogin() {
@@ -159,7 +159,5 @@ export class Login extends React.Component {
 
             </div>
         );
-        
-        
     }
 }

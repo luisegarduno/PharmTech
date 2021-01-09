@@ -1,8 +1,7 @@
 import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
 import { PharmacistRepository } from '../../API/pharmacistRepository'
-import {Link} from "react-router-dom";
-
+import { Link } from "react-router-dom";
 
 export class OutgoingOrder extends React.Component {
 
@@ -39,7 +38,7 @@ export class OutgoingOrder extends React.Component {
                     <div className = "container">
                         <table  className = "table">
                             <thead className = "thead-dark">
-                            <tr className = "bg-secondary">
+                                <tr className = "bg-secondary">
                                     <th>Drug</th>
                                     <th>Patient</th>
                                     <th>Docter</th>

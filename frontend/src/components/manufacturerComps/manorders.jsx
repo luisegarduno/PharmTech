@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ManufacturerRepository } from "../../API";
 import _ from 'lodash';
 
@@ -72,15 +72,15 @@ export class Manorders extends React.Component {
 
     render() {
         return (
-           <div className = "body backgroundextend">
-            <nav>
-                <div className = "img" id = "logo">
+            <div className = "body backgroundextend">
+                <nav>
+                    <div className = "img" id = "logo">
                         <img src={Logo} alt="Logo" />
-                </div>
-                <h1 className = "yourCart">
+                    </div>
+                    <h1 className = "yourCart">
                         Orders
-                </h1>
-            </nav>
+                    </h1>
+                </nav>
                 <h1 className = "tableHeader">All Outgoing Orders</h1>
                 <div className = "itemsTable tableSort">
                     <table>
@@ -108,12 +108,13 @@ export class Manorders extends React.Component {
                         </tbody>
                     </table>
                 </div>
+
                 <Link to="maninventory">
                     <button className = "btn btn-secondary mr-3" id = "viewInventory">View All Inventory</button>
-                    </Link> 
+                </Link> 
                 <Link to="/manufacturer">
                     <button className = "btn coloredBtn ml-3">Return to Homepage</button>
-                    </Link> 
+                </Link> 
            </div>
         );
     }

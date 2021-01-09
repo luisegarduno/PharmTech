@@ -13,9 +13,11 @@ export class ManufacturerRepository {
     getInventory() {
         return new Promise((resolve, reject) => {
             axios.get(`${this.url}/manuinventory`, this.config)
-                .then(x => resolve(x.data))
+                .then(x => {
+                    resolve(x.data);
+                })
                 .catch(x => {
-                    alert(x); // handle error
+                    alert(x);           // Handle Error
                     reject(x);
                 });
         });
@@ -24,9 +26,11 @@ export class ManufacturerRepository {
     markExpired(tf, batchid) {
         return new Promise((resolve, reject) => {
             axios.put(`${this.url}/updateExpiration`, tf, batchid)
-                .then(x => resolve(x.data))
+                .then(x => {
+                    resolve(x.data);
+                })
                 .catch(x => {
-                    alert(x); // handle error
+                    alert(x);           // Handle Error
                     reject(x);
                 });
         });
@@ -35,9 +39,11 @@ export class ManufacturerRepository {
     markBuy(tf, batchid) {
         return new Promise((resolve, reject) => {
             axios.put(`${this.url}/updateOK`, tf, batchid)
-                .then(x => resolve(x.data))
+                .then(x => {
+                    resolve(x.data);
+                })
                 .catch(x => {
-                    alert(x); // handle error
+                    alert(x);           // Handle Error
                     reject(x);
                 });
         });
@@ -46,9 +52,11 @@ export class ManufacturerRepository {
     getOrders() {
         return new Promise((resolve, reject) => {
             axios.get(`${this.url}/manufacturerorders`)
-                .then(x => resolve(x.data))
+                .then(x => {
+                    resolve(x.data);
+                })
                 .catch(x => {
-                    alert(x); // handle error
+                    alert(x);           // Handle Error
                     reject(x);
                 });
         });
@@ -57,9 +65,11 @@ export class ManufacturerRepository {
     getSales() {
         return new Promise((resolve, reject) => {
             axios.get(`${this.url}/manuinventory`)
-                .then(x => resolve(x.data))
+                .then(x => {
+                    resolve(x.data);
+                })
                 .catch(x => {
-                    alert(x); // handle error
+                    alert(x);           // Handle Error
                     reject(x);
                 });
         });
@@ -68,9 +78,11 @@ export class ManufacturerRepository {
     getFinancials() {
         return new Promise((resolve, reject) => {
             axios.get(`${this.url}/manuinventory`)
-                .then(x => resolve(x.data))
+                .then(x => {
+                    resolve(x.data);
+                })
                 .catch(x => {
-                    alert(x); // handle error
+                    alert(x);           // Handle error
                     reject(x);
                 });
         });

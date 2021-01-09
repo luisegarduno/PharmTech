@@ -1,7 +1,5 @@
 import React from "react";
-import {PrescriptionItem} from './jsitem/prescriptionitem'
-
-
+import { PrescriptionItem } from './jsitem/prescriptionitem'
 
 class PrescriptForm extends React.Component {
 
@@ -20,7 +18,6 @@ class PrescriptForm extends React.Component {
         alldoctors : [],
         isediting: -1,
     }
-
     
     handleDrug = (event) =>{
         this.setState({ drug_id: event.target.value });
@@ -77,7 +74,7 @@ class PrescriptForm extends React.Component {
         this.setState({alldrugs : this.props.alldrugs, allpatients: this.props.allpatients, alldoctors: this.props.alldoctors, isediting: 1});
     }
     render(){
-        return(
+        return (
             <div className = "container" style = {{width : "60%"}}>
                 <div className = "card bg-light">
                     <div className = "card-header bg-info text-white text-center">
@@ -143,7 +140,9 @@ class PrescriptForm extends React.Component {
                                         <button className = "btn btn-warning btn-block mt-3 mb-3" onClick= {this.handleClick.bind(this)}>Submit</button>
                                     </form>
                                 </div>
-                            )}})()}
+                            )}}
+                        )
+                    ()}
                 </div>
             </div>
         )

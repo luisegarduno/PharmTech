@@ -3,75 +3,77 @@ import axios from 'axios'
 export class PharmManagerRepository {
 
     getInventory(){
-            return new Promise((resolve,reject) =>{
-                axios.get('http://localhost:8000/getInventory')
-                    .then(x => {
-                        resolve(x.data);
-                    })
-                    .catch(x => {
-                        alert(x);
-                        reject(x);
-                    })
-            })
-        }
+        return new Promise((resolve,reject) =>{
+            axios.get('http://localhost:8000/getInventory')
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(x => {
+                    alert(x);           // Handle Error
+                    reject(x);
+                })
+        })
+    }
 
-        getCartInventory(){
-            return new Promise((resolve,reject) =>{
-                axios.get('http://localhost:8000/getCartInventory')
-                    .then(x => {
-                        resolve(x.data);
-                    })
-                    .catch(x => {
-                        alert(x);
-                        reject(x);
-                    })
-            })
-        }
+    getCartInventory(){
+        return new Promise((resolve,reject) =>{
+            axios.get('http://localhost:8000/getCartInventory')
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(x => {
+                    alert(x);           // Handle Error
+                    reject(x);
+                })
+        })
+    }
 
     getPharmManagerSales(){
-            return new Promise((resolve,reject) =>{
-                axios.get('http://localhost:8000/getPharmManagerSales')
-                    .then(x => {
-                        resolve(x.data);
-                    })
-                    .catch(x => {
-                        alert(x);
-                        reject(x);
-                    })
-            })
-        }
+        return new Promise((resolve,reject) =>{
+            axios.get('http://localhost:8000/getPharmManagerSales')
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(x => {
+                    alert(x);           // Handle Error
+                    reject(x);
+                })
+        })
+    }
 
-        getRecentPharmManagerSales(){
-            return new Promise((resolve,reject) =>{
-                axios.get('http://localhost:8000/getRecentPharmManagerSales')
-                    .then(x => {
-                        resolve(x.data);
-                    })
-                    .catch(x => {
-                        alert(x);
-                        reject(x);
-                    })
-            })
-        }
+    getRecentPharmManagerSales(){
+        return new Promise((resolve,reject) =>{
+            axios.get('http://localhost:8000/getRecentPharmManagerSales')
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(x => {
+                    alert(x);           // Handle Error
+                    reject(x);
+                })
+        })
+    }
 
-        getPharmRequest(){
-            return new Promise((resolve,reject) =>{
-                axios.get('http://localhost:8000/getPhamRequest')
-                    .then(x => {
-                        resolve(x.data);
-                    })
-                    .catch(x => {
-                        alert(x);
-                        reject(x);
-                    })
-            })
-        }
+    getPharmRequest(){
+        return new Promise((resolve,reject) =>{
+            axios.get('http://localhost:8000/getPhamRequest')
+                .then(x => {
+                    resolve(x.data);
+                })
+                .catch(x => {
+                    alert(x);           // Handle Error
+                    reject(x);
+                })
+        })
+    }
 
-        deleteOrder(id) {
-            return new Promise((resolve, reject) => {
-                axios.delete(`http://localhost:8000/deleteOrderRequest/${id}`, this.config)
-                    .then(x => resolve(x.data))
-                        alert("Order fulfilled")
-            });
-        }
+    deleteOrder(id) {
+        return new Promise((resolve, reject) => {
+            axios.delete(`http://localhost:8000/deleteOrderRequest/${id}`, this.config)
+                .then(x => {
+                    resolve(x.data);
+                })
+                alert("Order fulfilled")
+        });
+    }
 }

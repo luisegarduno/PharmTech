@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ManufacturerRepository } from "../../API";
 import _ from 'lodash';
 

@@ -9,7 +9,7 @@ export class PharmacistRepository {
                     resolve(x.data);
                 })
                 .catch(x => {
-                    alert(x);
+                    alert(x);           // Handle Error
                     reject(x);
                 })
         })
@@ -22,7 +22,7 @@ export class PharmacistRepository {
                     resolve(x.data);
                 })
                 .catch(x => {
-                    alert(x);
+                    alert(x);           // Handle Error
                     reject(x);
                 })
         })
@@ -35,7 +35,7 @@ export class PharmacistRepository {
                     resolve(x.data);
                 })
                 .catch(x => {
-                    alert(x);
+                    alert(x);           // Handle Error
                     reject(x);
                 })
         })
@@ -48,7 +48,7 @@ export class PharmacistRepository {
                     resolve(x.data);
                 })
                 .catch(x => {
-                    alert(x);
+                    alert(x);           // Handle Error
                     reject(x);
                 })
         })
@@ -61,12 +61,11 @@ export class PharmacistRepository {
                     resolve(x.data);
                 })
                 .catch(x => {
-                    alert(x);
+                    alert(x);           // Handle Error
                     reject(x);
                 })
         })
     }
-
 
     getReceived(){
         return new Promise((resolve,reject) =>{
@@ -75,7 +74,7 @@ export class PharmacistRepository {
                     resolve(x.data);
                 })
                 .catch(x => {
-                    alert(x);
+                    alert(x);           // Handle Error
                     reject(x);
                 })
         })        
@@ -90,7 +89,7 @@ export class PharmacistRepository {
                         resolve(x.data);
                     })
                     .catch(x => {
-                        alert(x);
+                        alert(x);           // Handle Error
                         reject(x);
                     })
             })
@@ -103,7 +102,7 @@ export class PharmacistRepository {
                         resolve(x.data);
                     })
                     .catch(x => {
-                        alert(x);
+                        alert(x);           // Handle Error
                         reject(x);
                     })
             })
@@ -118,7 +117,7 @@ export class PharmacistRepository {
                         resolve(x.data);
                     })
                     .catch(x => {
-                        alert(x);
+                        alert(x);           // Handle Error
                         reject(x);
                     })
             })
@@ -130,7 +129,7 @@ export class PharmacistRepository {
                         resolve(x.data);
                     })
                     .catch(x => {
-                        alert(x);
+                        alert(x);           // Handle Error
                         reject(x);
                     })
             })
@@ -144,7 +143,7 @@ export class PharmacistRepository {
                     resolve(x.data);
                 })
                 .catch(x => {
-                    alert(x);
+                    alert(x);           // Handle Error
                     reject(x);
                 })
         })
@@ -153,9 +152,11 @@ export class PharmacistRepository {
     deleteinventory(drug_id){
         return new Promise((resolve, reject) => {
             axios.delete('http://localhost:8000/delete/' + drug_id)
-                .then(x => resolve(x.data))
+                .then(x => {
+                    resolve(x.data);
+                })
                 .catch(x => {
-                    alert(x);
+                    alert(x);           // Handle Error
                     reject(x);
                 })
         })
@@ -166,7 +167,7 @@ export class PharmacistRepository {
             axios.delete('http://localhost:8000/deletePrescription/' + id)
                 .then(x => resolve(x.data))
                 .catch(x => {
-                    alert(x);
+                    alert(x);           // Handle Error
                     reject(x);
                 })
         })
@@ -179,12 +180,11 @@ export class PharmacistRepository {
                     resolve(x.data);
                 })
                 .catch(x => {
-                    alert(x);
+                    alert(x);           // Handle Error
                     reject(x);
                 })
         })
     }
-
 
     addRequest(param){
         return new Promise((resolve, reject) => {
@@ -193,12 +193,11 @@ export class PharmacistRepository {
                     resolve(x.data);
                 })
                 .catch(x => {
-                    alert(x);
+                    alert(x);           // Handle Error
                     reject(x);
                 })
         })        
     }
-
 
     getNotification(){
         return new Promise((resolve,reject) =>{
@@ -207,7 +206,7 @@ export class PharmacistRepository {
                     resolve(x.data);
                 })
                 .catch(x => {
-                    alert(x);
+                    alert(x);           // Handle Error
                     reject(x);
                 })
         })      
@@ -220,7 +219,7 @@ export class PharmacistRepository {
                     resolve(x.data);
                 })
                 .catch(x => {
-                    alert(x);
+                    alert(x);           // Handle Error
                     reject(x);
                 })
         })            
@@ -233,7 +232,7 @@ export class PharmacistRepository {
                     resolve(x.data);
                 })
                 .catch(x => {
-                    alert(x);
+                    alert(x);           // Handle Error
                     reject(x);
                 })
         })     
@@ -248,7 +247,7 @@ export class PharmacistRepository {
                     resolve(x.data);
                 })
                 .catch(x => {
-                    alert(x);
+                    alert(x);           // Handle Error
                     reject(x);
                 })
         })
@@ -269,7 +268,7 @@ export class PharmacistRepository {
                     resolve(x.data);
                 })
                 .catch(x => {
-                    alert(x);
+                    alert(x);           // Handle Error
                     reject(x);
                 })
         })       
@@ -291,7 +290,7 @@ export class PharmacistRepository {
                     resolve(x.data);
                 })
                 .catch(x => {
-                    alert(x);
+                    alert(x);           // Handle Error
                     reject(x);
                 })
         })   

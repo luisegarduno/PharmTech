@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 export class Autocomplete extends Component {
   render() {
     return (
@@ -11,4 +12,5 @@ export class Autocomplete extends Component {
     );
   }
 }
+
 export default Autocomplete;

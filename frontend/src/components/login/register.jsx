@@ -1,7 +1,7 @@
 import React from "react";
 import Logo from "../../images/pharmtechblue.png";
 import Logo2 from "../../images/erpharmtechgrayer.png";
-import {Link, Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { sha256 } from 'js-sha256';
 import axios from 'axios'
 
@@ -28,7 +28,6 @@ export class Register extends React.Component {
         this.findLoginType = this.findLoginType.bind(this);
         this.onRegister = this.onRegister.bind(this)
     }
-
 
     getFirstName(e) {
         this.setState({ firstName: e.target.value });
@@ -80,7 +79,6 @@ export class Register extends React.Component {
             userType_id: this.state.loginType})
         }
     }
-
 
     render() {
         return (

@@ -3,16 +3,14 @@ import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 import { PharmManagerRepository } from "../../API";
 import CartService from "./cartService";
-import Autocomplete from './Autocomplete';
 import _ from 'lodash';
 
 export class CartInventory extends React.Component {
 
+    username; 
     cartService = new CartService();
-
     pharmManagerRepository = new PharmManagerRepository();
 
-    username; 
     constructor(props) {
         super(props);
         this.username = localStorage['username']
@@ -90,12 +88,13 @@ export class CartInventory extends React.Component {
                             ))}
                     </table>
                 </div>
+
                 <Link to="/pharmManager/cart">
                     <button className = "return" id = "viewInventory">View Cart</button>
-                    </Link> 
+                </Link> 
                 <Link to="/pharmManager">
                     <button className = "return">Return to Homepage</button>
-                    </Link> 
+                </Link> 
            </div>
         );    
     }

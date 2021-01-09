@@ -2,11 +2,9 @@ import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
 import PrescriptForm from "./PrescriptForm"
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import InlineEdit from 'react-edit-inline2';
 import { PharmacistRepository } from '../../API/pharmacistRepository'
-import {PrescriptionItem} from './jsitem/prescriptionitem'
-import {PrescriptSearch} from './PrescriptSearch'
-
+import { PrescriptionItem } from './jsitem/prescriptionitem'
+import { PrescriptSearch } from './PrescriptSearch'
 
 export class Prescription extends React.Component {
 
@@ -20,24 +18,23 @@ export class Prescription extends React.Component {
     }
 
     state = {
-    alldrugs : [],
-    allpatients : [],
-    alldoctors : [],
-    Prescriptionlist : [],
-    CurrentOnchange: 'null',
-    isediting: -1,
-    line: -1,
-    newTitle: "",
-    newPatientID: 0,
-    newDrugID : 0,
-    newdoctor_id: 0,
-    newQuantity : 0,
-}
+        alldrugs : [],
+        allpatients : [],
+        alldoctors : [],
+        Prescriptionlist : [],
+        CurrentOnchange: 'null',
+        isediting: -1,
+        line: -1,
+        newTitle: "",
+        newPatientID: 0,
+        newDrugID : 0,
+        newdoctor_id: 0,
+        newQuantity : 0,
+    }
 
     componentDidMount(){
         this.onSearch()
     }
-
 
     onSearch(param){
         this.pharmacistRepository.getPrescription(param)
@@ -70,7 +67,6 @@ export class Prescription extends React.Component {
             });
     }
 
-
     buildDrugs(){
         var arr = [];
         arr.push(<option value = "0"></option>);
@@ -97,7 +93,6 @@ export class Prescription extends React.Component {
         });
         return arr;
     }
-
 
     GoDuplicate(item){
         var date= new Date();
