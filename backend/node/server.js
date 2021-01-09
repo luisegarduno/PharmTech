@@ -1,16 +1,25 @@
+require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mysql = require('mysql');
+// const mysqlConnect = require('./db');
 const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
 
 //mysql connection
 var connection = mysql.createConnection({
-  host: 'backend-db',
-  port: '3306',
-  user: 'manager',
-  password: 'Password',
-  database: 'pharmtech'
+  //host: 'backend-db',
+  //port: '3306',
+  //user: 'manager',
+  //password: 'Password',
+  //database: 'pharmtech'
+
+  host: process.env.MYSQL_HOST,
+  port: process.env.MYSQL_PORT,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASS,
+  database: process.env.MYSQL_DB,
+  multipleStatements: true
 });
 
 //set up some configs for express.

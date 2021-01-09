@@ -4,11 +4,14 @@
 # Docker compose handles all the cross platform persistence via volumes so we don't need to worry about
 #   copying over any of the actual code files for the backend.
 
-# We are using node version 8
-FROM node:12
+# We are using node version 14
+FROM node:14
+
 
 # Set the working directory within docker image
 WORKDIR /usr/src/app
+
+COPY ./execution-tools/wait-for-it.sh /usr/src/app
 
 # expose port 8000
 EXPOSE 8000
