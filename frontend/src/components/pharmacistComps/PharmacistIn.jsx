@@ -63,6 +63,7 @@ export class PharmacistIn extends React.Component {
 
     handleAdd(){
         var newitem = new InventoryItem(this.state.newdrugid, this.state.newdrugmount, this.state.newdrugdate);
+        // eslint-disable-next-line
         this.setState({newdrugid : 0, newdrugmount : 0, newdrugmount: ""})
         this.pharmacistRepository.addinventory(newitem)
             .then(() =>{
