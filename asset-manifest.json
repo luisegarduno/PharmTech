@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/static/css/main.b3ab27e7.chunk.css",
-    "main.js": "/static/js/main.0515cb0f.chunk.js",
-    "main.js.map": "/static/js/main.0515cb0f.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.f509aae8.js",
-    "runtime-main.js.map": "/static/js/runtime-main.f509aae8.js.map",
-    "static/css/2.0a9ec390.chunk.css": "/static/css/2.0a9ec390.chunk.css",
-    "static/js/2.d710ca8a.chunk.js": "/static/js/2.d710ca8a.chunk.js",
-    "static/js/2.d710ca8a.chunk.js.map": "/static/js/2.d710ca8a.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/2.0a9ec390.chunk.css.map": "/static/css/2.0a9ec390.chunk.css.map",
-    "static/css/main.b3ab27e7.chunk.css.map": "/static/css/main.b3ab27e7.chunk.css.map",
-    "static/js/2.d710ca8a.chunk.js.LICENSE.txt": "/static/js/2.d710ca8a.chunk.js.LICENSE.txt",
-    "static/media/App.css": "/static/media/background.6f83b9d3.png",
-    "static/media/erpharmtechgrayer.2d3988f9.png": "/static/media/erpharmtechgrayer.2d3988f9.png",
-    "static/media/pharmtechblue.924f2d80.png": "/static/media/pharmtechblue.924f2d80.png"
+    "main.css": "/PharmTech/static/css/main.40af32c0.chunk.css",
+    "main.js": "/PharmTech/static/js/main.407e5ff1.chunk.js",
+    "main.js.map": "/PharmTech/static/js/main.407e5ff1.chunk.js.map",
+    "runtime-main.js": "/PharmTech/static/js/runtime-main.b94ab9bf.js",
+    "runtime-main.js.map": "/PharmTech/static/js/runtime-main.b94ab9bf.js.map",
+    "static/css/2.0a9ec390.chunk.css": "/PharmTech/static/css/2.0a9ec390.chunk.css",
+    "static/js/2.d710ca8a.chunk.js": "/PharmTech/static/js/2.d710ca8a.chunk.js",
+    "static/js/2.d710ca8a.chunk.js.map": "/PharmTech/static/js/2.d710ca8a.chunk.js.map",
+    "index.html": "/PharmTech/index.html",
+    "static/css/2.0a9ec390.chunk.css.map": "/PharmTech/static/css/2.0a9ec390.chunk.css.map",
+    "static/css/main.40af32c0.chunk.css.map": "/PharmTech/static/css/main.40af32c0.chunk.css.map",
+    "static/js/2.d710ca8a.chunk.js.LICENSE.txt": "/PharmTech/static/js/2.d710ca8a.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/PharmTech/static/media/background.6f83b9d3.png",
+    "static/media/erpharmtechgrayer.2d3988f9.png": "/PharmTech/static/media/erpharmtechgrayer.2d3988f9.png",
+    "static/media/pharmtechblue.924f2d80.png": "/PharmTech/static/media/pharmtechblue.924f2d80.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.f509aae8.js",
+    "static/js/runtime-main.b94ab9bf.js",
     "static/css/2.0a9ec390.chunk.css",
     "static/js/2.d710ca8a.chunk.js",
-    "static/css/main.b3ab27e7.chunk.css",
-    "static/js/main.0515cb0f.chunk.js"
+    "static/css/main.40af32c0.chunk.css",
+    "static/js/main.407e5ff1.chunk.js"
   ]
 }
