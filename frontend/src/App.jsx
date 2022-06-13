@@ -10,7 +10,8 @@ import { IncomingOrder, OutgoingOrder, ReceivedOrder, Prescription } from './com
 import { PharmacistIn } from './components/pharmacistComps';
 import { Doctor } from './components/pages/doctor';
 import { ViewCart } from './components/pharmManagerComps/viewCart';
-import { YourPharmacy, Inventory, Sales, CartInventory, cartFix, ViewOrders } from './components/pharmManagerComps';
+// cartFix declared but never used (in import below)
+import { YourPharmacy, Inventory, Sales, CartInventory, ViewOrders } from './components/pharmManagerComps';
 import { Mansales, Maninventory, Manorders, Manfinancial } from './components/manufacturerComps';
 import { Docorders, Docinventory } from './components/doctorComps';
 import { Footer } from './Footer';
