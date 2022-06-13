@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/PharmTech/static/css/main.2d29c99d.chunk.css",
-    "main.js": "/PharmTech/static/js/main.b8f75b08.chunk.js",
-    "main.js.map": "/PharmTech/static/js/main.b8f75b08.chunk.js.map",
+    "main.css": "/PharmTech/static/css/main.c7676326.chunk.css",
+    "main.js": "/PharmTech/static/js/main.0f0feaa2.chunk.js",
+    "main.js.map": "/PharmTech/static/js/main.0f0feaa2.chunk.js.map",
     "runtime-main.js": "/PharmTech/static/js/runtime-main.b94ab9bf.js",
     "runtime-main.js.map": "/PharmTech/static/js/runtime-main.b94ab9bf.js.map",
     "static/css/2.0a9ec390.chunk.css": "/PharmTech/static/css/2.0a9ec390.chunk.css",
@@ -10,7 +10,7 @@
     "static/js/2.6ffb5281.chunk.js.map": "/PharmTech/static/js/2.6ffb5281.chunk.js.map",
     "index.html": "/PharmTech/index.html",
     "static/css/2.0a9ec390.chunk.css.map": "/PharmTech/static/css/2.0a9ec390.chunk.css.map",
-    "static/css/main.2d29c99d.chunk.css.map": "/PharmTech/static/css/main.2d29c99d.chunk.css.map",
+    "static/css/main.c7676326.chunk.css.map": "/PharmTech/static/css/main.c7676326.chunk.css.map",
     "static/js/2.6ffb5281.chunk.js.LICENSE.txt": "/PharmTech/static/js/2.6ffb5281.chunk.js.LICENSE.txt",
     "static/media/App.css": "/PharmTech/static/media/background.6f83b9d3.png",
     "static/media/erpharmtechgrayer.2d3988f9.png": "/PharmTech/static/media/erpharmtechgrayer.2d3988f9.png",
@@ -20,7 +20,7 @@
     "static/js/runtime-main.b94ab9bf.js",
     "static/css/2.0a9ec390.chunk.css",
     "static/js/2.6ffb5281.chunk.js",
-    "static/css/main.2d29c99d.chunk.css",
-    "static/js/main.b8f75b08.chunk.js"
+    "static/css/main.c7676326.chunk.css",
+    "static/js/main.0f0feaa2.chunk.js"
   ]
 }
