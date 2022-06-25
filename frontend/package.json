@@ -1,7 +1,6 @@
 {
-  "homepage": "https://gardunos.tech/PharmTech/",
-  "name": "pharm-tech",
-  "version": "0.1.1",
+  "name": "PharmTech",
+  "version": "0.1.2",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.12.4",

@@ -82,4 +82,60 @@ module.exports = function user(app, logger) {
         });
     });
 
+    // GET
+    // Returns patient and patientID
+    app.get('/getPatient', (req, res) => {
+        // obtain a connection from our pool of connections
+        pool.getConnection(function (err, connection){
+            if(err){
+                // if there is an issue obtaining a connection, release the connection instance and log the error
+                logger.error('Problem obtaining MySQL connection',err)
+                res.status(400).send('Problem obtaining MySQL connection');
+            }
+            else {
+                connection.query('SELECT u.id AS PatientID, CONCAT(u.first_name, " ", u.last_name) AS PatientName FROM user u JOIN user_type ut ON u.userType_id = ut.id WHERE ut.type = "patient"', function (err, rows, fields) {
+                    if (err) {
+                        logger.error("Error while executing Query");
+                        res.status(400).json({
+                            "data": [],
+                            "error": "MySQL error"
+                        })
+                    } else{
+                        res.status(200).json({
+                            "data": rows
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+    // GET
+    // Returns DoctorID and Doctor ID
+    app.get('/getDoctor', (req, res) => {
+        // obtain a connection from our pool of connections
+        pool.getConnection(function (err, connection){
+            if(err){
+                // if there is an issue obtaining a connection, release the connection instance and log the error
+                logger.error('Problem obtaining MySQL connection',err)
+                res.status(400).send('Problem obtaining MySQL connection');
+            }
+            else {
+                connection.query('SELECT u.id AS DoctorID, CONCAT(u.first_name, " ", u.last_name) AS DoctorName FROM user u JOIN user_type ut ON u.userType_id = ut.id WHERE ut.type = "doctor"', function (err, rows, fields) {
+                    if (err) {
+                        logger.error("Error while executing Query");
+                        res.status(400).json({
+                            "data": [],
+                            "error": "MySQL error"
+                        })
+                    } else{
+                        res.status(200).json({
+                            "data": rows
+                        });
+                    }
+                });
+            }
+        });
+    });
+    
 }

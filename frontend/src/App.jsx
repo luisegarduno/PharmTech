@@ -37,7 +37,7 @@ class App extends React.Component {
               <Route exact path="/register"><Register /></Route>
               <Route exact path="/pharmManager/"><Footer/><PharmManager /></Route>
               <Route exact path="/pharmManager/cart" ><Footer/><ViewCart /></Route>
-              <Route exact path = "/redirect"><cartFix /></Route>
+              <Route exact path="/redirect"><cartFix /></Route>
               <Route exact path="/pharmManager/cart/inventory" ><Footer/><CartInventory /></Route>
               <Route exact path="/pharmManager/yourPharmacy" ><Footer/><YourPharmacy /></Route>
               <Route exact path="/pharmManager/inventory" ><Footer/><Inventory /></Route>
