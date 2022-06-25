@@ -24,3 +24,18 @@ yarn-debug.log*
 yarn-error.log*
 
 ./yarn.lock
+node_modules
+/.log
+/.node_modules
+
+/node
+/.node
+node
+
+/mysql
+mysql
+/.mysql
+
+package.json
+.env
+/.env

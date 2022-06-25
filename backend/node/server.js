@@ -1,59 +1,48 @@
 require('dotenv').config()
-const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const mysql = require('mysql');
-// const mysqlConnect = require('./db');
+const express = require('express');
+const bodyParser = require('body-parser');
+const mysqlConnect = require('./connection');
 const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
 
-//mysql connection
-var connection = mysql.createConnection({
-  //host: 'backend-db',
-  //port: '3306',
-  //user: 'manager',
-  //password: 'Password',
-  //database: 'pharmtech'
-
-  host: process.env.MYSQL_HOST,
-  port: process.env.MYSQL_PORT,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASS,
-  database: process.env.MYSQL_DB,
-  multipleStatements: true
-});
-
-//set up some configs for express.
+// Set up some configs for express.
 const config = {
-  name: 'sample-express-app',
+  name: 'pharmtech-express-app',
   port: 8000,
   host: '0.0.0.0',
 };
 
-//create the express.js object
+// Create the express.js object
 const app = express();
 
-//create a logger object.  Using logger is preferable to simply writing to the console.
+// Create a logger object.  Using logger is preferable to simply writing to the console.
 const logger = log({ console: true, file: false, label: config.name });
 
-app.use(bodyParser.json());
+// Specify middleware to use
+app.use(express.json());
 app.use(cors({
   origin: '*'
 }));
 app.use(ExpressAPILogMiddleware(logger, { request: true }));
 
-//Attempting to connect to the database.
-connection.connect(function (err) {
-  if (err)
-    logger.error("Cannot connect to DB!");
-  else
-    logger.info("Connected to the DB!");
-});
+const user = require('./routes/user')
+const notification = require('./routes/notification')
 
-//GET /
+user(app, logger);
+notification(app, logger);
+
 app.get('/', (req, res) => {
   res.status(200).send('Go to 0.0.0.0:3000.');
 });
 
+// connecting the express object to listen on a particular port as defined in the config object.
+app.listen(config.port, config.host, (e) => {
+  if (e)
+    throw new Error('Internal Server Error');
+  logger.info(`${config.name} running on ${config.host}:${config.port}`);
+});
+/*
 //get list of users
 app.get('/getUser', (req, res) => {
   connection.query('SELECT * FROM user', function (err, rows, fields) {
@@ -106,7 +95,7 @@ app.post('/registerUser', (req, res) => {
     }
   });
 })
-
+*/
 //inventory for pharmacist and manager
 app.get('/getInventory', (req, res) => {
   connection.query('SELECT d.name, d.id ,i.quantity, d.unit_measure, i.exp_date, d.sell_price, d.rec_stock_amount, d.unit_measure AS units FROM inventory i join drugs d on i.drug_id = d.id', function (err, rows, fields) {
@@ -201,6 +190,7 @@ app.get('/pharmacyInventory', (req, res) => {
   });
 });
 
+/*
 // GET
 // Scans entire inventory and returns value on whether each drug is InStock or OutOfStock
 app.get('/pharmacyNotification', async (req, res) => {
@@ -288,6 +278,7 @@ app.delete('/deleteNotification/:id', async (req, res) => {
     res.end(JSON.stringify(result)); 
     });
 });
+*/
 
 
 // GET : drug id
