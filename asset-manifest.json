@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/PharmTech/static/css/main.40af32c0.chunk.css",
-    "main.js": "/PharmTech/static/js/main.8e48357f.chunk.js",
-    "main.js.map": "/PharmTech/static/js/main.8e48357f.chunk.js.map",
+    "main.js": "/PharmTech/static/js/main.b6fc6b06.chunk.js",
+    "main.js.map": "/PharmTech/static/js/main.b6fc6b06.chunk.js.map",
     "runtime-main.js": "/PharmTech/static/js/runtime-main.37aae7f8.js",
     "runtime-main.js.map": "/PharmTech/static/js/runtime-main.37aae7f8.js.map",
     "static/css/2.cbedb215.chunk.css": "/PharmTech/static/css/2.cbedb215.chunk.css",
@@ -21,6 +21,6 @@
     "static/css/2.cbedb215.chunk.css",
     "static/js/2.2b5df3cf.chunk.js",
     "static/css/main.40af32c0.chunk.css",
-    "static/js/main.8e48357f.chunk.js"
+    "static/js/main.b6fc6b06.chunk.js"
   ]
 }
