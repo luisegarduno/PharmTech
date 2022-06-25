@@ -1,0 +1,36 @@
+name: Yarn + MySQL
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'yarn'
+        cache-dependency-path: backend/node/yarn.lock
+        
+    - uses: shogo82148/actions-setup-mysql@v1
+      with:
+        mysql-version: '8.0'
+
+    - name: Load in MySQL Databases/Tables        
+      run: |
+        mysql -uroot -h127.0.0.1 -e 'SELECT version()' < backend/mysql/init.sql
+        mysql -uroot -h127.0.0.1 -e 'SELECT version()' < backend/mysql/pharmtech_schema.sql
+    - name: Install node modules & deploy        
+      run: cd backend/node; yarn install; yarn run dev & sleep 5
