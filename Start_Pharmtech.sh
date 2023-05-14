@@ -10,7 +10,7 @@ docker compose up -d
 source backend/node/.env
 
 echo "Loading PharmTech db..."
-./backend/node/execution-tools/wait-until.sh "docker compose exec -T -e MYSQL_PWD=${MYSQL_PASS} backend-db mysql -u ${MYSQL_USER} -D ${MYSQL_DB} -e 'select 1'" > /dev/null 2>&1
+./backend/node/execution-tools/wait-until.sh "docker compose exec -T -e MYSQL_PWD=${MYSQL_PASS} ${MYSQL_HOST} mysql -u ${MYSQL_USER} -D ${MYSQL_DB} -e 'select 1'" > /dev/null 2>&1
 echo "Successfully loaded in PharmTech db"
 
 echo "Restarting Database & API containers"

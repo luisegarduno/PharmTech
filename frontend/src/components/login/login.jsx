@@ -42,7 +42,7 @@ export class Login extends React.Component {
     onLogin() {
         let password = this.state.password
         password = sha256(password);
-        console.log(this.loginRepository.verifyUser(this.state.username, password, this.state.loginType))
+        //console.log(this.loginRepository.verifyUser(this.state.username, password, this.state.loginType))
         axios.post('http://localhost:8000/verifyUser', {username: this.state.username, password: password, type: this.state.loginType})
             .then(response => {
                 if (response.data === 0) {
