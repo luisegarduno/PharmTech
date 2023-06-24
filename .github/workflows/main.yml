@@ -2,9 +2,9 @@ name: Yarn + MySQL
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -32,5 +32,6 @@ jobs:
       run: |
         mysql -uroot -h127.0.0.1 -e 'SELECT version()' < backend/mysql/init.sql
         mysql -uroot -h127.0.0.1 -e 'SELECT version()' < backend/mysql/pharmtech_schema.sql
+
     - name: Install node modules & deploy        
       run: cd backend/node; yarn install; yarn run dev & sleep 5
