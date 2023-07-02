@@ -2,7 +2,6 @@ import React from "react";
 import Logo from "../../images/pharmtechblue.png";
 import Logo2 from "../../images/erpharmtechgrayer.png";
 import { Redirect } from "react-router-dom";
-import { sha256 } from 'js-sha256';
 import axios from 'axios'
 
 export class Register extends React.Component {
@@ -69,12 +68,10 @@ export class Register extends React.Component {
         }
         else {
             this.setState({checkPasswords: true});
-            let password = this.state.password
-            password = sha256(password);
             axios.post('http://localhost:8000/registerUser', {first_name: this.state.firstName, 
             last_name: this.state.lastName, 
             username: this.state.username, 
-            hashpass: password, 
+            password: this.state.password, 
             email: this.state.email, 
             userType_id: this.state.loginType})
         }

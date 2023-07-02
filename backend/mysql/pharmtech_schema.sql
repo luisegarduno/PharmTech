@@ -26,9 +26,9 @@ CREATE TABLE IF NOT EXISTS `pharmtech`.`user` (
     `id`            INT AUTO_INCREMENT,
     `first_name`    VARCHAR(50),
     `last_name`     VARCHAR(50),
-    `username`      VARCHAR(100),
-    `hashpass`      VARCHAR(500),
-    `email`         VARCHAR(500),
+    `username`      VARCHAR(50),
+    `password`      VARCHAR(100),
+    `email`         VARCHAR(100),
     `userType_id`   INT NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`userType_id`)
@@ -36,12 +36,12 @@ CREATE TABLE IF NOT EXISTS `pharmtech`.`user` (
         ON UPDATE CASCADE
 );
 
-INSERT INTO `pharmtech`.`user` (`first_name`, `last_name`, `username`, `hashpass`, `email`, `userType_id`) VALUES 
-            (  'Jane',   'Doe',   'JDoe', '008c70392e3abfbd0fa47bbc2ed96aa99bd49e159727fcba0f2e6abeb3a9d601',  'jdoe@pharmtech.com', 1),
-            (  'John', 'Smith', 'JSmith', '78e1ff0deb8d9b3cbaa934b8f1773cd117edea714dcab0e62109233a3e36293b', 'jadoe@pharmtech.com', 2),
-            ( 'Sarah', 'Jones', 'SJones', '1ea99aec6fa7ed38356ecab95920f8bf92c8cbc1d45591ecebe574bcf30b56af', 'svega@pharmtech.com', 3),
-            (   'Sam',  'Free',  'SFree', 'bdb5d62282c2c5761a3a15cd5968429dd37f4920751e55aaf5a01a04e3211d45', 'sfree@pharmtech.com', 3),
-            (  'Will',  'Vega',  'WVega', 'eba60cfdde3b1564fa26e6930b953bcf5b8900880d81519122529c51477ac063', 'wvega@pharmtech.com', 4),
+INSERT INTO `pharmtech`.`user` (`first_name`, `last_name`, `username`, `password`, `email`, `userType_id`) VALUES 
+            (  'Jane',   'Doe',   'JDoe', '$2b$10$CmrDR3YvdkT7Xpd7XYc/F.eD2MH8NU.mJewWsu7bLXxh1WX4JCXtW',  'jdoe@pharmtech.com', 1),
+            (  'John', 'Smith', 'JSmith', '$2b$10$eN.9Oz3nCnVNB9enqfKgmeZ8KkHAziCZIwFPUKSxBsG8Ye5q5Q9o2', 'jadoe@pharmtech.com', 2),
+            ( 'Sarah', 'Jones', 'SJones', '$2b$10$Xx7ODAIIQjMJVGCURK295eeehZX18pTeZz4Up2L9FTsvo6ivgD9Bu', 'svega@pharmtech.com', 3),
+            (   'Sam',  'Free',  'SFree', '$2b$10$IplV67.58Eg7LHDoO6.jBOsIQw5ZkEWylEDzF1jgCM3hpwmh88gj.', 'sfree@pharmtech.com', 3),
+            (  'Will',  'Vega',  'WVega', '$2b$10$O4pyMK4HhF61dY4IVqhqiO0wFWR6L4l513K1p40.uw8Ima4GS/Mr6', 'wvega@pharmtech.com', 4),
             ( 'Emily', 'Smith', 'ESmith', null, null, 5),
             (  'Ryan', 'Jones', 'RJones', null, null, 5),
             ('Leslie',   'Wan',     null, null, null, 5);
