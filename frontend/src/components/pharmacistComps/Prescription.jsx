@@ -3,9 +3,8 @@ import Logo from "../../images/erpharmtechgrayer.png";
 import PrescriptForm from "./PrescriptForm"
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { PharmacistRepository } from '../../API/pharmacistRepository'
-import {PrescriptionItem} from './jsitem/prescriptionitem'
-import {PrescriptSearch} from './PrescriptSearch'
-
+import { PrescriptionItem } from './jsitem/prescriptionitem'
+import { PrescriptSearch } from './PrescriptSearch'
 
 export class Prescription extends React.Component {
 
@@ -19,24 +18,23 @@ export class Prescription extends React.Component {
     }
 
     state = {
-    alldrugs : [],
-    allpatients : [],
-    alldoctors : [],
-    Prescriptionlist : [],
-    CurrentOnchange: 'null',
-    isediting: -1,
-    line: -1,
-    newTitle: "",
-    newPatientID: 0,
-    newDrugID : 0,
-    newdoctor_id: 0,
-    newQuantity : 0,
-}
+        alldrugs : [],
+        allpatients : [],
+        alldoctors : [],
+        Prescriptionlist : [],
+        CurrentOnchange: 'null',
+        isediting: -1,
+        line: -1,
+        newTitle: "",
+        newPatientID: 0,
+        newDrugID : 0,
+        newdoctor_id: 0,
+        newQuantity : 0,
+    }
 
     componentDidMount(){
         this.onSearch()
     }
-
 
     onSearch(param){
         this.pharmacistRepository.getPrescription(param)
@@ -69,7 +67,6 @@ export class Prescription extends React.Component {
             });
     }
 
-
     buildDrugs(){
         var arr = [];
         arr.push(<option value = "0"></option>);
@@ -96,7 +93,6 @@ export class Prescription extends React.Component {
         });
         return arr;
     }
-
 
     GoDuplicate(item){
         var date= new Date();
@@ -164,7 +160,7 @@ export class Prescription extends React.Component {
                 <div className = "body">
                     <nav>
                         <div className = "img" id = "logo">
-                            <img src={Logo} alt="logo"/>
+                            <img src={Logo} alt=""/>
                         </div>
                     </nav>
                 </div>
@@ -221,7 +217,7 @@ export class Prescription extends React.Component {
                         if(this.state.isediting !== -1){
                             return(
                                 <form onSubmit={this.handleSubmit.bind(this)}>
-                                    <div className = "card  text-center bg-light">
+                                    <div className = "card text-center bg-light">
                                         <h4 className="card-title ml-3 mt-3">Edit changes: </h4>
                                         <div className = "card-body">
                                             <div className = "row">
@@ -229,10 +225,10 @@ export class Prescription extends React.Component {
                                                     <label htmlFor="newTitle">Title</label>
                                                 </div>
                                                 <div className = "col">
-                                                    <label  htmlFor="patientname2">Patient</label>
+                                                    <label htmlFor="patientname2">Patient</label>
                                                 </div>
                                                 <div className = "col">
-                                                    <label  htmlFor="drugname2">DrugID</label>
+                                                    <label htmlFor="drugname2">DrugID</label>
                                                 </div>
                                                 <div className = "col">
                                                     <label htmlFor="quantity">quantity</label>
@@ -267,7 +263,7 @@ export class Prescription extends React.Component {
                                             </div>
 
                                             <div className = "row">
-                                                <button className = "btn btn-info form-control  mt-2 ml-2 mr-2" onClick = {() => this.GoSave()} >Save</button>
+                                                <button className = "btn btn-info form-control mt-2 ml-2 mr-2" onClick = {() => this.GoSave()} >Save</button>
                                             </div>
 
                                         </div>

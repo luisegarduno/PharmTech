@@ -1,8 +1,7 @@
 import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { PharmacistRepository } from '../../API/pharmacistRepository'
-
 
 export class IncomingOrder extends React.Component {
 
@@ -42,7 +41,7 @@ export class IncomingOrder extends React.Component {
                                 <tr className = "bg-secondary">
                                     <th>Drug</th>
                                     <th>Patient</th>
-                                    <th>Docter</th>
+                                    <th>Doctor</th>
                                     <th>Quantity</th>
                                     <th>Create Date</th>
                                 </tr>

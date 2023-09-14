@@ -1,10 +1,8 @@
 import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
 import { PharmacistRepository } from '../../API/pharmacistRepository'
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import _ from 'lodash';
-// import {ReceiveorderItem} from './jsitem/receiveorderitem'
-
 
 export class ReceivedOrder extends React.Component {
 
@@ -37,7 +35,7 @@ export class ReceivedOrder extends React.Component {
             .then(Alldrugs => this.setState({alldrugs : Alldrugs.data}));
         this.pharmacistRepository.getPatient()
             .then(Allpatients => this.setState({allpatients : Allpatients.data}));
-            this.pharmacistRepository.getDoctor()
+        this.pharmacistRepository.getDoctor()
             .then(Alldoctors => this.setState({alldoctors : Alldoctors.data}));
     }
 
@@ -52,7 +50,6 @@ export class ReceivedOrder extends React.Component {
     handleDoctor = (event) =>{
         this.setState({newDoctorID : event.target.value});
     }
-
 
     buildDrugs(){
         var arr = [];
@@ -128,7 +125,7 @@ export class ReceivedOrder extends React.Component {
                 <div className = "body">
                     <nav>
                         <div className = "img" id = "logo">
-                            <img src={Logo} alt="logo"/>
+                            <img src={Logo} alt=""/>
                         </div>
                     </nav>
                     <div className = "bg-secondary pb-2 mb-4 pt-1 mt-2">
@@ -217,7 +214,6 @@ export class ReceivedOrder extends React.Component {
                                             </div>
                                         </div>
                                     </form>
-
                                 )
                             }
                         })()}

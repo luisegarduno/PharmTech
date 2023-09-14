@@ -4,8 +4,7 @@ import {RequestItem} from './jsitem/requestitem'
 import Logo from "../../images/erpharmtechgrayer.png";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { PharmacistRepository } from '../../API/pharmacistRepository'
-import {PinventSearch} from './PinventSearch'
-
+import { PinventSearch } from './PinventSearch'
 
 export class PharmacistIn extends React.Component {
 
@@ -63,6 +62,7 @@ export class PharmacistIn extends React.Component {
 
     handleAdd(){
         var newitem = new InventoryItem(this.state.newdrugid, this.state.newdrugmount, this.state.newdrugdate);
+        // eslint-disable-next-line
         this.setState({newdrugid : 0, newdrugmount : 0, newdrugmount: ""})
         this.pharmacistRepository.addinventory(newitem)
             .then(() =>{
@@ -110,7 +110,7 @@ export class PharmacistIn extends React.Component {
         this.state.alldrugs.forEach(element => {
             newmarked.push(false);
         });
-        if(this.state.userNotification.length !==0){
+        if(this.state.userNotification.length !== 0){
             for (let i = 0; i < this.state.userNotification.length; i++) {
                 for (let j = 0; j < this.state.alldrugs.length; j++) {
                     if(this.state.userNotification[i].DrugID === this.state.alldrugs[j].DrugID){
@@ -128,8 +128,8 @@ export class PharmacistIn extends React.Component {
             this.pharmacistRepository.addUserNotification(this.username, item)
                 .then(() => {
                     alert("Notification Added");
-                    this.state.marked[item-1] = true;
-                    this.setState({marked:newmarked});
+                    this.setState(this.marked[item-1] = true);
+                    //this.setState({marked:newmarked});
                     this.onSearch("");
                 })
         }
@@ -137,7 +137,8 @@ export class PharmacistIn extends React.Component {
             this.pharmacistRepository.deleteUserNotification(this.username, item)
                 .then(() => {
                     alert("Notification Canceled");
-                    this.state.marked[item-1] = true;
+                    this.setState(this.marked[item-1] = true);
+                    //this.state.marked[item-1] = true;
                     this.setState({marked:newmarked});
                     this.onSearch("");
                 })
@@ -177,7 +178,7 @@ export class PharmacistIn extends React.Component {
                 <div className = "navBar">
                     <nav>
                         <div className = "img">
-                            <img src={Logo} alt="logo"/>
+                            <img src={Logo} alt=""/>
                         </div>
                     </nav>
                 </div>
@@ -221,7 +222,7 @@ export class PharmacistIn extends React.Component {
                                     {(() => {
                                         if(this.state.date.toISOString() <= item.exp_date){
                                             return(
-                                            <td> Is not expired</td>
+                                            <td>Is not expired</td>
                                             )
                                         }
                                         else{
