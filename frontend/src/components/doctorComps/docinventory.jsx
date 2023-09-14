@@ -68,16 +68,18 @@ export class Docinventory extends React.Component {
 
     render() {
         return (
-           <div className = "body">
-            <nav>
-                <div className = "img" id = "logo">
+            <div className = "body">
+                <nav>
+                    <div className = "img" id = "logo">
                         <img alt="Logo" src={Logo} />
-                </div>
-                <h1 className = "yourCart">
+                    </div>
+                    <h1 className = "yourCart">
                         Inventory
-                </h1>
-            </nav>
-            <h1 className="tableHeader">Filter for Drug Type</h1>
+                    </h1>
+                </nav>
+
+                <h1 className="tableHeader">Filter for Drug Type</h1>
+
                 <form className="sortBy">
                     <input type="radio" id="filterAll" name="filter" value="all" onClick={this.filterFor.bind(this, 'all')} defaultChecked></input>
                     <label htmlFor="filterAll">All</label>
@@ -86,7 +88,8 @@ export class Docinventory extends React.Component {
                         <label htmlFor={item.drug_type} className="capWord">{item.drug_type}</label></>
                     ))}
                 </form>
-            <h1 className = "tableHeader">All Inventory</h1>
+
+                <h1 className = "tableHeader">All Inventory</h1>
                 <div className = "itemsTable scrollTableSort">
                     <table>
                         <thead><tr className="headerFixed">
@@ -109,10 +112,11 @@ export class Docinventory extends React.Component {
                         </tbody>
                     </table>
                 </div>
+
                 <Link to="/doctor">
                     <button className = "btn coloredBtn ml-3">Return to Homepage</button>
-                    </Link> 
-           </div>
+                </Link> 
+            </div>
         );
     }
 }

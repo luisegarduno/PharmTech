@@ -48,7 +48,7 @@ export class Docorders extends React.Component {
     }
 
     getStatus(fulfillDate){
-        if (fulfillDate === null){
+        if (fulfillDate == null){
             return "Preparing to Ship";
         } else {
             var shipDate = fulfillDate.substring(5,7) + "-" + fulfillDate.substring(8,10) + "-" + fulfillDate.substring(0,4);
@@ -62,16 +62,17 @@ export class Docorders extends React.Component {
 
     render() {
         return (
-           <div className = "body">
-            <nav>
-                <div className = "img" id = "logo">
+            <div className = "body">
+                <nav>
+                    <div className = "img" id = "logo">
                         <img alt="Logo" src={Logo} />
-                </div>
-                <h1 className = "yourCart">
+                    </div>
+                    <h1 className = "yourCart">
                         Orders
-                </h1>
-            </nav>
-            <h1 className = "tableHeader">All Incoming Orders</h1>
+                    </h1>
+                </nav>
+
+                <h1 className = "tableHeader">All Incoming Orders</h1>
                 <div className = "itemsTable tableSort">
                     <table><thead>
                         <tr class="headerFixed">
@@ -81,24 +82,26 @@ export class Docorders extends React.Component {
                             <th><button type="button" id="expDate" onClick={this.sortBy.bind(this, 'quantity')}>Units</button></th>
                         </tr></thead>
                         <tbody>
-                        {this.state.orders.map(item => (
-                            <tr>
-                                <td id="item">{item.name}</td>
-                                <td id="item">{this.orderDate(item.order_date)}</td>
-                                <td id="item">{this.getStatus(item.fulfill_date)}</td>
-                                <td id="item">{this.formatQuantity(item.quantity)} {item.unit_measure}</td>
-                            </tr>
-                        ))}
+                            {this.state.orders.map(item => (
+                                <tr>
+                                    <td id="item">{item.name}</td>
+                                    <td id="item">{this.orderDate(item.order_date)}</td>
+                                    <td id="item">{this.getStatus(item.fulfill_date)}</td>
+                                    <td id="item">{this.formatQuantity(item.quantity)} {item.unit_measure}</td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
+
                 <Link to="docinventory">
                     <button className = "btn btn-secondary mr-3" id = "viewInventory">View All Inventory</button>
-                    </Link> 
+                </Link> 
+
                 <Link to="/doctor">
                     <button className = "btn coloredBtn ml-3">Return to Homepage</button>
-                    </Link> 
-           </div>
+                </Link> 
+            </div>
         );
     }
 }
