@@ -14,14 +14,14 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  color: white;
+  min-height: 100vh;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  background-color: #282c34;
   font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {
@@ -29,29 +29,22 @@
 }
 /*./components/pages/141990.jpg */
 .background {
-  font-family: 'Raleway', sans-serif;
-  /*background-image: url(./images/background.jpg);
-  height: 130%; 
-  background-position: center;
-  background-size: cover;
-  width: 100vw;
-  min-height: 100vh;
-  position: absolute;*/
-  background-image: url(./images/background.png);
+  width: 100%;
+  height: 100%;
+  background-size: auto ;
   background-position: top;
   background-repeat: repeat;
-  background-size: auto ;
-  height: 100%;
-  width: 100%;
+  font-family: 'Raleway', sans-serif;
+  background-image: url(./images/background.png);
 }
 
 .layer {
-  background-color: rgb(206, 207, 207, 0.7);
-  height: 100%; 
-  background-position: center;
-  background-size: cover;
   width: 100vw;
+  height: 100%; 
   min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-color: rgb(206, 207, 207, 0.7);
 }
 
 @keyframes App-logo-spin {
@@ -64,25 +57,25 @@
 }
 
 .foot {
-  z-index: 10;
-  position: fixed;
-  height: 4em;
   left: 0;
   bottom: 0;
+  height: 4em;
   width: 100%;
-  background-color: rgb(74,100,168);
+  z-index: 10;
   color: white;
+  position: fixed;
   text-align: left;
+  background-color: rgb(74,100,168);
 }
 
 .footText {
-  margin-left: 1em;
   color: white;
+  margin-left: 1em;
   font-size: xx-large;
 }
 
 .footText:hover {
+  color: white;
   direction: none;
   text-decoration: none;
-  color: white;
 }
