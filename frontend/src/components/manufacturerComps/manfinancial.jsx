@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ManufacturerRepository } from "../../API";
 import _ from 'lodash';
 
@@ -63,7 +63,7 @@ export class Manfinancial extends React.Component {
     getTotal(amount, sellPrice, purchasePrice){
         var difference = sellPrice - purchasePrice;
         var rev = amount * difference;
-        this.state.revenue = this.state.revenue + rev;
+        this.setState(this.state.revenue + rev);
         rev = rev.toFixed(2);
         rev = rev.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         return rev;
@@ -77,7 +77,7 @@ export class Manfinancial extends React.Component {
 
     render() {
         return (
-           <div className = "body">
+            <div className = "body">
                 <nav>
                 <div className = "img" id = "logo">
                         <img src={Logo} alt="Logo"/>
@@ -117,7 +117,7 @@ export class Manfinancial extends React.Component {
                 <Link to="/manufacturer">
                     <button className = "btn coloredBtn ml-3">Return to Homepage</button>
                     </Link> 
-           </div>
+            </div>
         );
     }
 }

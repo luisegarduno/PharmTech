@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ManufacturerRepository } from "../../API";
 import _ from 'lodash';
 
@@ -58,14 +58,14 @@ export class Mansales extends React.Component {
 
     render() {
         return (
-           <div className = "body">
+            <div className = "body">
                 <nav>
-                <div className = "img" id = "logo">
+                    <div className = "img" id = "logo">
                         <img src={Logo} alt="Logo"/>
-                </div>
-                <h1 className = "yourCart">
+                    </div>
+                    <h1 className = "yourCart">
                         Sales
-                </h1>
+                    </h1>
                 </nav>
                 <h1 className = "tableHeader">All Sales</h1>
                 <div className = "itemsTable">
@@ -77,24 +77,25 @@ export class Mansales extends React.Component {
                             <th>Total</th>
                         </tr></thead>
                         <tbody>
-                        {this.state.sales.map(item => (
-                            <tr key={item.name}>
-                                <td id="item">{item.name}</td>
-                                <td id="item">{this.formatQuantity(item.quantity)} {item.unit_measure}</td>
-                                <td id="item">${this.formatPrice(item.purchase_price)}/{item.unit_measure}</td>
-                                <td id="item">${this.getTotal(item.quantity, item.purchase_price)}</td>
-                            </tr>
-                        ))}
+                            {this.state.sales.map(item => (
+                                <tr key={item.name}>
+                                    <td id="item">{item.name}</td>
+                                    <td id="item">{this.formatQuantity(item.quantity)} {item.unit_measure}</td>
+                                    <td id="item">${this.formatPrice(item.purchase_price)}/{item.unit_measure}</td>
+                                    <td id="item">${this.getTotal(item.quantity, item.purchase_price)}</td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
+
                 <Link to="/manufacturer">
                     <button className = "btn coloredBtn ml-3">Return to Homepage</button>
-                    </Link> 
+                </Link> 
                 <Link to="manfinancial">
                     <button className = "btn btn-secondary mr-3" id = "viewInventory">View Financial Info</button>
-                    </Link> 
-           </div>
+                </Link> 
+            </div>
         );
     }
 }
