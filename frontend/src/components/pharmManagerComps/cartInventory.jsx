@@ -3,16 +3,14 @@ import Logo from "../../images/erpharmtechgrayer.png";
 import {Link} from "react-router-dom";
 import { PharmManagerRepository } from "../../API";
 import CartService from "./cartService";
-import Autocomplete from './Autocomplete';
 import _ from 'lodash';
 
 export class CartInventory extends React.Component {
 
+    username; 
     cartService = new CartService();
-
     pharmManagerRepository = new PharmManagerRepository();
 
-    username; 
     constructor(props) {
         super(props);
         this.username = localStorage['username']
@@ -65,7 +63,7 @@ export class CartInventory extends React.Component {
             return (<h1>Loading...</h1>)
         }
         return (
-           <div className = "body">
+            <div className = "body">
                 <nav>
                     <div className = "img" id = "logo">
                             <img src={Logo} alt="Logo"/>
@@ -82,21 +80,22 @@ export class CartInventory extends React.Component {
                         </tr>
                             {this.state.drugs.map(item => (
                                 <tr key = {item.id}>
-                                  <td id = "item">{item.name}
-                                  <Link to="/pharmManager/cart"><button type = "button" id = "swap" onClick = {e => this.cartService.addToCart(item)}>Select</button></Link>
-                                  </td>
+                                    <td id = "item">{item.name}
+                                        <Link to="/pharmManager/cart"><button type = "button" id = "swap" onClick = {e => this.cartService.addToCart(item)}>Select</button></Link>
+                                    </td>
                                     <td id = "item">${parseFloat(item.purchase_price).toFixed(2)}</td>
                                 </tr>
                             ))}
                     </table>
                 </div>
+
                 <Link to="/pharmManager/cart">
                     <button className = "return" id = "viewInventory">View Cart</button>
-                    </Link> 
+                </Link> 
                 <Link to="/pharmManager">
                     <button className = "return">Return to Homepage</button>
-                    </Link> 
-           </div>
+                </Link> 
+            </div>
         );    
     }
 }

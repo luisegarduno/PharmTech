@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { PharmManagerRepository } from "../../API";
 import _ from 'lodash';
 
@@ -53,38 +53,33 @@ export class ViewOrders extends React.Component {
 
     render() {
         return (
-           <div className = "body">
+            <div className = "body">
                 <nav>
-                <div className = "img" id = "logo">
+                    <div className = "img" id = "logo">
                         <img src={Logo} alt="Logo"/>
-                </div>
-                <h1 className = "yourCart">
-                        Pending Orders
-                </h1>
+                    </div>
+                    <h1 className = "yourCart">Pending Orders</h1>
                 </nav>
-                 <div className = "itemsTable">
+                <div className = "itemsTable">
                     <table>
                         <tr>
-                        <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'name')}>Item Name</button></th>
+                            <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'name')}>Item Name</button></th>
                             <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'quantity')}>Amount Requested</button></th>
                             <th><button type = "button" id = "expDate" onClick={this.sortBy.bind(this, 'date_requested')}>Date of Request</button></th>
                         </tr>
-                            {this.state.orders.map((order, index) => (
-                                <tr>
-                                  <td id = "item">{order.name}
-                                  </td>
-                                  <td id = "item">
-                                      {order.quantity} {order.unit_measure}
-                                    </td>
-                                    <td id = "item">{this.formatDate(order.date_requested)}<button type = "button" id = "swap" onClick = {e => this.onFulfill(order.id, index)}>Fulfill Order</button></td>
-                                </tr>
-                            ))}
+                        {this.state.orders.map((order, index) => (
+                            <tr>
+                                <td id = "item">{order.name}</td>
+                                <td id = "item">{order.quantity} {order.unit_measure}</td>
+                                <td id = "item">{this.formatDate(order.date_requested)}<button type = "button" id = "swap" onClick = {e => this.onFulfill(order.id, index)}>Fulfill Order</button></td>
+                            </tr>
+                        ))}
                     </table>
-                 </div>
+                </div>
                 <Link to="/pharmManager">
                     <button className = "return">Return to Homepage</button>
-                    </Link> 
-           </div>
+                </Link> 
+            </div>
         );
     }
 }

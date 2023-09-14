@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { PharmManagerRepository } from "../../API";
 import CartService from "./cartService";
 
@@ -56,77 +56,71 @@ export class ViewCart extends React.Component {
         if (!this.state.cart.items) {
             return (
                 <div className = "body">
-                <nav>
-                <div className = "img" id = "logo">
-                        <img src={Logo} alt="Logo"/>
-                </div>
-                <h1 className = "yourCart">
-                        Your Cart
-                </h1>
-                </nav>
-                <div id = "emptycart">
-                <h1>Your Cart is Empty</h1>
-                <Link to="cart/inventory"><button type = "button" id = "addItem">Add Items Here</button></Link>
-                </div>
+                    <nav>
+                        <div className = "img" id = "logo">
+                            <img src={Logo} alt="Logo"/>
+                        </div>
+                        <h1 className = "yourCart">Your Cart</h1>
+                    </nav>
+                    <div id = "emptycart">
+                        <h1>Your Cart is Empty</h1>
+                        <Link to="cart/inventory"><button type = "button" id = "addItem">Add Items Here</button></Link>
+                    </div>
                 </div>
             )
         }
-        return ( 
-           <div className = "body">
-            <nav>
-                <div className = "img" id = "logo">
+        return (
+            <div className = "body">
+                <nav>
+                    <div className = "img" id = "logo">
                         <img src={Logo} alt="Logo"/>
-                </div>
-                <h1 className = "yourCart">
-                        Your Cart
-                </h1>
+                    </div>
+                    <h1 className = "yourCart">Your Cart</h1>
                 </nav>
                 <div className = "itemsTable">
                     <table>
                         <tbody>
-                        <tr>
-                            <th>Item</th>
-                            <th>Quantity</th>
-                            <th>Subtotal</th>
-                        </tr>
+                            <tr>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Subtotal</th>
+                            </tr>
                             {this.state.cart.items.map((item, index) => (
                                 <tr key = {item.product.id} value={item}>
-                                  <td id = "item">{item.product.name}
-                                  <Link to="cart/inventory"><button type = "button" id = "swap" onClick={ () => this.onDelete(index) }>Swap</button></Link>
-                                  </td>
-                                  <td id = "item">
-                                <input id = "quantity" placeholder={item.quantity} onChange={(e) => {this.findQuantity(e, index)}}>
-                                </input>
-                                    <button type = "button" id = "delete" onClick={ () => this.onDelete(index) }>Delete</button>
+                                    <td id = "item">{item.product.name}
+                                        <Link to="cart/inventory"><button type = "button" id = "swap" onClick={ () => this.onDelete(index) }>Swap</button></Link>
                                     </td>
-
+                                    <td id = "item">
+                                        <input id = "quantity" placeholder={item.quantity} onChange={(e) => {this.findQuantity(e, index)}}></input>
+                                        <button type = "button" id = "delete" onClick={ () => this.onDelete(index) }>Delete</button>
+                                    </td>
                                     <td id = "item">${item.purchase_price.toFixed(2)}</td>
                                 </tr>
                             ))}
-                        <tr className = "lastRow">
-                            <td>
-                                <div className = "extraButtons">
-                                <Link to="cart/inventory"><button type = "button" id = "addItems">Add Items</button></Link>
-                                </div>
-                            </td>
-                            <td colSpan = "2"> 
-                            <h3 id = "total">Total: ${this.state.cart.total.toFixed(2)}</h3> <br/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colSpan = "3">
-                                <div className = "extraButtons">
-                                    <button type = "button" className = "placeOrder" onClick={ () => this.submitOrder()} disabled={this.state.cart.items.size === 0}>Place Order</button>
-                                </div>
-                            </td>
-                        </tr>
+                            <tr className = "lastRow">
+                                <td>
+                                    <div className = "extraButtons">
+                                        <Link to="cart/inventory"><button type = "button" id = "addItems">Add Items</button></Link>
+                                    </div>
+                                </td>
+                                <td colSpan = "2"> 
+                                    <h3 id = "total">Total: ${this.state.cart.total.toFixed(2)}</h3> <br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colSpan = "3">
+                                    <div className = "extraButtons">
+                                        <button type = "button" className = "placeOrder" onClick={ () => this.submitOrder()} disabled={this.state.cart.items.size === 0}>Place Order</button>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
                 <Link to="/pharmManager">
                     <button className = "return">Return to Homepage</button>
-                    </Link> 
-           </div>
+                </Link> 
+            </div>
         );
     }
 }
