@@ -13,9 +13,11 @@ export class DoctorRepository {
     getInventory() {
         return new Promise((resolve, reject) => {
             axios.get(`${this.url}/getDoctorInventory`)
-                .then(x => resolve(x.data))
+                .then(x => {
+                    resolve(x.data);
+                })
                 .catch(x => {
-                    alert(x); // handle error
+                    alert(x);           // Handle Error
                     reject(x);
                 });
         });
@@ -24,9 +26,11 @@ export class DoctorRepository {
     getDrugTypes() {
         return new Promise((resolve, reject) => {
             axios.get(`${this.url}/getDrugTypes`)
-                .then(x => resolve(x.data))
+                .then(x => {
+                    resolve(x.data);
+                })
                 .catch(x => {
-                    alert(x); // handle error
+                    alert(x);           // Handle Error
                     reject(x);
                 });
         });
@@ -35,9 +39,11 @@ export class DoctorRepository {
     getOrders() {
         return new Promise((resolve, reject) => {
             axios.get(`${this.url}/manufacturerorders`)
-                .then(x => resolve(x.data))
+                .then(x => {
+                    resolve(x.data);
+                })
                 .catch(x => {
-                    alert(x); // handle error
+                    alert(x);           // Handle Error
                     reject(x);
                 });
         });
