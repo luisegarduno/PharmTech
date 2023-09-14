@@ -1,7 +1,6 @@
 import React from "react";
 import Logo from "../../images/erpharmtechgrayer.png";
-import {Link} from "react-router-dom";
-
+import { Link } from "react-router-dom";
 
 export class Pharmacist extends React.Component {
     
@@ -17,8 +16,6 @@ export class Pharmacist extends React.Component {
     }
 
     render(){
-
-
         return(
             <div className = "body">
                 <div className = "navBar">
@@ -30,18 +27,16 @@ export class Pharmacist extends React.Component {
                             Welcome back {this.username}!
                         </h1>
                     </nav>
- 
                 </div>
+
                 <div className = "menu">
-                <Link to ="/pharmacist/PharmacistIn"><button type = "button" id = "menuButton"><br />Inventory</button></Link>
-                <Link to ="/pharmacist/IncomingOrder"><button type = "button" id = "menuButton">Incoming<br />Order</button></Link>
-                <Link to ="/pharmacist/OutgoingOrder"><button type = "button" id = "menuButton">Outgoing<br />Order</button></Link>
-                <Link to ="/pharmacist/ReceivedOrder"><button type = "button" id = "menuButton">Received<br />Order</button></Link>
-                <Link to ="/pharmacist/Prescription"><button type = "button" id = "menuButton"><br />Prescription</button></Link>
+                    <Link to ="/pharmacist/PharmacistIn"><button type = "button" id = "menuButton"><br />Inventory</button></Link>
+                    <Link to ="/pharmacist/IncomingOrder"><button type = "button" id = "menuButton">Incoming<br />Order</button></Link>
+                    <Link to ="/pharmacist/OutgoingOrder"><button type = "button" id = "menuButton">Outgoing<br />Order</button></Link>
+                    <Link to ="/pharmacist/ReceivedOrder"><button type = "button" id = "menuButton">Received<br />Order</button></Link>
+                    <Link to ="/pharmacist/Prescription"><button type = "button" id = "menuButton"><br />Prescription</button></Link>
                 </div>
             </div>
-            
-
         );
     }
 }
