@@ -28,13 +28,13 @@ export class Manorders extends React.Component {
     }
 
     sortBy(field) {      
-        if (this.state.sortDirection == 'asc') {
+        if (this.state.sortDirection === 'asc') {
             this.setState({sortDirection: 'desc'})
             this.setState({ 
                 orders: _.orderBy(this.state.orders, field, this.state.sortDirection)
             });
         }
-        if (this.state.sortDirection == 'desc') {
+        if (this.state.sortDirection === 'desc') {
             this.setState({sortDirection: 'asc'})
             this.setState({ 
                 orders: _.orderBy(this.state.orders, field, this.state.sortDirection)
@@ -48,7 +48,7 @@ export class Manorders extends React.Component {
     }
 
     getStatus(fulfillDate){
-        if (fulfillDate == null){
+        if (fulfillDate === null){
             return "Packing";
         } else {
             var shipDate = fulfillDate.substring(5,7) + "-" + fulfillDate.substring(8,10) + "-" + fulfillDate.substring(0,4);

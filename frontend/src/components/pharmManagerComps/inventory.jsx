@@ -4,7 +4,6 @@ import {Link} from "react-router-dom";
 import { PharmManagerRepository } from "../../API";
 import _ from 'lodash';
 import CartService from "./cartService";
-import CartItem from "./cartItem";
 
 export class Inventory extends React.Component {
 
@@ -55,13 +54,13 @@ export class Inventory extends React.Component {
 
 
     sortBy(field) {        
-        if (this.state.sortDirection == 'asc') {
+        if (this.state.sortDirection === 'asc') {
             this.setState({sortDirection: 'desc'})
             this.setState({ 
                 drugs: _.orderBy(this.state.drugs, field, this.state.sortDirection) 
             });
         }
-        if (this.state.sortDirection == 'desc') {
+        if (this.state.sortDirection === 'desc') {
             this.setState({sortDirection: 'asc'})
             this.setState({ 
                 drugs: _.orderBy(this.state.drugs, field, this.state.sortDirection) 

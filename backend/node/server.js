@@ -118,7 +118,7 @@ app.get('/getInventory', (req, res) => {
 
 //inventory for pharmacist and manager
 app.get('/getDrugTypes', (req, res) => {
-  connection.query('SELECT name AS drug_type FROM drug_types;', function (err, rows, fields) {
+  connection.query('SELECT name AS drug_type FROM drug_type;', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -138,7 +138,7 @@ app.get('/getDrugTypes', (req, res) => {
 
 //gets inventory information for doctor
 app.get('/getDoctorInventory', (req, res) => {
-  connection.query('SELECT batch_id, d.name, i.drug_id, quantity, exp_date, t.name AS drug_type, r.related FROM inventory AS i LEFT JOIN drugs AS d ON d.id = i.drug_id LEFT JOIN (SELECT drug_type, GROUP_CONCAT(DISTINCT name) AS related FROM drugs GROUP BY drug_type) AS r ON d.drug_type = r.drug_type JOIN drug_types AS t ON t.id = d.drug_type;', function (err, rows, fields) {
+  connection.query('SELECT batch_id, d.name, i.drug_id, quantity, exp_date, t.name AS drug_type, r.related FROM inventory AS i LEFT JOIN drugs AS d ON d.id = i.drug_id LEFT JOIN (SELECT drug_type, GROUP_CONCAT(DISTINCT name) AS related FROM drugs GROUP BY drug_type) AS r ON d.drug_type = r.drug_type JOIN drug_type AS t ON t.id = d.drug_type;', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({
@@ -570,7 +570,7 @@ app.put('/editReceiving', async (req, res) => {
 
 // Returns all prescriptions sorted out by Drug Type
 app.get('/pharmacylist', (req, res) => {
-  connection.query('SELECT p.title AS Title, CONCAT(u.first_name, " ", u.last_name) AS Patient, u.id AS PatientID, p.id AS PrescriptionID, d.name AS DrugName, d.id AS DrugID, p.quantity AS Quantity, d.unit_measure AS Unit, p.doctor_id, CONCAT(u2.first_name, " ", u2.last_name) AS doctor_name FROM `pharmtech`.`prescriptions` p JOIN user u ON u.id = p.patient_id JOIN user u2 ON u2.id = p.doctor_id JOIN drugs d ON d.id = p.drug_id LEFT JOIN drug_types dt ON d.drug_type = dt.id ORDER BY dt.name ASC', function (err, rows, fields) {
+  connection.query('SELECT p.title AS Title, CONCAT(u.first_name, " ", u.last_name) AS Patient, u.id AS PatientID, p.id AS PrescriptionID, d.name AS DrugName, d.id AS DrugID, p.quantity AS Quantity, d.unit_measure AS Unit, p.doctor_id, CONCAT(u2.first_name, " ", u2.last_name) AS doctor_name FROM `pharmtech`.`prescriptions` p JOIN user u ON u.id = p.patient_id JOIN user u2 ON u2.id = p.doctor_id JOIN drugs d ON d.id = p.drug_id LEFT JOIN drug_type dt ON d.drug_type = dt.id ORDER BY dt.name ASC', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({

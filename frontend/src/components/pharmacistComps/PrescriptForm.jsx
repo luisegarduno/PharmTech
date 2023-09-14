@@ -1,8 +1,6 @@
 import React from "react";
 import {PrescriptionItem} from './jsitem/prescriptionitem'
 
-
-
 class PrescriptForm extends React.Component {
 
     constructor(props) {
@@ -84,7 +82,7 @@ class PrescriptForm extends React.Component {
                         <button className = "btn btn-info text-center form-control font-weight-bold " style = {{fontSize: "0.7cm"}} onClick = {() => this.handleload()}>Add Prescription</button>
                     </div>
                     {(() => {
-                        if(this.state.isediting != -1){
+                        if(this.state.isediting !== -1){
                             return(
                                 <div className = "card-body mt-1">
                                     <form  onSubmit={this.handleSubmit.bind(this)}>

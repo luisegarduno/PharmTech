@@ -31,7 +31,7 @@ export class Docinventory extends React.Component {
     }
 
     filterFor(field) {
-        if (field == "all") {
+        if (field === "all") {
             this.doctorRepository.getInventory().then(Drug => this.setState({drugs : Drug.data}));
         } else {
             this.setState({drugs: this.state.backup})
@@ -43,13 +43,13 @@ export class Docinventory extends React.Component {
 
     sortBy(field) {
         this.setState({revenue: 0})      
-        if (this.state.sortDirection == 'asc') {
+        if (this.state.sortDirection === 'asc') {
             this.setState({sortDirection: 'desc'})
             this.setState({ 
                 drugs: _.orderBy(this.state.drugs, field, this.state.sortDirection)
             });
         }
-        if (this.state.sortDirection == 'desc') {
+        if (this.state.sortDirection === 'desc') {
             this.setState({sortDirection: 'asc'})
             this.setState({ 
                 drugs: _.orderBy(this.state.drugs, field, this.state.sortDirection)

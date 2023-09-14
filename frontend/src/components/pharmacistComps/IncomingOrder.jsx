@@ -55,7 +55,7 @@ export class IncomingOrder extends React.Component {
                                         <td>{item.Patient}</td>
                                         <td>{item.doctor_name}</td>
                                         <td>{item.quantity}</td>
-                                        <td>{item.create_date}</td>
+                                        <td>{new Date(item.create_date).toLocaleDateString()}</td>
                                     </tr>
                                 ))}
                             </tbody>

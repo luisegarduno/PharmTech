@@ -31,13 +31,13 @@ export class Manfinancial extends React.Component {
 
     sortBy(field) {
         this.setState({revenue: 0})      
-        if (this.state.sortDirection == 'asc') {
+        if (this.state.sortDirection === 'asc') {
             this.setState({sortDirection: 'desc'})
             this.setState({ 
                 drugs: _.orderBy(this.state.drugs, field, this.state.sortDirection)
             });
         }
-        if (this.state.sortDirection == 'desc') {
+        if (this.state.sortDirection === 'desc') {
             this.setState({sortDirection: 'asc'})
             this.setState({ 
                 drugs: _.orderBy(this.state.drugs, field, this.state.sortDirection)

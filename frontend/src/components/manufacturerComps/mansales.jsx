@@ -27,13 +27,13 @@ export class Mansales extends React.Component {
     }
 
     sortBy(field) {      
-        if (this.state.sortDirection == 'asc') {
+        if (this.state.sortDirection === 'asc') {
             this.setState({sortDirection: 'desc'})
             this.setState({ 
                 sales: _.orderBy(this.state.sales, field, this.state.sortDirection)
             });
         }
-        if (this.state.sortDirection == 'desc') {
+        if (this.state.sortDirection === 'desc') {
             this.setState({sortDirection: 'asc'})
             this.setState({ 
                 sales: _.orderBy(this.state.sales, field, this.state.sortDirection)

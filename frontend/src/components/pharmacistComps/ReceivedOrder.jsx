@@ -3,7 +3,7 @@ import Logo from "../../images/erpharmtechgrayer.png";
 import { PharmacistRepository } from '../../API/pharmacistRepository'
 import {Link} from "react-router-dom";
 import _ from 'lodash';
-import {ReceiveorderItem} from './jsitem/receiveorderitem'
+// import {ReceiveorderItem} from './jsitem/receiveorderitem'
 
 
 export class ReceivedOrder extends React.Component {
@@ -82,13 +82,13 @@ export class ReceivedOrder extends React.Component {
     }
 
     sortBy(field) {        
-        if (this.state.sortDirection == 'asc') {
+        if (this.state.sortDirection === 'asc') {
             this.setState({sortDirection: 'desc'})
             this.setState({ 
                 orders: _.orderBy(this.state.orders, field, this.state.sortDirection) 
             });
         }
-        if (this.state.sortDirection == 'desc') {
+        if (this.state.sortDirection === 'desc') {
             this.setState({sortDirection: 'asc'})
             this.setState({ 
                 orders: _.orderBy(this.state.orders, field, this.state.sortDirection) 
@@ -128,7 +128,7 @@ export class ReceivedOrder extends React.Component {
                 <div className = "body">
                     <nav>
                         <div className = "img" id = "logo">
-                            <img src={Logo} />
+                            <img src={Logo} alt="logo"/>
                         </div>
                     </nav>
                     <div className = "bg-secondary pb-2 mb-4 pt-1 mt-2">
@@ -156,8 +156,8 @@ export class ReceivedOrder extends React.Component {
                                         <td>{item.doctor_name}</td>
                                         <td>{item.Drug}</td>
                                         <td>{item.quantity}</td>
-                                        <td>{item.create_date}</td>
-                                        <td>{item.fill_date}</td>
+                                        <td>{new Date(item.create_date).toLocaleDateString()}</td>
+                                        <td>{new Date(item.fill_date).toLocaleDateString()}</td>
                                         <td><button className = "btn btn-warning mb-2" onClick = {() => this.GoEdit(item.OrderID, index)}>Edit</button> <br /></td>
                                     </tr>
                                 ))}
@@ -165,7 +165,7 @@ export class ReceivedOrder extends React.Component {
                         </table>
 
                         {(() => {
-                            if(this.state.isediting != -1){
+                            if(this.state.isediting !== -1){
                                 return(
                                     <form onSubmit = {this.handleSubmit}>
                                         <div className = "card  text-center bg-light">
