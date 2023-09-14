@@ -153,8 +153,8 @@ export class ReceivedOrder extends React.Component {
                                         <td>{item.doctor_name}</td>
                                         <td>{item.Drug}</td>
                                         <td>{item.quantity}</td>
-                                        <td>{item.create_date}</td>
-                                        <td>{item.fill_date}</td>
+                                        <td>{new Date(item.create_date).toLocaleDateString()}</td>
+                                        <td>{new Date(item.fill_date).toLocaleDateString()}</td>
                                         <td><button className = "btn btn-warning mb-2" onClick = {() => this.GoEdit(item.OrderID, index)}>Edit</button> <br /></td>
                                     </tr>
                                 ))}

@@ -36,12 +36,12 @@ export class OutgoingOrder extends React.Component {
                     </div>
 
                     <div className = "container">
-                        <table  className = "table">
+                        <table className = "table">
                             <thead className = "thead-dark">
                                 <tr className = "bg-secondary">
                                     <th>Drug</th>
                                     <th>Patient</th>
-                                    <th>Docter</th>
+                                    <th>Doctor</th>
                                     <th>Quantity</th>
                                     <th>Create Date</th>
                                 </tr>
@@ -54,7 +54,7 @@ export class OutgoingOrder extends React.Component {
                                         <td>{item.Patient}</td>
                                         <td>{item.doctor_name}</td>
                                         <td>{item.quantity}</td>
-                                        <td>{item.create_date}</td>
+                                        <td>{new Date(item.create_date).toLocaleDateString()}</td>
                                     </tr>
                                 ))}
                             </tbody>

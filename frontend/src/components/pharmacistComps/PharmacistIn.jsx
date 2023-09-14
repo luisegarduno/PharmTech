@@ -219,7 +219,7 @@ export class PharmacistIn extends React.Component {
                                     <td>{item.id}</td>
                                     <td bgcolor = {this.colorforunit(item.quantity)} >{item.quantity}</td>
                                     <td>{item.DrugUnit}</td>
-                                    <td>{item.exp_date}</td>
+                                    <td>{new Date(item.exp_date).toLocaleDateString()}</td>
                                     {(() => {
                                         if(this.state.date.toISOString() <= item.exp_date){
                                             return(
