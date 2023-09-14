@@ -1,4 +1,3 @@
--- DROP DATABASE IF EXISTS `pharmtech`;
 CREATE DATABASE IF NOT EXISTS `pharmtech`; 
 
 USE `pharmtech`;
@@ -109,23 +108,23 @@ CREATE TABLE IF NOT EXISTS `pharmtech`.`inventory` (
 );
 
 INSERT INTO `pharmtech`.`inventory` (`drug_id`, `quantity`, `exp_date`) VALUES 
-            ( 1, 1000, '2022-09-20'),
-            ( 2, 2000, '2022-10-30'),
-            ( 3, 2000, '2022-06-28'),
-            ( 4, 3000, '2022-01-20'),
-            ( 5, 5000, '2022-04-09'),
-            ( 6, 1300, '2022-05-10'),
-            ( 7,  400, '2022-04-29'),
-            ( 8, 1080, '2021-03-16'),
-            ( 9, 1976, '2022-02-13'),
-            (10, 3732, '2022-12-15'),
-            (11, 1204, '2022-12-31'),
-            (12,  701, '2024-01-20'),
-            ( 1, 2000, '2021-02-21'),
-            ( 7, 6000, '2022-07-02'),
+            ( 1, 1000, '2023-09-20'),
+            ( 2, 2000, '2023-10-30'),
+            ( 3, 2000, '2023-06-28'),
+            ( 4, 3000, '2024-01-20'),
+            ( 5, 5000, '2023-04-09'),
+            ( 6, 1300, '2023-05-10'),
+            ( 7,  400, '2023-04-29'),
+            ( 8, 1080, '2024-03-16'),
+            ( 9, 1976, '2024-02-13'),
+            (10, 3732, '2023-12-15'),
+            (11, 1204, '2023-12-31'),
+            (12,  701, '2023-01-20'),
+            ( 1, 2000, '2024-02-21'),
+            ( 7, 6000, '2023-07-02'),
             (12, 1000, '2023-03-31'),
-            ( 2,  500, '2019-03-31'),
-            (11,   25, '2020-03-31');
+            ( 2,  500, '2013-03-31'),
+            (11,   25, '2023-03-31');
 
 -- -----------------------------------------------------
 -- Table `pharmtech`.`prescriptions`
@@ -187,9 +186,9 @@ CREATE TABLE IF NOT EXISTS `pharmtech`.`order_requests` (
 );
 
 INSERT INTO `pharmtech`.`order_requests` (`drug_id`, `quantity`, `date_requested`) VALUES
-            (4, 1000, '2019-09-20'),
-            (1, 200, '2020-01-13'),
-            (12, 350, '2020-04-26');
+            (4, 1000, '2023-09-18'),
+            (1,  200, '2023-01-13'),
+            (12, 350, '2023-04-26');
 
 INSERT INTO `pharmtech`.`prescriptions` (`patient_id`, `drug_id`, `quantity`, `fill_date`, `create_date`, `title`, `doctor_id`) VALUES 
             (6,  3, 100, '2022-01-20', '2022-10-23', 'For Infection', 3),
@@ -254,17 +253,15 @@ CREATE TABLE IF NOT EXISTS `pharmtech`.`manufacturer_inventory` (
 );
 
 INSERT INTO `pharmtech`.`manufacturer_inventory` (`drug_id`, `quantity`, `exp_date`, `expired`, `ok_to_sell`, `aquired_from`) VALUES
-            ( 1, 12000, '2022-09-20', false,  true, 'China'),
-            ( 2, 10000, '2021-10-30', false,  true,'China'),
-            ( 3, 95000, '2020-06-28',  true, false, 'Germany'),
-            (12,  8000, '2023-01-20', false,  true, 'China'),
-            ( 8, 15000, '2023-04-09', false,  true, 'Boston'),
-            (10, 13000, '2021-05-10',  true, false, 'China'),
-            ( 7, 20000, '2022-04-29',  true, false, 'Germany'),
-            ( 4, 17080, '2021-03-16',  true, false, 'China'),
-            ( 5, 12976, '2023-02-13', false,  true, 'China'),
-            ( 6, 13732, '2023-12-15', false,  true, 'Minneapolis'),
-            (11, 10204, '2020-12-31', false,  true, 'China'),
+            ( 1, 12000, '2023-09-20', false,  true, 'China'),
+            ( 2, 10000, '2023-10-30', false,  true, 'China'),
+            ( 3, 95000, '2023-06-28',  true, false, 'Germany'),
+            (12,  8000, '2024-01-20', false,  true, 'China'),
+            ( 8, 15000, '2024-04-09', false,  true, 'Boston'),
+            (10, 13000, '2022-05-10',  true, false, 'China'),
+            ( 7, 20000, '2024-04-29',  true, false, 'Germany'),
+            ( 4, 17080, '2024-03-16',  true, false, 'China'),
+            ( 5, 12976, '2024-02-13', false,  true, 'China'),
+            ( 6, 13732, '2024-12-15', false,  true, 'Minneapolis'),
+            (11, 10204, '2024-12-31', false,  true, 'China'),
             ( 9, 11701, '2024-01-20', false,  true, 'South Africa');
-
-    
