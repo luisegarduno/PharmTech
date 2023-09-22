@@ -1,68 +1,55 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# PharmTech
 
-## Available Scripts
+[comment]: <> (@todo Finish README.md)
+[comment]: <> (@body Complete the 'About', 'Prerequisites', 'Deployment', & 'Additional Config' sections)
 
-In the project directory, you can run:
+## Table of Contents
+- [About](#about)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+  - Deploy [via local network](#option-1-deploying-local-database--api-to-docker-containers-local) or [w/ AWS Tools](#option-2-deploying-rds-cloud-database--api-to-docker-containers-ec2-linux-instance)
+- [Additional configuration](#additional-configuration)
 
-### `npm start`
+## About
+What is PharmTech?
+- PharmTech is a  full-stack pharmaceutical web application that allows pharmacists, doctors, and drug manufactures to update inventory, send patient prescriptions, request inventory and more!
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Prerequisites
+- `Docker` v19.03.13 or higher
+- `Docker-compose` v1.27.4 or higher 
+- `Node.js` v16.15.1 or higher
+- `npm` v6.14.9 or higher
+- `yarn` v1.22.5 or higher
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Installation
 
-### `npm test`
+#### Option 0: For a quick-start - Deploying local database + _API_ to docker containers (<ins>_local_<ins>)
+1. Build docker image: `$ ./First_Run.sh`
+2. Start docker container `$ ./Start_PharmTech`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Option 1: Deploying local database + _API_ to docker containers (<ins>_local_<ins>)
+1. Deploy Frontend & Backend (Using Docker) ➡ `$ docker compose up`
+- or Backend ONLY ➡ `$ cd PharmTech/backend; yarn run dev`
+- or Frontend ONLY ➡ `$ cd PharmTech/frontend; yarn start`
 
-### `npm run build`
+#### Option 2: Deploying <ins>`RDS cloud database`<ins> + _API_ to docker containers (<ins>_`EC2 Linux Instance`_<ins>)
+1. AWS Management Console
+2. Create _RDS MySQL Database_
+3. Create _EC2 Linux Instance_
+4. Install the following within _EC2 Linux Instance_:
+  - `Node.js` + `npm` + `yarn`
+  - <a href="https://gist.github.com/npearce/6f3c7826c7499587f00957fee62f8ee9" target="_top"><b>`Docker + Docker-Compose`</b></a>
+  - clone project repository
+6. Within the `PharmTech/backend` folder, create `.env` file & enter cloud database credentials :
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+> MYSQL_DB=<br>
+  MYSQL_PORT=<br>
+  MYSQL_CLOUD_USER=<br>
+  MYSQL_CLOUD_PASS=<br>
+  MYSQL_CLOUD_HOST=
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+7. Deploy Frontend & Backend (Using Docker) ➡ `$ docker compose up`
+- or Backend ONLY ➡ `$ cd PharmTech/backend; yarn run dev`
+- or Frontend ONLY ➡ `$ cd PharmTech/frontend; yarn start`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Additional configuration
